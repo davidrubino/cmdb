@@ -1,0 +1,11 @@
+.dropdown-menu li {
+	margin-left:10px;
+}
+
+.jumbotron {
+	background-color: white;
+}
+
+.jumbotron div {
+	padding-top: 12px;
+}
