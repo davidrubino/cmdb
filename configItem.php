@@ -23,13 +23,13 @@
 			<div class="jumbotron">
 				<div class="col-md-4" id="tree"></div>
 				<div class="col-md-8">
-					<h1 id="toreplace">Config items</h1>
+					<h1 id="properties"></h1>
 				</div>
 			</div>
 		</div>
 
-		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="jquery/jquery-1.11.3.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
 		<script src="js/tree.js"></script>
 		<script src="js/menu.js"></script>

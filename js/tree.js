@@ -52,19 +52,8 @@ $(function() {
 		"core" : {
 			"check_callback" : true,
 			'data' : [{
-				"text" : "Root node",
-				"state" : {
-					"opened" : true
-				},
-				"children" : [{
-					"text" : "Child node 1",
-					"state" : {
-						"selected" : true
-					},
-				}, {
-					"text" : "Child node 2",
-					"type" : "file"
-				}]
+				"url" : "retrieveValues.php",
+				"datatype" : "json"
 			}]
 		},
 
@@ -89,6 +78,6 @@ $(function() {
 		j = data.selected.length; i < j; i++) {
 			r.push(data.instance.get_node(data.selected[i]).text);
 		}
-		$('#toreplace').html('Selected: ' + r.join(', '));
+		$('#properties').html('Selected: ' + r.join(', '));
 	});
 });
