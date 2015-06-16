@@ -2,6 +2,8 @@
 
 include 'db_connect.php';
 
+header('Content-Type: application/json');
+
 function retrieveMaps($conn) {
 	$id = $_POST['id'];
 

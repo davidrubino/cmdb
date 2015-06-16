@@ -73,28 +73,31 @@ $(function() {
 
 	}).on('changed.jstree', function(e, data) {
 
-		/*node = data.node;
-		 //send AJAX request and retrieve blog
-		 $.post("db_loadMap.php", {
-		 'id' : node.id
-		 }, function(data) {
-		 data = JSON.parse(data);
-		 $("#properties").html();
+		node = data.node;
+		//send AJAX request and retrieve blog
+		$.post("db_loadMap.php", {
+			'id' : node.id
+		}, function(data) {
+			data = JSON.parse(data);
+			$("#properties").html();
 
-		 if (data.success == 'yes') {
-		 $("#properties").html(data.message);
-		 } else {
-		 alert(data.message);
-		 }
-		 });*/
+			if (data.success == 'yes') {
+				$("#properties").html(data.message);
+			} else {
+				alert(data.message);
+			}
+		});
 
-		var i,
-		    j,
-		    r = [];
-		for ( i = 0,
-		j = data.selected.length; i < j; i++) {
-			r.push(data.instance.get_node(data.selected[i]).text);
+		if (data.selected) {
+			var i,
+			    j,
+			    r = [];
+			for ( i = 0,
+			j = data.selected.length; i < j; i++) {
+				r.push(data.instance.get_node(data.selected[i]).text);
+			}
+			$('#application_id').html("application_id: " + data.selected).text;
+			$('#name').html("name: " + r.join(', '));
 		}
-		$('#properties').html('Selected: ' + r.join(', '));
 	});
 });

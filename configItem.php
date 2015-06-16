@@ -23,7 +23,9 @@
 			<div class="jumbotron">
 				<div class="col-md-4" id="tree"></div>
 				<div class="col-md-8">
-					<h1 id="properties"></h1>
+					<h2 id="application_id"></h2>
+					<h2 id="name"></h2>
+					<h2 id="properties"></h2>
 				</div>
 			</div>
 		</div>
@@ -32,7 +34,7 @@
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
 		<script src="tree.js"></script>
-		<script src="js/menu.js"></script>
+		<script src="menu.js"></script>
 
 	</body>
 	</body>

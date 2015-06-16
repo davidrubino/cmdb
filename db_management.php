@@ -136,9 +136,82 @@ function insertIntoApplication($conn) {
 	}
 }
 
-$conn = connect("localhost", "root", "america76", "test");
-createTables($conn);
-insertIntoApplication($conn);
-closeConnection($conn);
+function insertIntoDepartment($conn) {
+	try {
+		$sql = "
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(10, 'Human Resources');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(11, 'Manufacturing');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(12, 'Information Technology');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(13, 'Marketing');
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Department table";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
 
+function insertIntoMapDepartmentApplication($conn) {
+	try {
+		$sql = "
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(50, 12, 20);
+		
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(51, 12, 21);
+		
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(52, 12, 22);
+		
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(53, 10, 24);
+		
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(54, 11, 23);
+		
+		INSERT INTO Map_department_application
+		(mapDepApp_id, department_id, application_id)
+		VALUES
+		(55, 13, 25);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Map_department_application table";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
+$conn = connect("localhost", "root", "america76", "test");
+//createTables($conn);
+//insertIntoApplication($conn);
+insertIntoDepartment($conn);
+insertIntoMapDepartmentApplication($conn);
+closeConnection($conn);
 ?>
