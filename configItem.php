@@ -31,7 +31,7 @@
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
-		<script src="js/tree.js"></script>
+		<script src="tree.js"></script>
 		<script src="js/menu.js"></script>
 
 	</body>

@@ -49,12 +49,13 @@ function customMenu($node) {
 
 $(function() {
 	$("#tree").jstree({
+
 		"core" : {
 			"check_callback" : true,
-			'data' : [{
-				"url" : "retrieveValues.php",
-				"datatype" : "json"
-			}]
+			"data" : {
+				"type" : "POST",
+				"url" : "db_loadValue.php",
+			}
 		},
 
 		"types" : {
@@ -68,9 +69,25 @@ $(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "dnd", "massload", "search", "sort", "state", "types", "unique", "wholerow"]
+		"plugins" : ["contextmenu", "dnd", "massload", "search", "sort", "state", "types", "unique", "wholerow", "themes", "json_data", "ui"]
 
 	}).on('changed.jstree', function(e, data) {
+
+		/*node = data.node;
+		 //send AJAX request and retrieve blog
+		 $.post("db_loadMap.php", {
+		 'id' : node.id
+		 }, function(data) {
+		 data = JSON.parse(data);
+		 $("#properties").html();
+
+		 if (data.success == 'yes') {
+		 $("#properties").html(data.message);
+		 } else {
+		 alert(data.message);
+		 }
+		 });*/
+
 		var i,
 		    j,
 		    r = [];

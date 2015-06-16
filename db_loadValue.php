@@ -2,6 +2,8 @@
 
 include 'db_connect.php';
 
+header('Content-Type: application/json');
+
 function retrieveValues($conn) {
 	try {
 		$sql = 'SELECT * FROM application ORDER BY application_id ASC;';
@@ -16,9 +18,9 @@ function retrieveValues($conn) {
 }
 
 $conn = connect("localhost", "root", "america76", "test");
-echo '<br>';
+//echo '<br>';
 retrieveValues($conn);
-echo '<br>';
+//echo '<br>';
 closeConnection($conn);
 
 ?>
