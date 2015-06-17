@@ -31,22 +31,32 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(1, 'Server', NULL);
+(0, 'Root', NULL);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(2, 'Network', NULL);
+(3, 'Database', 0);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(11, 'Linux', 1);
+(31, 'MySQL', 3);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(12, 'Windows', 1);
+(32, 'Oracle', 3);
+
+INSERT INTO Class
+(id, name, parent_id)
+VALUES
+(33, 'SQL Server', 3);
+
+INSERT INTO Class
+(id, name, parent_id)
+VALUES
+(2, 'Network', 0);
 
 INSERT INTO Class
 (id, name, parent_id)
@@ -71,27 +81,22 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(3, 'Database', NULL);
+(1, 'Server', 0);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(31, 'MySQL', 3);
+(11, 'Linux', 1);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(32, 'Oracle', 3);
+(12, 'Windows', 1);
 
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(33, 'SQL Server', 3);
-
-INSERT INTO Class
-(id, name, parent_id)
-VALUES
-(4, 'Storage', NULL);
+(4, 'Storage', 0);
 
 INSERT INTO Class
 (id, name, parent_id)
@@ -107,13 +112,7 @@ VALUES
 INSERT INTO Config_item
 (id, class_id)
 VALUES
-(1000, 1);
-
--- network --
-INSERT INTO Config_item
-(id, class_id)
-VALUES
-(2000, 2);
+(1000, 11);
 
 -- doc --
 INSERT INTO Config_item

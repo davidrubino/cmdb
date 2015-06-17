@@ -71,10 +71,11 @@ $(function() {
 
 		"plugins" : ["contextmenu", "dnd", "massload", "search", "sort", "state", "types", "unique", "wholerow", "themes", "json_data", "ui"]
 
-	}).on('changed.jstree', function(e, data) {
+	});
+	/*
+	.on('changed.jstree', function(e, data) {
 
 		node = data.node;
-		//send AJAX request and retrieve blog
 		$.post("db_loadMap.php", {
 			'id' : node.id
 		}, function(data) {
@@ -99,5 +100,5 @@ $(function() {
 			$('#application_id').html("application_id: " + data.selected).text;
 			$('#name').html("name: " + r.join(', '));
 		}
-	});
+	});*/
 });

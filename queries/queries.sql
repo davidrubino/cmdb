@@ -50,3 +50,8 @@ and property.name = 'IP Address'
 and property_values.config_id = config_item.id 
 and config_item.id = 
 (select config_item.id from config_item, property_values where property_values.string_value='bashful');
+
+-- select the children of the database class --
+SELECT class.name from class
+where class.parent_id =
+(select class.id from class where class.parent_id is null and class.name = "Database")
