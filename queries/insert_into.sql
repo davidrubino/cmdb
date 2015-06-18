@@ -31,12 +31,7 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(0, 'Root', NULL);
-
-INSERT INTO Class
-(id, name, parent_id)
-VALUES
-(3, 'Database', 0);
+(3, 'Database', NULL);
 
 INSERT INTO Class
 (id, name, parent_id)
@@ -56,7 +51,7 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(2, 'Network', 0);
+(2, 'Network', NULL);
 
 INSERT INTO Class
 (id, name, parent_id)
@@ -81,7 +76,7 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(1, 'Server', 0);
+(1, 'Server', NULL);
 
 INSERT INTO Class
 (id, name, parent_id)
@@ -96,7 +91,7 @@ VALUES
 INSERT INTO Class
 (id, name, parent_id)
 VALUES
-(4, 'Storage', 0);
+(4, 'Storage', NULL);
 
 INSERT INTO Class
 (id, name, parent_id)
