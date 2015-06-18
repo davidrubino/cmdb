@@ -20,15 +20,17 @@
 		?>
 
 		<div class="container">
-			<div class="jumbotron">
-				<div class="col-md-4" id="tree"></div>
-				<div class="col-md-8">
-					<h2 id="application_id"></h2>
-					<h2 id="name"></h2>
-					<h2 id="properties"></h2>
-				</div>
+			<div class="col-md-4" id="tree"></div>
+			<div class="col-md-8">
+				<h2 id="id"></h2>
+				<h2 id="name"></h2>
+				<h2 id="parent_id"></h2>
 			</div>
 		</div>
+
+		<?php
+		include 'footer.php';
+		?>
 
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>

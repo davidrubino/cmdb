@@ -1,11 +1,16 @@
+body {
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
 .dropdown-menu li {
-	margin-left:10px;
+	margin-left: 10px;
 }
 
-.jumbotron {
-	background-color: white;
-}
-
-.jumbotron div {
-	padding-top: 12px;
+.glyphicon-large {
+	min-height: 50px;
+	line-height: 50px;
+	font-size: 25px;
+	color: #9d9d9d;
+	padding-right: 15px;
 }
