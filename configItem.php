@@ -22,9 +22,37 @@
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
 			<div class="col-md-8">
-				<h2 id="id"></h2>
 				<h2 id="name"></h2>
-				<h2 id="parent_id"></h2>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title" id="class-panel"></h3>
+					</div>
+					<table class="table">
+						<tr>
+							<td> hostname </td>
+							<td> bashful </td>
+						</tr>
+						<tr>
+							<td> fully qualified name </td>
+							<td> bashful.kohls.com </td>
+						</tr>
+					</table>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">server: Linux</h3>
+					</div>
+					<table class="table">
+						<tr>
+							<td> RedHat Version </td>
+							<td> 5.3 </td>
+						</tr>
+						<tr>
+							<td> satellite host </td>
+							<td> doc </td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 

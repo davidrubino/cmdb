@@ -55,3 +55,32 @@ and config_item.id =
 SELECT class.name from class
 where class.parent_id =
 (select class.id from class where class.parent_id is null and class.name = "Database")
+
+-- select all values from the bashful server --
+select property_value.id, property_value.str_value from property_value, config_item
+where property_value.config_id = config_item.id
+and config_item.id = 1000
+
+-- select all properties from the server class --
+select property.id, property.name from property, map_class_property, class
+where property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 1
+
+-- select the server properties and their values for the config item bashful --
+select property.name, property_value.str_value from property_value, config_item, property, map_class_property, class
+where property_value.config_id = config_item.id
+and config_item.id = 1000
+and property_value.property_id = property.id
+and property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 1
+
+-- select the linux server properties and their values for the config item bashful --
+select property.name, property_value.str_value from property_value, config_item, property, map_class_property, class
+where property_value.config_id = config_item.id
+and config_item.id = 1000
+and property_value.property_id = property.id
+and property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 11

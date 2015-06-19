@@ -20,7 +20,18 @@ function retrieveValues($conn) {
 
 				//select the config items of each subclass
 				foreach ($conn->query($sql_ci) as $row_ci) {
-					array_push($config_items, ['id' => $row_ci['id'], 'text' => $row_ci['id'], 'type' => 'file']);
+					$sql_ci_name = "select property_value.id, property_value.str_value from property_value, property
+					where property_value.config_id = {$row_ci['id']}
+					and property_value.property_id = property.id
+					and property.name = 'hostname'
+					";
+					$result = "";
+					
+					//select the hostname of each config item
+					foreach ($conn->query($sql_ci_name) as $ci_name) {
+						$result = $ci_name['str_value'];
+					}
+					array_push($config_items, ['id' => $row_ci['id'], 'text' => $result, 'type' => 'file']);
 				}
 				array_push($children_nodes, ['id' => $row_children['id'], 'text' => $row_children['name'], 'children' => $config_items, 'state' => ['opened' => true]]);
 			}

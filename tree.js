@@ -73,17 +73,13 @@ $(function() {
 
 	}).on('select_node.jstree', function(e, data) {
 
-		//http://stackoverflow.com/questions/8120617/jstree-load-and-click
-		var parents = $("#tree").jstree("get_path", data.node, true);
-		$.each(parents, function(k, v) {
-			// Log down the ID's
-			$('#parent_id').html(v);
-		});
-		//var ids = data.get_path(data.node, '/');
-		//var names = data.inst.get_path(data.rslt.obj.attr('id'),'#',false);
-		//$('#parent_id').html("Path [ID or Name] from root node to selected node = ID's = "+ids ); //+" :: Name's = "+names);
-
-		//$('#parent_id').html(data.node.parents);
+		var path = $("#tree").jstree(true).get_path(data.node,":");
+		$('#name').html(path);
+		//select the node name
+		$('#class-panel').html(data.instance.get_node(data.selected).text);
+		//select the node id
+		//$('#class-panel').html(data.selected).text;
+		
 		/*node = data.node;
 		$.post("db_loadMap.php", {
 		'id' : node.id
@@ -97,19 +93,6 @@ $(function() {
 		alert(data.message);
 		}
 		});*/
-
-		//var loMainSelected = data;
-		//alert(loMainSelected.node.parents);
-
-		/*var i,
-		 j,
-		 r = [];
-		 for ( i = 0,
-		 j = data.selected.length; i < j; i++) {
-		 r.push(data.instance.get_node(data.selected[i]).text);
-		 }
-		 $('#id').html("id: " + data.selected).text;
-		 $('#name').html("name: " + r.join(', '));*/
 	});
 
 });
