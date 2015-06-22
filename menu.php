@@ -9,7 +9,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 				<span class="icon-bar"></span>
 			</button>
 		</div>
-		<div id="navbar" class="navbar-collapse collapse">
+		<div id="navbar" class="navbar-collapse collapse" role="navigation">
 			<ul class="nav navbar-nav" id="#menu">
 				<li>
 					<a href="index.php">Home</a>

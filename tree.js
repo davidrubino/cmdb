@@ -73,26 +73,48 @@ $(function() {
 
 	}).on('select_node.jstree', function(e, data) {
 
-		var path = $("#tree").jstree(true).get_path(data.node,":");
+		console.log(data);
+		var path = $("#tree").jstree(true).get_path(data.node, ":");
+		var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
+		var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
 		$('#name').html(path);
-		//select the node name
-		$('#class-panel').html(data.instance.get_node(data.selected).text);
-		//select the node id
-		//$('#class-panel').html(data.selected).text;
-		
-		/*node = data.node;
-		$.post("db_loadMap.php", {
-		'id' : node.id
-		}, function(data) {
-		data = JSON.parse(data);
-		$("#properties").html();
+		$('#class-title').html(grandparent_name);
+		$('#subclass-title').html(grandparent_name + ':' + parent_name);
 
-		if (data.success == 'yes') {
-		$("#properties").html(data.message);
-		} else {
-		alert(data.message);
+		var id = data.node.id;
+		var parent_id = data.node.parent;
+		var grandparent_id = data.node.parents[1];
+
+		$.ajax({
+			type : "POST",
+			url : "db_loadClassProperties.php",
+			data : "id=" + id + "&grandparent_id=" + grandparent_id,
+			success : function(data) {
+				var htmlResult = new Array();
+				for (var i = 0; i < data.length; i++) {
+					htmlResult.push("<tr><td>" + data[i].name + "</td><td>" + data[i].str_value + "</td></tr>");
+				}
+				$("#class-panel").html(htmlResult);
+			}
+		});
+
+		$.ajax({
+			type : "POST",
+			url : "db_loadConfigItemProperties.php",
+			data : "id=" + id + "&parent_id=" + parent_id,
+			success : function(data) {
+				var htmlResult = new Array();
+				for (var i = 0; i < data.length; i++) {
+					htmlResult.push("<tr><td>" + data[i].name + "</td><td>" + data[i].str_value + "</td></tr>");
+				}
+				$("#subclass-panel").html(htmlResult);
+			}
+		});
+
+	}).bind('delete_node.jstree', function(e, data) {
+		// Check medatada, assuming that root's parent_id is NULL:
+		if (data.node.parent == '#') {
+			core.check_callback(false);
 		}
-		});*/
 	});
-
 });
