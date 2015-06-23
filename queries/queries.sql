@@ -68,7 +68,8 @@ and map_class_property.class_id = class.id
 and class.id = 1
 
 -- select the server properties and their values for the config item bashful --
-select property.name, property_value.str_value from property_value, config_item, property, map_class_property, class
+select property.name, property.tab, ifnull(property_value.str_value, ifnull(property_value.date_value, property_value.float_value)) as value
+from property_value, config_item, property, map_class_property, class
 where property_value.config_id = config_item.id
 and config_item.id = 1000
 and property_value.property_id = property.id
@@ -77,7 +78,8 @@ and map_class_property.class_id = class.id
 and class.id = 1
 
 -- select the linux server properties and their values for the config item bashful --
-select property.name, property_value.str_value from property_value, config_item, property, map_class_property, class
+select property.name, property.tab, ifnull(property_value.str_value, ifnull(property_value.date_value, property_value.float_value)) as value
+from property_value, config_item, property, map_class_property, class
 where property_value.config_id = config_item.id
 and config_item.id = 1000
 and property_value.property_id = property.id

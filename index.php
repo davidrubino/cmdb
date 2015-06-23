@@ -20,7 +20,10 @@
 
 		<div class="container">
 			<div class="jumbotron">
-				<h1>Hello, world!</h1>
+				<h1>Welcome!</h1>
+				<p>
+					<a href="login.php">Sign in</a> to get started!
+				</p>
 			</div>
 		</div>
 
@@ -32,6 +35,5 @@
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="menu.js"></script>
 
-	</body>
 	</body>
 </html>

@@ -24,6 +24,7 @@ function createTables($conn) {
 		id int NOT NULL,
 		name varchar(255),
 		value_type varchar(255),
+		tab varchar(255),
 		PRIMARY KEY (id)
 		);
 		
@@ -86,6 +87,14 @@ function createTables($conn) {
 		PRIMARY KEY (mapDepApp_id),
 		FOREIGN KEY (department_id) REFERENCES Department(department_id),
 		FOREIGN KEY (application_id) REFERENCES Application(application_id)
+		);
+		
+		CREATE TABLE User (
+		username varchar(255) NOT NULL,
+		password varchar(255) NOT NULL,
+		first_name varchar(255) NOT NULL,
+		last_name varchar(255) NOT NULL,
+		PRIMARY KEY (username)
 		);
 	";
 		// use exec() because no results are returned
@@ -353,44 +362,64 @@ function insertIntoProperty($conn) {
 	try {
 		$sql = "
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(100, 'hostname', 'string');
+		(100, 'hostname', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(104, 'fully qualified name', 'string');
+		(104, 'fully qualified name', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(105, 'ip address', 'string');
+		(105, 'ip address', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(106, 'type', 'string');
+		(106, 'type', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(107, 'manufacturing', 'string');
+		(107, 'manufacturing', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(108, 'serial number', 'string');
+		(108, 'serial number', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(109, 'version', 'string');
+		(109, 'version', 'string', 'general');
 		
 		INSERT INTO Property
-		(id, name, value_type)
+		(id, name, value_type, tab)
 		VALUES
-		(110, 'satellite host', 'string');
+		(110, 'satellite host', 'string', 'general');
+		
+		INSERT INTO Property
+		(id, name, value_type, tab)
+		VALUES
+		(111, 'cost', 'string', 'financial');
+		
+		INSERT INTO Property
+		(id, name, value_type, tab)
+		VALUES
+		(112, 'OS maintenance cost', 'string', 'financial');
+		
+		INSERT INTO Property
+		(id, name, value_type, tab)
+		VALUES
+		(113, 'administrator', 'string', 'labor');
+		
+		INSERT INTO Property
+		(id, name, value_type, tab)
+		VALUES
+		(114, 'number of developers', 'string', 'labor');
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Property";
@@ -436,12 +465,32 @@ function insertIntoMapClassProperty($conn) {
 		INSERT INTO Map_class_property
 		(id, class_id, prop_id)
 		VALUES
+		(10008, 1, 111);
+		
+		INSERT INTO Map_class_property
+		(id, class_id, prop_id)
+		VALUES
+		(10009, 1, 113);
+		
+		INSERT INTO Map_class_property
+		(id, class_id, prop_id)
+		VALUES
 		(11001, 11, 109);
 		
 		INSERT INTO Map_class_property
 		(id, class_id, prop_id)
 		VALUES
 		(11002, 11, 110);
+		
+		INSERT INTO Map_class_property
+		(id, class_id, prop_id)
+		VALUES
+		(11003, 11, 112);
+		
+		INSERT INTO Map_class_property
+		(id, class_id, prop_id)
+		VALUES
+		(11004, 11, 114);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Map_class_property";
@@ -523,6 +572,26 @@ function insertIntoPropertyValue($conn) {
 			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
 			(23, 110, 1000, 'doc', NULL, NULL);
+			
+			INSERT INTO Property_value
+			(id, property_id, config_id, str_value, date_value, float_value)
+			VALUES
+			(24, 111, 1000, '$790', NULL, NULL);
+			
+			INSERT INTO Property_value
+			(id, property_id, config_id, str_value, date_value, float_value)
+			VALUES
+			(25, 112, 1000, '$200/month', NULL, NULL);
+			
+			INSERT INTO Property_value
+			(id, property_id, config_id, str_value, date_value, float_value)
+			VALUES
+			(26, 113, 1000, 'Mike Johnson', NULL, NULL);
+			
+			INSERT INTO Property_value
+			(id, property_id, config_id, str_value, date_value, float_value)
+			VALUES
+			(27, 114, 1000, '3', NULL, NULL);
 			";
 		$conn -> exec($sql);
 		echo "Values inserted into Property_value";

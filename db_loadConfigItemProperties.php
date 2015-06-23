@@ -9,7 +9,8 @@ function retrieveProperties($conn) {
 	$parent_id = $_POST['parent_id'];
 
 	try {
-		$sql = 'select property.name, property_value.str_value
+		$sql = 'select property.name, property.tab,
+		ifnull(property_value.str_value, ifnull(property_value.date_value, property_value.float_value)) as value
 		from property_value, config_item, property, map_class_property, class
 		where property_value.config_id = config_item.id
 		and config_item.id = :id

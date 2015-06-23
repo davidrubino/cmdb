@@ -29,17 +29,29 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form" role="search">
+		                <div class="input-group">
+		                    <input type="text" class="form-control" placeholder="Search" name="q">
+		                    <div class="input-group-btn">
+		                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+		                    </div>
+		                </div>
+	            	</form>
+				</li>
 				<li class="dropdown">
 					<span class="glyphicon glyphicon-menu-hamburger glyphicon-large" data-toggle="dropdown" role="button" aria-expanded="false" aria-hidden="true"></span>
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							Account information</a>
+							<a href="#">Account information</a>
 						</li>
 						<li>
-							Open configuration</a>
+							<a href="#">Open configuration</a>
 						</li>
 						<li>
-							Sign out</a>
+							<a href="#">Snapshot database</a>
+						<li>
+							<a href="#">Sign out</a>
 						</li>
 					</ul>
 				</li>

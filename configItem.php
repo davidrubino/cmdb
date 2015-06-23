@@ -38,26 +38,50 @@
 
 					<div class="tab-content">
 						<div class="tab-pane active" id="general">
-							<h2 id="name"></h2>
+							<h2 class="name"></h2>
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h3 class="panel-title" id="class-title"></h3>
+									<h3 class="panel-title class-title"></h3>
 								</div>
-								<table class="table" id="class-panel"></table>
+								<table class="table" id="class-panel-general"></table>
 							</div>
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h3 class="panel-title" id="subclass-title"></h3>
+									<h3 class="panel-title subclass-title"></h3>
 								</div>
-								<table class="table" id="subclass-panel"></table>
+								<table class="table" id="subclass-panel-general"></table>
 							</div>
 						</div>
 
 						<div class="tab-pane" id="financial">
-							<h2>Financial</h2>
+							<h2 class="name"></h2>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title class-title"></h3>
+								</div>
+								<table class="table" id="class-panel-financial"></table>
+							</div>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title subclass-title"></h3>
+								</div>
+								<table class="table" id="subclass-panel-financial"></table>
+							</div>
 						</div>
 						<div class="tab-pane" id="labor">
-							<h2>Labor</h2>
+							<h2 class="name"></h2>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title class-title"></h3>
+								</div>
+								<table class="table" id="class-panel-labor"></table>
+							</div>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title subclass-title"></h3>
+								</div>
+								<table class="table" id="subclass-panel-labor"></table>
+							</div>
 						</div>
 					</div>
 				</div>
