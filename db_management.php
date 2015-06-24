@@ -90,12 +90,15 @@ function createTables($conn) {
 		);
 		
 		CREATE TABLE User (
-		username varchar(255) NOT NULL,
-		password varchar(255) NOT NULL,
-		first_name varchar(255) NOT NULL,
-		last_name varchar(255) NOT NULL,
-		PRIMARY KEY (username)
-		);
+		user_id INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		user_name VARCHAR(25) NOT NULL , 
+		user_email VARCHAR(50) NOT NULL , 
+		user_pass VARCHAR(60) NOT NULL , 
+		user_fname VARCHAR(60) NOT NULL, 
+		user_lname VARCHAR(60) NOT NULL, 
+		UNIQUE (user_name), 
+		UNIQUE (user_email)
+		); 
 	";
 		// use exec() because no results are returned
 		$conn -> exec($sql);
@@ -600,16 +603,4 @@ function insertIntoPropertyValue($conn) {
 		echo $sql . "<br>" . $e -> getMessage();
 	}
 }
-
-$conn = connect("localhost", "root", "america76", "test");
-//createTables($conn);
-//insertIntoApplication($conn);
-//insertIntoDepartment($conn);
-//insertIntoMapDepartmentApplication($conn);
-//insertIntoClass($conn);
-//insertIntoConfigItem($conn);
-//insertIntoProperty($conn);
-//insertIntoMapClassProperty($conn);
-//insertIntoPropertyValue($conn);
-closeConnection($conn);
 ?>

@@ -46,7 +46,5 @@ function retrieveValues($conn) {
 	}
 }
 
-$conn = connect("localhost", "root", "america76", "test");
-retrieveValues($conn);
-closeConnection($conn);
+retrieveValues($DB_con);
 ?>

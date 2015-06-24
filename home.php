@@ -22,7 +22,7 @@
 			<div class="jumbotron">
 				<h1>Welcome!</h1>
 				<p>
-					<a href="login.php">Sign in</a> to get started!
+					<a href="login.php">Log in</a> or <a href="sign-up.php">Sign Up</a> to get started!
 				</p>
 			</div>
 		</div>

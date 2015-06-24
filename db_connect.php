@@ -1,20 +1,20 @@
 <?php
 
-function connect($servername, $username, $password, $dbname) {
-	$conn = null;
-	try {
-		$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch(PDOException $e) {
-		echo "Connection failed: " . $e -> getMessage();
-	}
-	return $conn;
+session_start();
+
+$DB_host = "localhost";
+$DB_user = "root";
+$DB_pass = "america76";
+$DB_name = "test";
+
+try {
+	$DB_con = new PDO("mysql:host={$DB_host};dbname={$DB_name}", $DB_user, $DB_pass);
+	$DB_con -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$DB_con -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+	echo $e -> getMessage();
 }
 
-function closeConnection($conn) {
-	$conn = null;
-	return $conn;
-}
-
+include_once 'user.php';
+$user = new USER($DB_con);
 ?>

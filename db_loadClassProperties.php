@@ -28,7 +28,5 @@ function retrieveProperties($conn) {
 	}
 }
 
-$conn = connect("localhost", "root", "america76", "test");
-retrieveProperties($conn);
-closeConnection($conn);
+retrieveProperties($DB_con);
 ?>
