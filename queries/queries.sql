@@ -86,3 +86,13 @@ and property_value.property_id = property.id
 and property.id = map_class_property.prop_id
 and map_class_property.class_id = class.id
 and class.id = 11
+
+-- select the user properties for david --
+select user_name, user_email, user_fname, user_lname, isAdmin
+from user
+where user_id = 1;
+
+-- update the password for david --
+update user
+set user_pass = 'rissy'
+where user_name = 'david';

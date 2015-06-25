@@ -6,18 +6,19 @@ class USER {
 		$this -> db = $DB_con;
 	}
 
-	public function register($fname, $lname, $uname, $umail, $upass) {
+	public function register($fname, $lname, $uname, $umail, $upass, $isAdmin) {
 		try {
 			$new_password = password_hash($upass, PASSWORD_DEFAULT);
 
-			$stmt = $this -> db -> prepare("INSERT INTO user(user_name,user_email,user_pass, user_fname, user_lname) 
-                                                       VALUES(:uname, :umail, :upass, :fname, :lname)");
+			$stmt = $this -> db -> prepare("INSERT INTO user(user_name,user_email,user_pass, user_fname, user_lname, isAdmin) 
+                                                       VALUES(:uname, :umail, :upass, :fname, :lname, :isAdmin)");
 
 			$stmt -> bindparam(":uname", $uname);
 			$stmt -> bindparam(":umail", $umail);
 			$stmt -> bindparam(":upass", $new_password);
 			$stmt -> bindparam(":fname", $fname);
 			$stmt -> bindparam(":lname", $lname);
+			$stmt -> bindparam(":isAdmin", $isAdmin);
 			$stmt -> execute();
 
 			return $stmt;
@@ -39,6 +40,19 @@ class USER {
 					return false;
 				}
 			}
+		} catch(PDOException $e) {
+			echo $e -> getMessage();
+		}
+	}
+
+	public function changePassword($uname, $upass) {
+		try {
+			$new_password = password_hash($upass, PASSWORD_DEFAULT);
+			$stmt = $this -> db -> prepare("update user set user_pass = :upass where user_name = :uname;");
+			$stmt -> bindparam(":uname", $uname);
+			$stmt -> bindparam(":upass", $new_password);
+			$stmt -> execute();
+			return $stmt;
 		} catch(PDOException $e) {
 			echo $e -> getMessage();
 		}

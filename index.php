@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Human Resources</title>
+		<title>Welcome!</title>
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
@@ -20,7 +20,10 @@
 
 		<div class="container">
 			<div class="jumbotron">
-				<h1>Human Resources</h1>
+				<h1>Welcome!</h1>
+				<p>
+					<a href="login.php">Log in</a> or <a href="sign-up.php">Sign Up</a> to get started!
+				</p>
 			</div>
 		</div>
 
@@ -28,9 +31,9 @@
 		include 'footer.php';
 		?>
 
-		<script src="jquery/jquery-1.11.3.js" type="text/javascript"></script>
-		<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="menu.js" type="text/javascript"></script>
+		<script src="jquery/jquery-1.11.3.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="menu.js"></script>
 
 	</body>
 </html>

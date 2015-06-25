@@ -1,14 +1,5 @@
 <?php
 
-/*include_once 'db_connect.php';
-if (!$user -> is_loggedin()) {
-	$user -> redirect('login.php');
-}
-$user_id = $_SESSION['user_session'];
-$stmt = $DB_con -> prepare("SELECT * FROM user WHERE user_id=:user_id");
-$stmt -> execute(array(":user_id" => $user_id));
-$userRow = $stmt -> fetch(PDO::FETCH_ASSOC);*/
-
 echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -49,14 +40,11 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 		                </div>
 	            	</form>
 				</li>
-				<li>
-					<h4><span class="label label-success label-large">David</span></h4>
-				</li>
 				<li class="dropdown">
 					<span class="glyphicon glyphicon-menu-hamburger glyphicon-large" data-toggle="dropdown" role="button" aria-expanded="false" aria-hidden="true"></span>
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<a href="#">Account information</a>
+							<a href="accountInfo.php">Account information</a>
 						</li>
 						<li>
 							<a href="#">Open configuration</a>

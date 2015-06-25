@@ -1,3 +1,14 @@
+<?php
+include_once 'db_connect.php';
+if (!$user -> is_loggedin()) {
+	$user -> redirect('login.php');
+}
+$user_id = $_SESSION['user_session'];
+$stmt = $DB_con -> prepare("SELECT * FROM user WHERE user_id=:user_id");
+$stmt -> execute(array(":user_id" => $user_id));
+$userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>

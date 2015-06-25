@@ -95,7 +95,8 @@ function createTables($conn) {
 		user_email VARCHAR(50) NOT NULL , 
 		user_pass VARCHAR(60) NOT NULL , 
 		user_fname VARCHAR(60) NOT NULL, 
-		user_lname VARCHAR(60) NOT NULL, 
+		user_lname VARCHAR(60) NOT NULL,
+		isAdmin BOOLEAN NOT NULL,
 		UNIQUE (user_name), 
 		UNIQUE (user_email)
 		); 

@@ -13,6 +13,8 @@ if (isset($_POST['btn-signup'])) {
 	$upass_check = trim($_POST['txt_upass_check']);
 	$fname = trim($_POST['txt_fname']);
 	$lname = trim($_POST['txt_lname']);
+	$isAdminValue = trim($_POST['select_isAdmin']);
+	$isAdmin = filter_var($isAdminValue, FILTER_VALIDATE_BOOLEAN);
 
 	if ($uname == "") {
 		$error[] = "Please provide a username!";
@@ -41,7 +43,7 @@ if (isset($_POST['btn-signup'])) {
 			} else if ($row['user_email'] == $umail) {
 				$error[] = "Email already taken!";
 			} else {
-				if ($user -> register($fname, $lname, $uname, $umail, $upass)) {
+				if ($user -> register($fname, $lname, $uname, $umail, $upass, $isAdmin)) {
 					$user -> redirect('home.php');
 				}
 			}
@@ -83,24 +85,14 @@ if (isset($_POST['btn-signup'])) {
 					<div style="padding-top:30px" class="panel-body" >
 
 						<?php
-if(isset($error))
-{
-foreach($error as $error)
-{
+if(isset($error)) {
+foreach($error as $error) {
 						?>
 						<div class="alert alert-danger">
 							<i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
 						</div>
 						<?php
 						}
-						}
-						else if(isset($_GET['joined']))
-						{
-						?>
-						<div class="alert alert-info">
-							<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered
-						</div>
-						<?php
 						}
 						?>
 
@@ -116,7 +108,7 @@ foreach($error as $error)
 
 							<div style="margin-bottom: 25px" class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								<input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail ID" value="<?php
+								<input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail" value="<?php
 								if (isset($error)) {echo $umail;
 								}
 								?>" />
@@ -146,6 +138,14 @@ foreach($error as $error)
 								if (isset($error)) {echo $lname;
 								}
 								?>" />
+							</div>
+
+							<div style="margin-bottom: 25px" class="input-group">
+								<span class="input-group-addon">Admin?</span>
+								<select class="form-control" name="select_isAdmin">
+									<option value="true">True</option>
+									<option value="false">False</option>
+								</select>
 							</div>
 
 							<div style="margin-top:10px" class="form-group">
