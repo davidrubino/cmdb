@@ -143,8 +143,8 @@ foreach($error as $error) {
 							<div style="margin-bottom: 25px" class="input-group">
 								<span class="input-group-addon">Admin?</span>
 								<select class="form-control" name="select_isAdmin">
-									<option value="true">True</option>
-									<option value="false">False</option>
+									<option value="true">Yes</option>
+									<option value="false">No</option>
 								</select>
 							</div>
 

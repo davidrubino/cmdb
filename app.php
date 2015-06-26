@@ -1,3 +1,14 @@
+<?php
+
+include 'db_connect.php';
+
+if (!$user -> is_loggedin()) {
+	$user -> redirect('login.php');
+}
+
+$user_id = $_SESSION['user_session'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>

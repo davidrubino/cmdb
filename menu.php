@@ -41,7 +41,9 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 	            	</form>
 				</li>
 				<li class="dropdown">
-					<span class="glyphicon glyphicon-menu-hamburger glyphicon-large" data-toggle="dropdown" role="button" aria-expanded="false" aria-hidden="true"></span>
+					<a data-toggle="dropdown" href="#">Settings
+          				<span class="caret"></span>
+          			</a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<a href="accountInfo.php">Account information</a>
