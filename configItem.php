@@ -10,6 +10,11 @@ $user_id = $_SESSION['user_session'];
 $stmt = $DB_con -> prepare("SELECT * FROM user WHERE user_id=:user_id");
 $stmt -> execute(array(":user_id" => $user_id));
 $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
+
+$permission = $userRow['isAdmin'];
+if ($permission == 1) {
+	$user -> redirect('configItem_admin.php');
+}
 ?>
 
 <!DOCTYPE html>

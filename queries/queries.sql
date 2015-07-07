@@ -96,3 +96,9 @@ where user_id = 1;
 update user
 set user_pass = 'rissy'
 where user_name = 'david';
+
+-- update the fully qualified name for bashful --
+update property_value, property
+set str_value = 'bashful.walmart.com'
+where property_value.property_id = property.id
+and property.name = 'fully qualified name';
