@@ -74,11 +74,10 @@ if (isset($_POST['btn-save'])) {
                   <div class="alert alert-danger">
                      <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
                   </div>
-                  <?php
-				}
-				}
-				else if(isset($_GET['updated']))
-				{
+                  <?php }
+					}
+					else if(isset($_GET['updated']))
+					{
 				 ?>
                  <div class="alert alert-info">
                       <i class="glyphicon glyphicon-log-in"></i> &nbsp; Your password has been updated!

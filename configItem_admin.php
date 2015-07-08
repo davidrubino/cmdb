@@ -2,7 +2,7 @@
 
 include_once 'db_connect.php';
 
-function updateDB($conn, $value, $name) {
+function updateDB($conn, $value, $name, $conf_id) {
 
 	try {
 		$sql = 'update property_value, property
@@ -10,9 +10,10 @@ function updateDB($conn, $value, $name) {
 			property_value.date_value = if(property_value.date_value is null, null, :value2),
 			property_value.float_value = if(property_value.float_value is null, null, :value3)
 		where property_value.property_id = property.id
+		and property_value.config_id = :conf_id
 		and property.name = :name';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':value1' => $value, ':value2' => $value, ':value3' => $value, ':name' => $name));
+		$stmt -> execute(array(':value1' => $value, ':value2' => $value, ':value3' => $value, ':name' => $name, ':conf_id' => $conf_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 	} catch(PDOException $e) {
@@ -35,9 +36,66 @@ if ($permission == 0) {
 }
 
 if (isset($_POST['general-btn-save'])) {
-	$value = "bashful.walmart.com";
-	$name = "fully qualified name";
-	updateDB($DB_con, $value, $name);
+	if (isset($_POST['generalA'])) {
+		for ($i = 0; $i < count($_POST['generalA']); $i++) {
+			$conf_id = key($_POST['generalA'][$i]);
+			$name = key($_POST['generalA'][$i][$conf_id]);
+			$value = current($_POST['generalA'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+
+	if (isset($_POST['generalB'])) {
+		for ($i = 0; $i < count($generalB); $i++) {
+			$conf_id = key($_POST['generalB'][$i]);
+			$name = key($_POST['generalB'][$i][$conf_id]);
+			$value = current($_POST['generalB'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+	$user -> redirect('configItem_admin.php#general');
+}
+
+if (isset($_POST['financial-btn-save'])) {
+	if (isset($_POST['financialA'])) {
+		for ($i = 0; $i < count($_POST['financialA']); $i++) {
+			$conf_id = key($_POST['financialA'][$i]);
+			$name = key($_POST['financialA'][$i][$conf_id]);
+			$value = current($_POST['financialA'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+
+	if (isset($_POST['financialB'])) {
+		for ($i = 0; $i < count($_POST['financialB']); $i++) {
+			$conf_id = key($_POST['financialB'][$i]);
+			$name = key($_POST['financialB'][$i][$conf_id]);
+			$value = current($_POST['financialB'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+	$user -> redirect('configItem_admin.php#financial');
+}
+
+if (isset($_POST['labor-btn-save'])) {
+	if (isset($_POST['laborA'])) {
+		for ($i = 0; $i < count($_POST['laborA']); $i++) {
+			$conf_id = key($_POST['laborA'][$i]);
+			$name = key($_POST['laborA'][$i][$conf_id]);
+			$value = current($_POST['laborA'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+
+	if (isset($_POST['laborB'])) {
+		for ($i = 0; $i < count($_POST['laborB']); $i++) {
+			$conf_id = key($_POST['laborB'][$i]);
+			$name = key($_POST['laborB'][$i][$conf_id]);
+			$value = current($_POST['laborB'][$i][$conf_id]);
+			updateDB($DB_con, $value, $name, $conf_id);
+		}
+	}
+	$user -> redirect('configItem_admin.php#labor');
 }
 ?>
 
@@ -69,7 +127,7 @@ if (isset($_POST['general-btn-save'])) {
 				<div class="tabbable">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#general" data-toggle="tab">General</a>
+							<a class="active" href="#general" data-toggle="tab">General</a>
 						</li>
 						<li>
 							<a href="#financial" data-toggle="tab">Financial</a>

@@ -94,13 +94,13 @@ $(function() {
 				var htmlResult_labor = new Array();
 				for (var i = 0; i < data.length; i++) {
 					if (data[i].tab == 'general') {
-						htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input value="' + data[i].value + '"></td></tr>');
+						htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input name="generalA[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 					if (data[i].tab == 'financial') {
-						htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input value="' + data[i].value + '"></td></tr>');
+						htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input name="financialA[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 					if (data[i].tab == 'labor') {
-						htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input value="' + data[i].value + '"></td></tr>');
+						htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input name="laborA[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 				}
 				$("#class-panel-general").html(htmlResult_general);
@@ -119,13 +119,13 @@ $(function() {
 				var htmlResult_labor = new Array();
 				for (var i = 0; i < data.length; i++) {
 					if (data[i].tab == 'general') {
-						htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input name="general[' + i + ']" value="' + data[i].value + '"></td></tr>');
+						htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input name="generalB[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 					if (data[i].tab == 'financial') {
-						htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input name="financial[' + i + ']" value="' + data[i].value + '"></td></tr>');
+						htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input name="financialB[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 					if (data[i].tab == 'labor') {
-						htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input name="labor[' + i + ']" value="' + data[i].value + '"></td></tr>');
+						htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input name="laborB[' + i + '][' + id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
 					}
 				}
 				$("#subclass-panel-general").html(htmlResult_general);

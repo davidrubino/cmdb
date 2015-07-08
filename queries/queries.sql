@@ -99,6 +99,9 @@ where user_name = 'david';
 
 -- update the fully qualified name for bashful --
 update property_value, property
-set str_value = 'bashful.walmart.com'
+set property_value.str_value = if(property_value.str_value is null, null, 'bashful'),
+	property_value.date_value = if(property_value.date_value is null, null, 'bashful'),
+	property_value.float_value = if(property_value.float_value is null, null, 'bashful')
 where property_value.property_id = property.id
-and property.name = 'fully qualified name';
+and property_value.config_id = 1000
+and property.name = 'hostname';
