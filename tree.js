@@ -33,7 +33,7 @@ $(function() {
 
 		$.ajax({
 			type : "POST",
-			url : "db_loadClassProperties.php",
+			url : "db_loadClassValues.php",
 			data : "id=" + id + "&grandparent_id=" + grandparent_id,
 			success : function(data) {
 				var htmlResult_general = new Array();
@@ -58,7 +58,7 @@ $(function() {
 
 		$.ajax({
 			type : "POST",
-			url : "db_loadConfigItemProperties.php",
+			url : "db_loadSubClassValues.php",
 			data : "id=" + id + "&parent_id=" + parent_id,
 			success : function(data) {
 				var htmlResult_general = new Array();
@@ -87,4 +87,4 @@ $(function() {
 			core.check_callback(false);
 		}
 	});
-});
+}); 

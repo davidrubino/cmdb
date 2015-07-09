@@ -16,3 +16,7 @@ body {
 	min-height: 30px;
 	line-height: 30px;
 }
+
+.highlight {
+	background-color: #999999;
+}

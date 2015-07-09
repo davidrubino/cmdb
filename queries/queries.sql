@@ -87,6 +87,20 @@ and property.id = map_class_property.prop_id
 and map_class_property.class_id = class.id
 and class.id = 11
 
+-- select the properties and their types for the class Server --
+select property.name, property.tab, property.value_type
+from property, map_class_property, class
+where property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 1
+
+-- select the properties and their types for the class Linux --
+select property.name, property.tab, property.value_type
+from property, map_class_property, class
+where property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 11
+
 -- select the user properties for david --
 select user_name, user_email, user_fname, user_lname, isAdmin
 from user
