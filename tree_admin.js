@@ -78,7 +78,7 @@ $(function() {
 		"plugins" : ["contextmenu", "massload", "search", "sort", "state", "types", "unique", "wholerow", "themes", "json_data", "ui"]
 
 	}).on('select_node.jstree', function(e, data) {
-		
+
 		var path = $("#tree").jstree(true).get_path(data.node, ":");
 		var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
 		var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
@@ -87,9 +87,11 @@ $(function() {
 		$('.subclass-title').html(grandparent_name + ':' + parent_name);
 
 		if (data.node.type == "file") {
-			$(".tabbable").show();
-			$(".subclass-panel").show();
 			$(".class-panel").show();
+			$(".subclass-panel").show();
+			$(".tabbable").show();
+			$(".btn-group-file").show();
+			$(".controls").hide();
 
 			var id = data.node.id;
 			var parent_id = data.node.parent;
@@ -147,9 +149,11 @@ $(function() {
 		}
 
 		if (data.node.type == "subfolder") {
-			$(".tabbable").show();
-			$(".subclass-panel").show();
 			$(".class-panel").hide();
+			$(".btn-group-file").hide();
+			$(".controls").show();
+			$(".subclass-panel").show();
+			$(".tabbable").show();
 
 			var class_id = data.node.id;
 
@@ -180,9 +184,11 @@ $(function() {
 		}
 
 		if (data.node.type == "folder") {
-			$(".tabbable").show();
 			$(".subclass-panel").hide();
+			$(".btn-group-file").hide();
+			$(".controls").show();
 			$(".class-panel").show();
+			$(".tabbable").show();
 
 			var class_id = data.node.id;
 
@@ -211,7 +217,7 @@ $(function() {
 				}
 			});
 		}
-		
+
 		if (data.node.type == "default") {
 			$(".tabbable").hide();
 		}
@@ -220,5 +226,136 @@ $(function() {
 		if (data.node.parent == '#') {
 			core.check_callback(false);
 		}
+	});
+});
+
+$(document).ready(function() {
+	$("#form-general").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadGeneral.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+
+	$("#form-financial").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadFinancial.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+
+	$("#form-labor").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadLabor.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+
+	$("#add-general-class-toggler").click(function(e) {
+		e.preventDefault();
+		$('#class-panel-general').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#add-general-subclass-toggler").click(function(e) {
+		e.preventDefault();
+		$('#subclass-panel-general').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#add-financial-class-toggler").click(function(e) {
+		e.preventDefault();
+		$('#class-panel-financial').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#add-financial-subclass-toggler").click(function(e) {
+		e.preventDefault();
+		$('#subclass-panel-financial').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#add-labor-class-toggler").click(function(e) {
+		e.preventDefault();
+		$('#class-panel-labor').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#add-labor-subclass-toggler").click(function(e) {
+		e.preventDefault();
+		$('#subclass-panel-labor').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-general-class-toggler").click(function(e) {
+		$('.highlight-general').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-general-subclass-toggler").click(function(e) {
+		$('.highlight-general').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-financial-class-toggler").click(function(e) {
+		$('.highlight-financial').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-financial-subclass-toggler").click(function(e) {
+		$('.highlight-financial').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-labor-class-toggler").click(function(e) {
+		$('.highlight-labor').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$("#rm-labor-subclass-toggler").click(function(e) {
+		$('.highlight-labor').remove();
+		$('.btn-group').slideDown(0);
+	});
+
+	$('#class-panel-general').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
+	});
+
+	$('#subclass-panel-general').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
+	});
+
+	$('#class-panel-financial').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
+	});
+
+	$('#subclass-panel-financial').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
+	});
+
+	$('#class-panel-labor').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
+	});
+
+	$('#subclass-panel-labor').on('click', 'tr', function(event) {
+		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
 	});
 });

@@ -69,54 +69,94 @@ if ($permission == 0) {
 									<div class="table-responsive">
 										<table class="table" id="class-panel-general"></table>
 									</div>
-									<a href="#" id="add-toggler"><img src="img/add-icon.png"></a>
-									<a href="#" id="rm-toggler"><img src="img/remove-icon.png"></a>
+									<div class="controls">
+										<a href="#" id="add-general-class-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-general-class-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
 
 								<div class="panel panel-primary subclass-panel">
 									<div class="panel-heading">
 										<h3 class="panel-title subclass-title"></h3>
 									</div>
-									<table class="table" id="subclass-panel-general"></table>
+									<div class="table-responsive">
+										<table class="table" id="subclass-panel-general"></table>
+									</div>
+									<div class="controls">
+										<a href="#" id="add-general-subclass-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-general-subclass-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
 
 								<div class="btn-group" style="display:none">
 									<div class="col-sm-12 controls">
-										<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
-											Save settings
+										<button type="submit" class="btn btn-large btn-primary">
+											Save
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
 								</div>
+
+								<div class="btn-group-file">
+									<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
+										Save settings
+									</button>
+									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+									</input>
+								</div>
+
 							</form>
 						</div>
 
 						<div class="tab-pane" id="financial">
 							<form class="form-horizontal" id="form-financial" role="form" method="post">
 								<h2 class="name"></h2>
+
 								<div class="panel panel-primary class-panel">
 									<div class="panel-heading">
 										<h3 class="panel-title class-title"></h3>
 									</div>
-									<table class="table" id="class-panel-financial"></table>
+									<div class="table-responsive">
+										<table class="table" id="class-panel-financial"></table>
+									</div>
+									<div class="controls">
+										<a href="#" id="add-financial-class-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-financial-class-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
+
 								<div class="panel panel-primary subclass-panel">
 									<div class="panel-heading">
 										<h3 class="panel-title subclass-title"></h3>
 									</div>
-									<table class="table" id="subclass-panel-financial"></table>
+									<div class="table-responsive">
+										<table class="table" id="subclass-panel-financial"></table>
+									</div>
+									<div class="controls">
+										<a href="#" id="add-financial-subclass-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-financial-subclass-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
 
-								<div class="btn-group">
+								<div class="btn-group" style="display:none">
 									<div class="col-sm-12 controls">
-										<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
-											Save settings
+										<button type="submit" class="btn btn-large btn-primary">
+											Save
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
 								</div>
+
+								<div class="btn-group-file">
+									<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
+										Save settings
+									</button>
+									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+									</input>
+								</div>
+
 							</form>
 						</div>
 
@@ -128,24 +168,46 @@ if ($permission == 0) {
 									<div class="panel-heading">
 										<h3 class="panel-title class-title"></h3>
 									</div>
-									<table class="table" id="class-panel-labor"></table>
+									<div class="table-responsive">
+										<table class="table" id="class-panel-labor"></table>
+									</div>
+									<div class="controls">
+										<a href="#" id="add-labor-class-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-labor-class-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
+
 								<div class="panel panel-primary subclass-panel">
 									<div class="panel-heading">
 										<h3 class="panel-title subclass-title"></h3>
 									</div>
-									<table class="table" id="subclass-panel-labor"></table>
+									<div class="table-responsive">
+										<table class="table" id="subclass-panel-labor"></table>
+									</div>
+									<div class="controls">
+										<a href="#" id="add-labor-subclass-toggler"><img src="img/add-icon.png"></a>
+										<a href="#" id="rm-labor-subclass-toggler"><img src="img/remove-icon.png"></a>
+									</div>
 								</div>
 
-								<div class="btn-group">
+								<div class="btn-group" style="display:none">
 									<div class="col-sm-12 controls">
-										<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
-											Save settings
+										<button type="submit" class="btn btn-large btn-primary">
+											Save
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
 								</div>
+
+								<div class="btn-group-file">
+									<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
+										Save settings
+									</button>
+									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+									</input>
+								</div>
+
 							</form>
 						</div>
 
@@ -163,62 +225,6 @@ if ($permission == 0) {
 		<script src="dist/jstree.min.js"></script>
 		<script src="tree_admin.js"></script>
 		<script src="menu.js"></script>
-		<script>
-			$(document).ready(function() {
-				$("#form-general").on('submit', function(event) {
-					event.preventDefault();
-					data = $(this).serialize();
-
-					$.ajax({
-						type : "GET",
-						url : "db_uploadGeneral.php",
-						data : data
-					}).done(function(msg) {
-						alert("Update successful!");
-					});
-				});
-
-				$("#form-financial").on('submit', function(event) {
-					event.preventDefault();
-					data = $(this).serialize();
-
-					$.ajax({
-						type : "GET",
-						url : "db_uploadFinancial.php",
-						data : data
-					}).done(function(msg) {
-						alert("Update successful!");
-					});
-				});
-
-				$("#form-labor").on('submit', function(event) {
-					event.preventDefault();
-					data = $(this).serialize();
-
-					$.ajax({
-						type : "GET",
-						url : "db_uploadLabor.php",
-						data : data
-					}).done(function(msg) {
-						alert("Update successful!");
-					});
-				});
-
-				$("#add-toggler").click(function(e) {
-					e.preventDefault();
-					$('#class-panel-general').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-					$('.btn-group').toggle();
-				});
-
-				$("#rm-toggler").click(function(e) {
-					$('.highlight').remove();
-				});
-
-				$('#class-panel-general').on('click', 'tr', function(event) {
-					$(this).addClass('highlight').siblings().removeClass('highlight');
-				});
-			});
-		</script>
 
 	</body>
 </html>

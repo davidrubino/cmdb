@@ -17,6 +17,14 @@ body {
 	line-height: 30px;
 }
 
-.highlight {
-	background-color: #999999;
+.highlight-general {
+	background-color: #D5D5D5;
+}
+
+.highlight-financial {
+	background-color: #D5D5D5;
+}
+
+.highlight-labor {
+	background-color: #D5D5D5;
 }
