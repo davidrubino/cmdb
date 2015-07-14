@@ -87,6 +87,7 @@ $(function() {
 		$('.subclass-title').html(grandparent_name + ':' + parent_name);
 
 		if (data.node.type == "file") {
+			$(".tabbable").show();
 			$("#fileData_general").show();
 			$("#fileData_financial").show();
 			$("#fileData_labor").show();
@@ -98,12 +99,6 @@ $(function() {
 			$("#folderData_general").hide();
 			$("#folderData_financial").hide();
 			$("#folderData_labor").hide();
-			
-			/*$(".class-panel").show();
-			$(".subclass-panel").show();
-			$(".tabbable").show();
-			$(".btn-group-file").show();
-			$(".controls").hide();*/
 
 			var id = data.node.id;
 			var parent_id = data.node.parent;
@@ -161,6 +156,7 @@ $(function() {
 		}
 
 		if (data.node.type == "subfolder") {
+			$(".tabbable").show();
 			$("#subfolderData_general").show();
 			$("#subfolderData_financial").show();
 			$("#subfolderData_labor").show();
@@ -172,12 +168,6 @@ $(function() {
 			$("#folderData_general").hide();
 			$("#folderData_financial").hide();
 			$("#folderData_labor").hide();
-			
-			/*$(".class-panel").hide();
-			$(".btn-group-file").hide();
-			$(".controls").show();
-			$(".subclass-panel").show();
-			$(".tabbable").show();*/
 
 			var class_id = data.node.id;
 
@@ -208,6 +198,7 @@ $(function() {
 		}
 
 		if (data.node.type == "folder") {
+			$(".tabbable").show();
 			$("#folderData_general").show();
 			$("#folderData_financial").show();
 			$("#folderData_labor").show();
@@ -219,12 +210,6 @@ $(function() {
 			$("#subfolderData_general").hide();
 			$("#subfolderData_financial").hide();
 			$("#subfolderData_labor").hide();
-			
-			/*$(".subclass-panel").hide();
-			$(".btn-group-file").hide();
-			$(".controls").show();
-			$(".class-panel").show();
-			$(".tabbable").show();*/
 
 			var class_id = data.node.id;
 
@@ -278,6 +263,32 @@ $(document).ready(function() {
 			alert("Update successful!");
 		});
 	});
+	
+	$("#form-general-subclass").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadGeneralSubclass.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+	
+	$("#form-general-class").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadGeneralClass.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
 
 	$("#form-financial").on('submit', function(event) {
 		event.preventDefault();
@@ -286,6 +297,32 @@ $(document).ready(function() {
 		$.ajax({
 			type : "GET",
 			url : "db_uploadFinancial.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+	
+	$("#form-financial-subclass").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadFinancialSubclass.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+	
+	$("#form-financial-class").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadFinancialClass.php",
 			data : data
 		}).done(function(msg) {
 			alert("Update successful!");
@@ -304,40 +341,66 @@ $(document).ready(function() {
 			alert("Update successful!");
 		});
 	});
+	
+	$("#form-labor-subclass").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadLaborSubclass.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
+	
+	$("#form-labor-class").on('submit', function(event) {
+		event.preventDefault();
+		data = $(this).serialize();
+
+		$.ajax({
+			type : "GET",
+			url : "db_uploadLaborClass.php",
+			data : data
+		}).done(function(msg) {
+			alert("Update successful!");
+		});
+	});
 
 	$("#add-general-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-general-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-general-data').append('<tr><td><input name="general-class" value="my data"></td><td><select class="form-control" name="select-general-class" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-general').slideDown(0);
 	});
 
 	$("#add-general-subclass-toggler").click(function(e) {
 		e.preventDefault();
-		$('#subclass-panel-general-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#subclass-panel-general-data').append('<tr><td><input name="general-subclass" value="my data"></td><td><select class="form-control" name="select-general-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-subfolder-general').slideDown(0);
 	});
 
 	$("#add-financial-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-financial-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-financial-data').append('<tr><td><input name="financial-class" value="my data"></td><td><select class="form-control" name="select-financial-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-financial').slideDown(0);
 	});
 
 	$("#add-financial-subclass-toggler").click(function(e) {
 		e.preventDefault();
-		$('#subclass-panel-financial-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#subclass-panel-financial-data').append('<tr><td><input name="financial-subclass" value="my data"></td><td><select class="form-control" name="select-financial-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-subfolder-financial').slideDown(0);
 	});
 
 	$("#add-labor-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-labor-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-labor-data').append('<tr><td><input name="labor-class" value="my data"></td><td><select class="form-control" name="select-labor-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-labor').slideDown(0);
 	});
 
 	$("#add-labor-subclass-toggler").click(function(e) {
 		e.preventDefault();
-		$('#subclass-panel-labor-data').append('<tr><td><input value="my data"></td><td><select class="form-control" name="select-value"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#subclass-panel-labor-data').append('<tr><td><input name="labor-subclass" value="my data"></td><td><select class="form-control" name="select-labor-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-subfolder-labor').slideDown(0);
 	});
 

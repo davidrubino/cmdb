@@ -119,3 +119,8 @@ set property_value.str_value = if(property_value.str_value is null, null, 'bashf
 where property_value.property_id = property.id
 and property_value.config_id = 1000
 and property.name = 'hostname';
+
+-- select the name of the last property inserted into the table --
+select name from property
+order by id desc 
+limit 1;
