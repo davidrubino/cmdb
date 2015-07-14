@@ -5,6 +5,8 @@ include 'db_connect.php';
 header('Content-Type: application/json');
 
 function retrieveProperties($conn) {
+	//$id = 1;
+	//$grandparent_id = 1;
 	$id = $_POST['id'];
 	$grandparent_id = $_POST['grandparent_id'];
 
@@ -16,7 +18,8 @@ function retrieveProperties($conn) {
 		and config_item.id = :id
 		and property_value.property_id = property.id
 		and property.id = map_class_property.prop_id
-		and map_class_property.class_id = class.id and class.id = :grandparent_id';
+		and map_class_property.class_id = class.id
+		and class.id = :grandparent_id';
 
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':id' => $id, ':grandparent_id' => $grandparent_id));

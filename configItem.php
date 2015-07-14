@@ -62,13 +62,17 @@ if ($permission == 1) {
 								<div class="panel-heading">
 									<h3 class="panel-title class-title"></h3>
 								</div>
-								<table class="table" id="class-panel-general"></table>
+								<div class="table-responsive">
+									<table class="table" id="class-panel-general"></table>
+								</div>
 							</div>
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
-								<table class="table" id="subclass-panel-general"></table>
+								<div class="table-responsive">
+									<table class="table" id="subclass-panel-general"></table>
+								</div>
 							</div>
 						</div>
 
@@ -78,13 +82,17 @@ if ($permission == 1) {
 								<div class="panel-heading">
 									<h3 class="panel-title class-title"></h3>
 								</div>
-								<table class="table" id="class-panel-financial"></table>
+								<div class="table-responsive">
+									<table class="table" id="class-panel-financial"></table>
+								</div>
 							</div>
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
-								<table class="table" id="subclass-panel-financial"></table>
+								<div class="table-responsive">
+									<table class="table" id="subclass-panel-financial"></table>
+								</div>
 							</div>
 						</div>
 						<div class="tab-pane" id="labor">
@@ -93,13 +101,17 @@ if ($permission == 1) {
 								<div class="panel-heading">
 									<h3 class="panel-title class-title"></h3>
 								</div>
-								<table class="table" id="class-panel-labor"></table>
+								<div class="table-responsive">
+									<table class="table" id="class-panel-labor"></table>
+								</div>
 							</div>
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
-								<table class="table" id="subclass-panel-labor"></table>
+								<div class="table-responsive">
+									<table class="table" id="subclass-panel-labor"></table>
+								</div>
 							</div>
 						</div>
 					</div>

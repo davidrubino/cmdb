@@ -57,158 +57,285 @@ if ($permission == 0) {
 					</ul>
 
 					<div class="tab-content">
-
 						<div class="tab-pane active" id="general">
-							<form class="form-horizontal" id="form-general" role="form" method="post">
-								<h2 class="name"></h2>
 
-								<div class="panel panel-primary class-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title class-title"></h3>
-									</div>
-									<div class="table-responsive">
-										<table class="table" id="class-panel-general"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-general-class-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-general-class-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
+							<div id="fileData_general">
+								<form class="form-horizontal" id="form-general" role="form" method="post">
+									<h2 class="name"></h2>
 
-								<div class="panel panel-primary subclass-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title subclass-title"></h3>
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-general"></table>
+										</div>
 									</div>
-									<div class="table-responsive">
-										<table class="table" id="subclass-panel-general"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-general-subclass-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-general-subclass-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
 
-								<div class="btn-group" style="display:none">
-									<div class="col-sm-12 controls">
-										<button type="submit" class="btn btn-large btn-primary">
-											Save
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-general"></table>
+										</div>
+									</div>
+
+									<div class="btn-group-file">
+										<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
+											Save settings
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
-								</div>
+								</form>
+							</div>
 
-								<div class="btn-group-file">
-									<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
-										Save settings
-									</button>
-									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-									</input>
-								</div>
+							<div id="subfolderData_general">
+								<form class="form-horizontal" id="form-general-subclass" role="form" method="post">
+									<h2 class="name"></h2>
 
-							</form>
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-general-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-general-subclass-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-general-subclass-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-subfolder-general" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div id="folderData_general">
+								<form class="form-horizontal" id="form-general-class" role="form" method="post">
+									<h2 class="name"></h2>
+
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-general-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-general-class-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-general-class-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-folder-general" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
 
 						<div class="tab-pane" id="financial">
-							<form class="form-horizontal" id="form-financial" role="form" method="post">
-								<h2 class="name"></h2>
 
-								<div class="panel panel-primary class-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title class-title"></h3>
-									</div>
-									<div class="table-responsive">
-										<table class="table" id="class-panel-financial"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-financial-class-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-financial-class-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
+							<div id="fileData_financial">
+								<form class="form-horizontal" id="form-financial" role="form" method="post">
+									<h2 class="name"></h2>
 
-								<div class="panel panel-primary subclass-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title subclass-title"></h3>
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-financial"></table>
+										</div>
 									</div>
-									<div class="table-responsive">
-										<table class="table" id="subclass-panel-financial"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-financial-subclass-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-financial-subclass-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
 
-								<div class="btn-group" style="display:none">
-									<div class="col-sm-12 controls">
-										<button type="submit" class="btn btn-large btn-primary">
-											Save
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-financial"></table>
+										</div>
+									</div>
+
+									<div class="btn-group-file">
+										<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
+											Save settings
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
-								</div>
 
-								<div class="btn-group-file">
-									<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
-										Save settings
-									</button>
-									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-									</input>
-								</div>
+								</form>
+							</div>
 
-							</form>
+							<div id="subfolderData_financial">
+								<form class="form-horizontal" id="form-financial-subclass" role="form" method="post">
+									<h2 class="name"></h2>
+
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-financial-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-financial-subclass-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-financial-subclass-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-subfolder-financial" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div id="folderData_financial">
+								<form class="form-horizontal" id="form-financial-class" role="form" method="post">
+									<h2 class="name"></h2>
+
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-financial-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-financial-class-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-financial-class-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-folder-financial" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
 
 						<div class="tab-pane" id="labor">
-							<form class="form-horizontal" id="form-labor" role="form" method="post">
-								<h2 class="name"></h2>
+							<div id="fileData_labor">
+								<form class="form-horizontal" id="form-labor" role="form" method="post">
+									<h2 class="name"></h2>
 
-								<div class="panel panel-primary class-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title class-title"></h3>
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-labor"></table>
+										</div>
 									</div>
-									<div class="table-responsive">
-										<table class="table" id="class-panel-labor"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-labor-class-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-labor-class-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
 
-								<div class="panel panel-primary subclass-panel">
-									<div class="panel-heading">
-										<h3 class="panel-title subclass-title"></h3>
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-labor"></table>
+										</div>
 									</div>
-									<div class="table-responsive">
-										<table class="table" id="subclass-panel-labor"></table>
-									</div>
-									<div class="controls">
-										<a href="#" id="add-labor-subclass-toggler"><img src="img/add-icon.png"></a>
-										<a href="#" id="rm-labor-subclass-toggler"><img src="img/remove-icon.png"></a>
-									</div>
-								</div>
 
-								<div class="btn-group" style="display:none">
-									<div class="col-sm-12 controls">
-										<button type="submit" class="btn btn-large btn-primary">
-											Save
+									<div class="btn-group-file">
+										<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
+											Save settings
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
 									</div>
-								</div>
 
-								<div class="btn-group-file">
-									<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
-										Save settings
-									</button>
-									<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-									</input>
-								</div>
+								</form>
+							</div>
+							
+							<div id="subfolderData_labor">
+								<form class="form-horizontal" id="form-labor-subclass" role="form" method="post">
+									<h2 class="name"></h2>
 
-							</form>
+									<div class="panel panel-primary subclass-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title subclass-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="subclass-panel-labor-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-labor-subclass-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-labor-subclass-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-subfolder-labor" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
+							
+							<div id="folderData_labor">
+								<form class="form-horizontal" id="form-labor-class" role="form" method="post">
+									<h2 class="name"></h2>
+
+									<div class="panel panel-primary class-panel">
+										<div class="panel-heading">
+											<h3 class="panel-title class-title"></h3>
+										</div>
+										<div class="table-responsive">
+											<table class="table" id="class-panel-labor-data"></table>
+										</div>
+										<div class="controls">
+											<a href="#" id="add-labor-class-toggler"><img src="img/add-icon.png"></a>
+											<a href="#" id="rm-labor-class-toggler"><img src="img/remove-icon.png"></a>
+										</div>
+									</div>
+
+									<div class="btn-group-folder-labor" style="display: none">
+										<div class="col-sm-12 controls">
+											<button type="submit" class="btn btn-large btn-primary">
+												Save settings
+											</button>
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											</input>
+										</div>
+									</div>
+								</form>
+							</div>
+							
 						</div>
 
 					</div>

@@ -5,6 +5,8 @@ include 'db_connect.php';
 header('Content-Type: application/json');
 
 function retrieveProperties($conn) {
+	//$id = 1;
+	//$parent_id = 5;
 	$id = $_POST['id'];
 	$parent_id = $_POST['parent_id'];
 

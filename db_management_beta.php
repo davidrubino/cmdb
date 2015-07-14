@@ -48,79 +48,90 @@ function createTables($conn) {
 	try {
 		$sql = "
 		CREATE TABLE Class (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		name varchar(255),
 		parent_id int,
+		PRIMARY KEY (id),
 		FOREIGN KEY (parent_id) REFERENCES Class(id)
 		);
 		
 		CREATE TABLE Config_item (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		class_id int,
+		PRIMARY KEY (id),
 		FOREIGN KEY (class_id) REFERENCES Class(id)
 		);
 		
 		CREATE TABLE Property (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		name varchar(255),
 		value_type varchar(255),
-		tab varchar(255)
+		tab varchar(255),
+		PRIMARY KEY (id)
 		);
 		
 		CREATE TABLE Map_class_property (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		class_id int,
 		prop_id int,
+		PRIMARY KEY (id),
 		FOREIGN KEY (class_id) REFERENCES Class(id),
 		FOREIGN KEY (prop_id) REFERENCES Property(id)
 		);
 		
 		CREATE TABLE Property_value (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		property_id int NOT NULL,
 		config_id int NOT NULL,
 		str_value varchar(255),
 		date_value date,
 		float_value float,
+		PRIMARY KEY (id),
 		FOREIGN KEY (property_id) REFERENCES Property(id),
 		FOREIGN KEY (config_id) REFERENCES Config_item(id)
 		);
 		
 		CREATE TABLE Position (
-		position_id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		title varchar(255)
+		position_id int NOT NULL,
+		title varchar(255),
+		PRIMARY KEY (position_id)
 		);
 		
 		CREATE TABLE Department (
-		department_id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		name varchar(255)
+		department_id int NOT NULL,
+		name varchar(255),
+		PRIMARY KEY (department_id)
 		);
 		
 		CREATE TABLE Employee (
-		username VARCHAR ( 255 ) NOT NULL PRIMARY KEY,
+		username varchar(255) NOT NULL,
 		password varchar(255),
 		full_name varchar(255),
 		hiring_year int,
 		isAdmin boolean,
 		position_id int,
 		dep_id int,
+		PRIMARY KEY (username),
 		FOREIGN KEY (position_id) REFERENCES Position (position_id),
 		FOREIGN KEY (dep_id) REFERENCES Department(department_id)
 		);
 		
 		CREATE TABLE Application (
-		application_id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		name varchar(255)
+		application_id int NOT NULL,
+		name varchar(255),
+		PRIMARY KEY (application_id)
 		);
 		
 		CREATE TABLE Map_department_application (
-		mapDepApp_id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		mapDepApp_id int NOT NULL,
 		department_id int,
 		application_id int,
+		PRIMARY KEY (mapDepApp_id),
 		FOREIGN KEY (department_id) REFERENCES Department(department_id),
 		FOREIGN KEY (application_id) REFERENCES Application(application_id)
 		);
-		";
+	";
+		// use exec() because no results are returned
 		$conn -> exec($sql);
 		echo "Tables created successfully";
 		echo "<br>";
@@ -132,9 +143,35 @@ function createTables($conn) {
 function insertIntoApplication($conn) {
 	try {
 		$sql = "
-		INSERT INTO Application (name) VALUES
-		('Domain Name System'),('Backup'),('Network Time Protocol'),
-		('Oracle E-Business Suite'),('Bamboo HR'),('Offerpop');
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(20, 'Domain Name System');
+		
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(21, 'Backup');
+		
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(22, 'Network Time Protocol');
+		
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(23, 'Oracle E-Business Suite');
+		
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(24, 'Bamboo HR');
+		
+		INSERT INTO Application
+		(application_id, name)
+		VALUES
+		(25, 'Offerpop');
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Application table";
@@ -147,9 +184,25 @@ function insertIntoApplication($conn) {
 function insertIntoDepartment($conn) {
 	try {
 		$sql = "
-		INSERT INTO Department (name) VALUES
-		('Human Resources'),('Manufacturing'),('Information Technology'),
-		('Marketing');
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(10, 'Human Resources');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(11, 'Manufacturing');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(12, 'Information Technology');
+		
+		INSERT INTO Department
+		(department_id, name)
+		VALUES
+		(13, 'Marketing');
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Department table";
@@ -163,34 +216,34 @@ function insertIntoMapDepartmentApplication($conn) {
 	try {
 		$sql = "
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(1, 5);
+		(50, 12, 20);
 		
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(2, 4);
+		(51, 12, 21);
 		
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(3, 1);
+		(52, 12, 22);
 		
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(3, 2);
+		(53, 10, 24);
 		
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(3, 3);
+		(54, 11, 23);
 		
 		INSERT INTO Map_department_application
-		(department_id, application_id)
+		(mapDepApp_id, department_id, application_id)
 		VALUES
-		(4, 6);
+		(55, 13, 25);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Map_department_application table";
@@ -204,79 +257,79 @@ function insertIntoClass($conn) {
 	try {
 		$sql = "
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Server', NULL);
+		(1, 'Server', NULL);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Network', NULL);
+		(2, 'Network', NULL);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Database', NULL);
+		(3, 'Database', NULL);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Storage', NULL);
+		(4, 'Storage', NULL);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Linux', 1);
+		(11, 'Linux', 1);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Windows', 1);
+		(12, 'Windows', 1);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Firewall', 2);
+		(21, 'Firewall', 2);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Load Balancer', 2);
+		(22, 'Load Balancer', 2);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Proxy', 2);
+		(23, 'Proxy', 2);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Router', 2);
+		(24, 'Router', 2);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('MySQL', 3);
+		(31, 'MySQL', 3);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Oracle', 3);
+		(32, 'Oracle', 3);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('SQL Server', 3);
+		(33, 'SQL Server', 3);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Network-attached storage', 4);
+		(41, 'Network-attached storage', 4);
 		
 		INSERT INTO Class
-		(name, parent_id)
+		(id, name, parent_id)
 		VALUES
-		('Storage area network', 4);
+		(42, 'Storage area network', 4);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Class";
@@ -289,8 +342,47 @@ function insertIntoClass($conn) {
 function insertIntoConfigItem($conn) {
 	try {
 		$sql = "
-		INSERT INTO Config_item (class_id) VALUES
-		(5), (5), (5), (5), (5), (5), (5);
+		-- bashful --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1000, 11);
+		
+		-- doc --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1101, 11);
+		
+		-- dopey --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1102, 11);
+		
+		-- grumpy --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1103, 11);
+		
+		-- happy --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1104, 11);
+		
+		-- sleepy --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1105, 11);
+		
+		-- sneezy --
+		INSERT INTO Config_item
+		(id, class_id)
+		VALUES
+		(1106, 11);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Config_item";
@@ -304,64 +396,64 @@ function insertIntoProperty($conn) {
 	try {
 		$sql = "
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('hostname', 'string', 'general');
+		(100, 'hostname', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('fully qualified name', 'string', 'general');
+		(104, 'fully qualified name', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('ip address', 'string', 'general');
+		(105, 'ip address', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('type', 'string', 'general');
+		(106, 'type', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('manufacturing', 'string', 'general');
+		(107, 'manufacturing', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('serial number', 'string', 'general');
+		(108, 'serial number', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('version', 'string', 'general');
+		(109, 'version', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('satellite host', 'string', 'general');
+		(110, 'satellite host', 'string', 'general');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('cost', 'float', 'financial');
+		(111, 'cost', 'float', 'financial');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('OS maintenance cost', 'float', 'financial');
+		(112, 'OS maintenance cost', 'float', 'financial');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('administrator', 'string', 'labor');
+		(113, 'administrator', 'string', 'labor');
 		
 		INSERT INTO Property
-		(name, value_type, tab)
+		(id, name, value_type, tab)
 		VALUES
-		('number of developers', 'float', 'labor');
+		(114, 'number of developers', 'float', 'labor');
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Property";
@@ -375,64 +467,64 @@ function insertIntoMapClassProperty($conn) {
 	try {
 		$sql = "
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 1);
+		(10000, 1, 100);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 2);
+		(10003, 1, 104);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 3);
+		(10004, 1, 105);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 4);
+		(10005, 1, 106);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 5);
+		(10006, 1, 107);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(1, 6);
+		(10007, 1, 108);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 7);
+		(10008, 1, 111);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 8);
+		(10009, 1, 113);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 9);
+		(11001, 11, 109);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 10);
+		(11002, 11, 110);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 11);
+		(11003, 11, 112);
 		
 		INSERT INTO Map_class_property
-		(class_id, prop_id)
+		(id, class_id, prop_id)
 		VALUES
-		(5, 12);
+		(11004, 11, 114);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Map_class_property";
@@ -446,94 +538,94 @@ function insertIntoPropertyValue($conn) {
 	try {
 		$sql = "
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 1, 'bashful', NULL, NULL);
+			(10, 100, 1000, 'bashful', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 2, 'doc', NULL, NULL);
+			(11, 100, 1101, 'doc', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 3, 'dopey', NULL, NULL);
+			(12, 100, 1102, 'dopey', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 4, 'grumpy', NULL, NULL);
+			(13, 100, 1103, 'grumpy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 5, 'happy', NULL, NULL);
+			(14, 100, 1104, 'happy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 6, 'sleepy', NULL, NULL);
+			(15, 100, 1105, 'sleepy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(1, 7, 'sneezy', NULL, NULL);
+			(16, 100, 1106, 'sneezy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(2, 1, 'bashful.kohls.com', NULL, NULL);
+			(17, 104, 1000, 'bashful.kohls.com', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(3, 1, '10.2.46.8', NULL, NULL);
+			(18, 105, 1000, '10.2.46.8', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(4, 1, 'physical', NULL, NULL);
+			(19, 106, 1000, 'physical', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(5, 1, 'dell', NULL, NULL);
+			(20, 107, 1000, 'dell', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(6, 1, '123456789', NULL, NULL);
+			(21, 108, 1000, '123456789', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(7, 1, '5.3', NULL, NULL);
+			(22, 109, 1000, '5.3', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(8, 1, 'doc', NULL, NULL);
+			(23, 110, 1000, 'doc', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(9, 1, NULL, NULL, 790);
+			(24, 111, 1000, NULL, NULL, 790);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(10, 1, NULL, NULL, 200);
+			(25, 112, 1000, NULL, NULL, 200);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(11, 1, 'Mike Johnson', NULL, NULL);
+			(26, 113, 1000, 'Mike Johnson', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
+			(id, property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(12, 1, NULL, NULL, 3);
+			(27, 114, 1000, NULL, NULL, 3);
 			";
 		$conn -> exec($sql);
 		echo "Values inserted into Property_value";
