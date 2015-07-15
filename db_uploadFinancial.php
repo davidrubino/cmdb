@@ -20,21 +20,21 @@ function updateDB($conn, $value, $name, $conf_id) {
 	}
 }
 
-if ($_GET) {
-	if (isset($_GET['financialA'])) {
-		for ($i = 0; $i < count($_GET['financialA']); $i++) {
-			$conf_id = key($_GET['financialA'][$i]);
-			$name = key($_GET['financialA'][$i][$conf_id]);
-			$value = current($_GET['financialA'][$i][$conf_id]);
+if ($_POST) {
+	if (isset($_POST['financialA'])) {
+		for ($i = 0; $i < count($_POST['financialA']); $i++) {
+			$conf_id = key($_POST['financialA'][$i]);
+			$name = key($_POST['financialA'][$i][$conf_id]);
+			$value = current($_POST['financialA'][$i][$conf_id]);
 			updateDB($DB_con, $value, $name, $conf_id);
 		}
 	}
 
-	if (isset($_GET['financialB'])) {
-		for ($i = 0; $i < count($_GET['financialB']); $i++) {
-			$conf_id = key($_GET['financialB'][$i]);
-			$name = key($_GET['financialB'][$i][$conf_id]);
-			$value = current($_GET['financialB'][$i][$conf_id]);
+	if (isset($_POST['financialB'])) {
+		for ($i = 0; $i < count($_POST['financialB']); $i++) {
+			$conf_id = key($_POST['financialB'][$i]);
+			$name = key($_POST['financialB'][$i][$conf_id]);
+			$value = current($_POST['financialB'][$i][$conf_id]);
 			updateDB($DB_con, $value, $name, $conf_id);
 		}
 	}

@@ -121,6 +121,14 @@ and property_value.config_id = 1000
 and property.name = 'hostname';
 
 -- select the name of the last property inserted into the table --
-select name from property
+select id from property
 order by id desc 
 limit 1;
+
+-- insert a new set of values into map_class_property --
+insert into map_class_property
+(class_id, prop_id)
+values
+(11, (select id from property
+order by id desc 
+limit 1));

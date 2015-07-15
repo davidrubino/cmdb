@@ -1,3 +1,5 @@
+var global_id = -1;
+
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
 	var items = {
@@ -169,12 +171,12 @@ $(function() {
 			$("#folderData_financial").hide();
 			$("#folderData_labor").hide();
 
-			var class_id = data.node.id;
+			global_id = data.node.id;
 
 			$.ajax({
 				type : "POST",
 				url : "db_loadSubClassProperties.php",
-				data : "class_id=" + class_id,
+				data : "class_id=" + global_id,
 				success : function(data) {
 					var htmlResult_general = new Array();
 					var htmlResult_financial = new Array();
@@ -211,12 +213,12 @@ $(function() {
 			$("#subfolderData_financial").hide();
 			$("#subfolderData_labor").hide();
 
-			var class_id = data.node.id;
+			global_id = data.node.id;
 
 			$.ajax({
 				type : "POST",
 				url : "db_loadClassProperties.php",
-				data : "class_id=" + class_id,
+				data : "class_id=" + global_id,
 				success : function(data) {
 					var htmlResult_general = new Array();
 					var htmlResult_financial = new Array();
@@ -256,7 +258,7 @@ $(document).ready(function() {
 		data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadGeneral.php",
 			data : data
 		}).done(function(msg) {
@@ -266,12 +268,12 @@ $(document).ready(function() {
 	
 	$("#form-general-subclass").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadGeneralSubclass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -279,12 +281,12 @@ $(document).ready(function() {
 	
 	$("#form-general-class").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadGeneralClass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -295,7 +297,7 @@ $(document).ready(function() {
 		data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadFinancial.php",
 			data : data
 		}).done(function(msg) {
@@ -305,12 +307,12 @@ $(document).ready(function() {
 	
 	$("#form-financial-subclass").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadFinancialSubclass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -318,12 +320,12 @@ $(document).ready(function() {
 	
 	$("#form-financial-class").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadFinancialClass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -334,7 +336,7 @@ $(document).ready(function() {
 		data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadLabor.php",
 			data : data
 		}).done(function(msg) {
@@ -344,12 +346,12 @@ $(document).ready(function() {
 	
 	$("#form-labor-subclass").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadLaborSubclass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -357,12 +359,12 @@ $(document).ready(function() {
 	
 	$("#form-labor-class").on('submit', function(event) {
 		event.preventDefault();
-		data = $(this).serialize();
+		var form_data = $(this).serialize();
 
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "db_uploadLaborClass.php",
-			data : data
+			data : form_data+"&class_id="+global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});

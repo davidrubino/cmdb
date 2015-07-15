@@ -20,21 +20,21 @@ function updateDB($conn, $value, $name, $conf_id) {
 	}
 }
 
-if ($_GET) {
-	if (isset($_GET['generalA'])) {
-		for ($i = 0; $i < count($_GET['generalA']); $i++) {
-			$conf_id = key($_GET['generalA'][$i]);
-			$name = key($_GET['generalA'][$i][$conf_id]);
-			$value = current($_GET['generalA'][$i][$conf_id]);
+if ($_POST) {
+	if (isset($_POST['generalA'])) {
+		for ($i = 0; $i < count($_POST['generalA']); $i++) {
+			$conf_id = key($_POST['generalA'][$i]);
+			$name = key($_POST['generalA'][$i][$conf_id]);
+			$value = current($_POST['generalA'][$i][$conf_id]);
 			updateDB($DB_con, $value, $name, $conf_id);
 		}
 	}
 
-	if (isset($_GET['generalB'])) {
-		for ($i = 0; $i < count($_GET['generalB']); $i++) {
-			$conf_id = key($_GET['generalB'][$i]);
-			$name = key($_GET['generalB'][$i][$conf_id]);
-			$value = current($_GET['generalB'][$i][$conf_id]);
+	if (isset($_POST['generalB'])) {
+		for ($i = 0; $i < count($_POST['generalB']); $i++) {
+			$conf_id = key($_POST['generalB'][$i]);
+			$name = key($_POST['generalB'][$i][$conf_id]);
+			$value = current($_POST['generalB'][$i][$conf_id]);
 			updateDB($DB_con, $value, $name, $conf_id);
 		}
 	}
