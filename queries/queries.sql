@@ -132,3 +132,31 @@ values
 (11, (select id from property
 order by id desc 
 limit 1));
+
+-- select the name for all subclass properties unused for a specific config item --
+select property.id, property.name
+from property, map_class_property, class, config_item
+where property.tab = 'general'
+and property.id = map_class_property.prop_id
+and map_class_property.class_id = class.id
+and class.id = 11
+and class.id = config_item.class_id
+and config_item.id = 1101
+and not exists
+( select * from property_value
+where property.id = property_value.property_id
+and property_value.config_id = config_item.id )
+
+-- select the name for all class properties unused for a specific config item --
+select property.id, property.name
+from property, map_class_property, class, config_item
+where property.tab = 'general'
+and property.id = map_class_property.prop_id
+and map_class_property.class_id = 1
+and map_class_property.class_id = class.parent_id
+and class.id = config_item.class_id
+and config_item.id = 1101
+and not exists
+( select * from property_value
+where property.id = property_value.property_id
+and property_value.config_id = config_item.id )
