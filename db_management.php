@@ -78,13 +78,12 @@ function createTables($conn) {
 		);
 		
 		CREATE TABLE Property_value (
-		id int NOT NULL,
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		property_id int NOT NULL,
 		config_id int NOT NULL,
 		str_value varchar(255),
 		date_value date,
 		float_value float,
-		PRIMARY KEY (id),
 		FOREIGN KEY (property_id) REFERENCES Property(id),
 		FOREIGN KEY (config_id) REFERENCES Config_item(id)
 		);
@@ -536,94 +535,94 @@ function insertIntoPropertyValue($conn) {
 	try {
 		$sql = "
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(10, 1, 1000, 'bashful', NULL, NULL);
+			(1, 1000, 'bashful', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(11, 1, 1101, 'doc', NULL, NULL);
+			(1, 1101, 'doc', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(12, 1, 1102, 'dopey', NULL, NULL);
+			(1, 1102, 'dopey', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(13, 1, 1103, 'grumpy', NULL, NULL);
+			(1, 1103, 'grumpy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(14, 1, 1104, 'happy', NULL, NULL);
+			(1, 1104, 'happy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(15, 1, 1105, 'sleepy', NULL, NULL);
+			(1, 1105, 'sleepy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(16, 1, 1106, 'sneezy', NULL, NULL);
+			(1, 1106, 'sneezy', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(17, 2, 1000, 'bashful.kohls.com', NULL, NULL);
+			(2, 1000, 'bashful.kohls.com', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(18, 3, 1000, '10.2.46.8', NULL, NULL);
+			(3, 1000, '10.2.46.8', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(19, 4, 1000, 'physical', NULL, NULL);
+			(4, 1000, 'physical', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(20, 5, 1000, 'dell', NULL, NULL);
+			(5, 1000, 'dell', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(21, 6, 1000, '123456789', NULL, NULL);
+			(6, 1000, '123456789', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(22, 7, 1000, '5.3', NULL, NULL);
+			(7, 1000, '5.3', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(23, 8, 1000, 'doc', NULL, NULL);
+			(8, 1000, 'doc', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(24, 9, 1000, NULL, NULL, 790);
+			(9, 1000, NULL, NULL, 790);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(25, 10, 1000, NULL, NULL, 200);
+			(10, 1000, NULL, NULL, 200);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(26, 11, 1000, 'Mike Johnson', NULL, NULL);
+			(11, 1000, 'Mike Johnson', NULL, NULL);
 			
 			INSERT INTO Property_value
-			(id, property_id, config_id, str_value, date_value, float_value)
+			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(27, 12, 1000, NULL, NULL, 3);
+			(12, 1000, NULL, NULL, 3);
 			";
 		$conn -> exec($sql);
 		echo "Values inserted into Property_value";
@@ -638,9 +637,9 @@ function insertIntoPropertyValue($conn) {
 //insertIntoApplication($DB_con);
 //insertIntoDepartment($DB_con);
 //insertIntoMapDepartmentApplication($DB_con);
-//insertIntoClass($DB_con);
-//insertIntoConfigItem($DB_con);
+insertIntoClass($DB_con);
+insertIntoConfigItem($DB_con);
 //insertIntoProperty($DB_con);
-//insertIntoMapClassProperty($DB_con);
-//insertIntoPropertyValue($DB_con);
+insertIntoMapClassProperty($DB_con);
+insertIntoPropertyValue($DB_con);
 ?>

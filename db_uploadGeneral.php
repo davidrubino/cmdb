@@ -14,7 +14,20 @@ function updateDB($conn, $value, $name, $conf_id) {
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':value1' => $value, ':value2' => $value, ':value3' => $value, ':name' => $name, ':conf_id' => $conf_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	} catch(PDOException $e) {
+		echo $e -> getMessage();
+	}
+}
 
+function insertDB($conn, $property_id, $config_id, $str_value, $date_value, $float_value) {
+	try {
+		$sql = 'insert into property_value
+		(property_id, config_id, str_value, date_value, float_value)
+		values
+		(:property_id, :config_id, :str_value, :date_value, :float_value);';
+		$stmt = $conn -> prepare($sql);
+		$stmt -> execute(array(':property_id' => $property_id, ':config_id' => $config_id, ':str_value' => $str_value, ':date_value' => $date_value, ':float_value' => $float_value));
+		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}

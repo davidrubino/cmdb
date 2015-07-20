@@ -160,3 +160,67 @@ and not exists
 ( select * from property_value
 where property.id = property_value.property_id
 and property_value.config_id = config_item.id )
+
+-- rename a class name --
+update class
+set name = 'SQLite'
+where id = 31
+
+-- rename config item name --
+update property_value, property
+set property_value.str_value = 'bashful'
+where property_value.config_id = 1000
+and property_value.property_id = property.id
+and property.name = 'hostname'
+
+-- delete a config item --
+delete from property_value
+where config_id = 1106
+
+delete from config_item
+where id = 1106
+
+-- delete a subclass --
+delete from property_value
+where exists (
+    select id from config_item
+    where config_item.id = property_value.config_id
+    and config_item.class_id = 11);
+
+delete from config_item
+where class_id = 11;
+
+delete from map_class_property
+where class_id = 11;
+
+delete from class
+where id = 11;
+
+-- delete a class --
+delete from property_value
+where exists (
+    select config_item.id from config_item, class
+    where config_item.id = property_value.config_id
+    and config_item.class_id = class.id
+    and class.parent_id = 1)
+
+delete from config_item
+where exists (
+    select class.id from class
+    where config_item.class_id = class.id
+    and class.parent_id = 1)
+
+delete from map_class_property
+where exists (
+    select class.id from class
+    where map_class_property.class_id = class.id
+    and class.parent_id = 1)
+
+delete from class
+where parent_id = 1
+
+delete from map_class_property
+where class_id = 1
+
+delete from class
+where id = 1

@@ -8,9 +8,22 @@ function customMenu($node) {
 		"createfolder" : {
 			"separator_before" : false,
 			"separator_after" : false,
-			"label" : "New folder",
+			"label" : "New class",
 			"action" : function(obj) {
-				$node = tree.create_node($node);
+				$node = tree.create_node($node, {
+					type : "folder"
+				});
+				tree.edit($node);
+			}
+		},
+		"createsubfolder" : {
+			"separator_before" : false,
+			"separator_after" : false,
+			"label" : "New subclass",
+			"action" : function(obj) {
+				$node = tree.create_node($node, {
+					type : "subfolder"
+				});
 				tree.edit($node);
 			}
 		},
@@ -43,9 +56,27 @@ function customMenu($node) {
 		}
 	};
 
+	if ($node.type === 'default') {
+		delete items.createitem;
+		delete items.createsubfolder;
+		delete items.remove;
+		delete items.rename;
+	}
+
+	if ($node.type === 'folder') {
+		delete items.createfolder;
+		delete items.createitem;
+	}
+
+	if ($node.type === 'subfolder') {
+		delete items.createfolder;
+		delete items.createsubfolder;
+	}
+
 	if ($node.type === 'file') {
 		delete items.createfolder;
 		delete items.createitem;
+		delete items.createsubfolder;
 	}
 
 	return items;
@@ -79,10 +110,9 @@ $(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "massload", "search", "sort", "state", "types", "unique", "wholerow", "themes", "json_data", "ui"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
-
 		var path = $("#tree").jstree(true).get_path(data.node, ":");
 		var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
 		var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
@@ -247,11 +277,78 @@ $(function() {
 			$(".tabbable").hide();
 		}
 
-	}).bind('delete_node.jstree', function(e, data) {
-		if (data.node.parent == '#') {
-			core.check_callback(false);
+	}).on('rename_node.jstree', function(e, data) {
+		var name = data.text;
+		var old = data.old;
+
+		if (data.node.type == 'file') {
+			$.ajax({
+				type : "POST",
+				url : "db_renameFolder.php",
+				data : "value=" + name + "&id=" + global_id,
+				success : function(data) {
+					alert(old + " was successfully updated to " + name);
+				}
+			});
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "db_renameNode.php",
+				data : "name=" + name + "&class_id=" + global_id,
+				success : function(data) {
+					alert(old + " was successfully updated to " + name);
+				}
+			});
+		}
+
+	}).on('delete_node.jstree', function(e, data) {
+
+		if (data.node.type == 'file') {
+			if (confirm("You are going to delete " + data.node.text + ". Do you wish to continue?")) {
+				$.ajax({
+					type : "POST",
+					url : "db_deleteConfigItem.php",
+					data : "id=" + global_id,
+					success : function(data) {
+						$(".tabbable").hide();
+					}
+				});
+			} else {
+				e.cancel();
+			}
+		}
+
+		if (data.node.type == 'subfolder') {
+			if (confirm("You are going to delete the subclass and all the configuration items it contains. Do you wish to continue?")) {
+				$.ajax({
+					type : "POST",
+					url : "db_deleteSubClass.php",
+					data : "id=" + global_id,
+					success : function(data) {
+						$(".tabbable").hide();
+					}
+				});
+			} else {
+				e.cancel();
+			}
+		}
+
+		if (data.node.type == 'folder') {
+			if (confirm("You are going to delete the class and all subsequent items it contains. Do you wish to continue?")) {
+				$.ajax({
+					type : "POST",
+					url : "db_deleteClass.php",
+					data : "id=" + global_id,
+					success : function(data) {
+						$(".tabbable").hide();
+					}
+				});
+			} else {
+				e.cancel();
+			}
 		}
 	});
+
 });
 
 $(document).ready(function() {
@@ -434,13 +531,13 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	$("#add-financial-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-financial-data').append('<tr><td><input name="financial-class" value="my data"></td><td><select class="form-control" name="select-financial-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-financial').slideDown(0);
 	});
-	
+
 	$("#add-financial-subclass-file-toggler").click(function(e) {
 		var tab = "financial";
 		e.preventDefault();
@@ -463,7 +560,7 @@ $(document).ready(function() {
 		$('#subclass-panel-financial-data').append('<tr><td><input name="financial-subclass" value="my data"></td><td><select class="form-control" name="select-financial-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-subfolder-financial').slideDown(0);
 	});
-	
+
 	$("#add-labor-class-file-toggler").click(function(e) {
 		var tab = "labor";
 		e.preventDefault();
@@ -480,7 +577,7 @@ $(document).ready(function() {
 				$('#select-class-labor-file').find('option').remove();
 				for (var i = 0; i < data.length; i++) {
 					console.log("in it");
-					
+
 					console.log(data[i].name);
 					$('#select-class-labor-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
 				}
@@ -493,7 +590,7 @@ $(document).ready(function() {
 		$('#class-panel-labor-data').append('<tr><td><input name="labor-class" value="my data"></td><td><select class="form-control" name="select-labor-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-labor').slideDown(0);
 	});
-	
+
 	$("#add-labor-subclass-file-toggler").click(function(e) {
 		var tab = "labor";
 		e.preventDefault();
