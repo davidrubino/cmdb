@@ -352,6 +352,7 @@ $(function() {
 });
 
 $(document).ready(function() {
+	var current = "";
 	$("#form-general").on('submit', function(event) {
 		event.preventDefault();
 		data = $(this).serialize();
@@ -469,44 +470,10 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#add-general-class-file-toggler").click(function(e) {
-		var tab = "general";
-		e.preventDefault();
-		$('#class-panel-general').append('<tr><td><select class="form-control" id="select-class-general-file" name="select-class-general-file"></select></td><td><input name="class-general-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedClassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_grandparent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				$('#select-class-general-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('#select-class-general-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
-	});
-
 	$("#add-general-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-general-data').append('<tr><td><input name="general-class" value="my data"></td><td><select class="form-control" name="select-general-class" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-general').slideDown(0);
-	});
-
-	$("#add-general-subclass-file-toggler").click(function(e) {
-		var tab = "general";
-		e.preventDefault();
-		$('#subclass-panel-general').append('<tr><td><select class="form-control" id="select-subclass-general-file" name="select-class-general-file"></select></td><td><input name="subclass-general-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedSubclassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_parent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				$('#select-subclass-general-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('#select-subclass-general-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
 	});
 
 	$("#add-general-subclass-toggler").click(function(e) {
@@ -515,44 +482,10 @@ $(document).ready(function() {
 		$('.btn-group-subfolder-general').slideDown(0);
 	});
 
-	$("#add-financial-class-file-toggler").click(function(e) {
-		var tab = "financial";
-		e.preventDefault();
-		$('#class-panel-financial').append('<tr><td><select class="form-control" id="select-class-financial-file" name="select-class-financial-file"></select></td><td><input name="class-financial-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedClassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_grandparent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				$('#select-class-financial-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('#select-class-financial-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
-	});
-
 	$("#add-financial-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-financial-data').append('<tr><td><input name="financial-class" value="my data"></td><td><select class="form-control" name="select-financial-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-financial').slideDown(0);
-	});
-
-	$("#add-financial-subclass-file-toggler").click(function(e) {
-		var tab = "financial";
-		e.preventDefault();
-		$('#subclass-panel-financial').append('<tr><td><select class="form-control" id="select-subclass-financial-file" name="select-subclass-financial-file"></select></td><td><input name="subclass-financial-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedSubclassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_parent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				$('#select-subclass-financial-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('#select-subclass-financial-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
 	});
 
 	$("#add-financial-subclass-toggler").click(function(e) {
@@ -561,51 +494,10 @@ $(document).ready(function() {
 		$('.btn-group-subfolder-financial').slideDown(0);
 	});
 
-	$("#add-labor-class-file-toggler").click(function(e) {
-		var tab = "labor";
-		e.preventDefault();
-		$('#class-panel-labor').append('<tr><td><select class="form-control" id="select-class-labor-file" name="select-class-labor-file"></select></td><td><input name="class-labor-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedClassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_grandparent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				console.log(global_grandparent_id);
-				console.log(global_id);
-				console.log(data.length);
-				console.log(data);
-				$('#select-class-labor-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					console.log("in it");
-
-					console.log(data[i].name);
-					$('#select-class-labor-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
-	});
-
 	$("#add-labor-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-labor-data').append('<tr><td><input name="labor-class" value="my data"></td><td><select class="form-control" name="select-labor-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-labor').slideDown(0);
-	});
-
-	$("#add-labor-subclass-file-toggler").click(function(e) {
-		var tab = "labor";
-		e.preventDefault();
-		$('#subclass-panel-labor').append('<tr><td><select class="form-control" id="select-subclass-labor-file" name="select-subclass-labor-file"></select></td><td><input name="subclass-labor-file" value="my data"></td></tr>');
-		$.ajax({
-			type : "POST",
-			url : "db_loadUnusedSubclassProperties.php",
-			data : "tab=" + tab + "&class_id=" + global_parent_id + "&config_item_id=" + global_id,
-			success : function(data) {
-				$('#select-subclass-labor-file').find('option').remove();
-				for (var i = 0; i < data.length; i++) {
-					$('#select-subclass-labor-file').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-				}
-			}
-		});
 	});
 
 	$("#add-labor-subclass-toggler").click(function(e) {
@@ -616,55 +508,55 @@ $(document).ready(function() {
 
 	$("#rm-general-class-toggler").click(function(e) {
 		$('.highlight-general').remove();
-		$('.btn-group-folder-general').slideDown(0);
 	});
 
 	$("#rm-general-subclass-toggler").click(function(e) {
 		$('.highlight-general').remove();
-		$('.btn-group-subfolder-general').slideDown(0);
 	});
 
 	$("#rm-financial-class-toggler").click(function(e) {
 		$('.highlight-financial').remove();
-		$('.btn-group-folder-financial').slideDown(0);
 	});
 
 	$("#rm-financial-subclass-toggler").click(function(e) {
 		$('.highlight-financial').remove();
-		$('.btn-group-subfolder-financial').slideDown(0);
 	});
 
 	$("#rm-labor-class-toggler").click(function(e) {
 		$('.highlight-labor').remove();
-		$('.btn-group-folder-labor').slideDown(0);
 	});
 
 	$("#rm-labor-subclass-toggler").click(function(e) {
 		$('.highlight-labor').remove();
-		$('.btn-group-subfolder-labor').slideDown(0);
 	});
 
 	$('#class-panel-general-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
 	});
 
 	$('#subclass-panel-general-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
 	});
 
 	$('#class-panel-financial-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
 	});
 
 	$('#subclass-panel-financial-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
 	});
 
 	$('#class-panel-labor-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
 	});
 
 	$('#subclass-panel-labor-data').on('click', 'tr', function(event) {
+		current = $(this).find("td")[0].innerHTML;
 		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
 	});
 });

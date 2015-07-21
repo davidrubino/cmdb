@@ -5,14 +5,14 @@ include 'db_connect.php';
 header('Content-Type: application/json');
 
 function retrieveProperties($conn) {
-	//$id = 1;
-	//$parent_id = 5;
-	$id = $_POST['id'];
-	$parent_id = $_POST['parent_id'];
+	$id = 1000;
+	$parent_id = 11;
+	//$id = $_POST['id'];
+	//$parent_id = $_POST['parent_id'];
 
 	try {
 		$sql = 'select property.name, property.tab,
-		ifnull(property_value.str_value, ifnull(property_value.date_value, property_value.float_value)) as value
+		if(property.value_type = "string", property_value.str_value, if(property.value_type = "date", property_value.date_value, property_value.float_value)) as value
 		from property_value, config_item, property, map_class_property, class
 		where property_value.config_id = config_item.id
 		and config_item.id = :id

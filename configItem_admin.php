@@ -70,10 +70,6 @@ if ($permission == 0) {
 										<div class="table-responsive">
 											<table class="table" id="class-panel-general"></table>
 										</div>
-										<div class="controls">
-											<a href="#" id="add-general-class-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-general-class-file-toggler"><img src="img/remove-icon.png"></a>
-										</div>
 									</div>
 
 									<div class="panel panel-primary subclass-panel">
@@ -82,10 +78,6 @@ if ($permission == 0) {
 										</div>
 										<div class="table-responsive">
 											<table class="table" id="subclass-panel-general"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-general-subclass-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-general-subclass-file-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -171,10 +163,6 @@ if ($permission == 0) {
 										<div class="table-responsive">
 											<table class="table" id="class-panel-financial"></table>
 										</div>
-										<div class="controls">
-											<a href="#" id="add-financial-class-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-financial-class-file-toggler"><img src="img/remove-icon.png"></a>
-										</div>
 									</div>
 
 									<div class="panel panel-primary subclass-panel">
@@ -183,10 +171,6 @@ if ($permission == 0) {
 										</div>
 										<div class="table-responsive">
 											<table class="table" id="subclass-panel-financial"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-financial-subclass-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-financial-subclass-file-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -272,10 +256,6 @@ if ($permission == 0) {
 										<div class="table-responsive">
 											<table class="table" id="class-panel-labor"></table>
 										</div>
-										<div class="controls">
-											<a href="#" id="add-labor-class-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-labor-class-file-toggler"><img src="img/remove-icon.png"></a>
-										</div>
 									</div>
 
 									<div class="panel panel-primary subclass-panel">
@@ -284,10 +264,6 @@ if ($permission == 0) {
 										</div>
 										<div class="table-responsive">
 											<table class="table" id="subclass-panel-labor"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-labor-subclass-file-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-labor-subclass-file-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -301,7 +277,7 @@ if ($permission == 0) {
 
 								</form>
 							</div>
-							
+
 							<div id="subfolderData_labor">
 								<form class="form-horizontal" id="form-labor-subclass" role="form" method="post">
 									<h2 class="name"></h2>
@@ -330,7 +306,7 @@ if ($permission == 0) {
 									</div>
 								</form>
 							</div>
-							
+
 							<div id="folderData_labor">
 								<form class="form-horizontal" id="form-labor-class" role="form" method="post">
 									<h2 class="name"></h2>
@@ -359,7 +335,7 @@ if ($permission == 0) {
 									</div>
 								</form>
 							</div>
-							
+
 						</div>
 
 					</div>

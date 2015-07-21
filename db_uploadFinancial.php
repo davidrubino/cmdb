@@ -5,9 +5,9 @@ include 'db_connect.php';
 function updateDB($conn, $value, $name, $conf_id) {
 	try {
 		$sql = 'update property_value, property
-		set	property_value.str_value = if(property_value.str_value is null, null, :value1),
-			property_value.date_value = if(property_value.date_value is null, null, :value2),
-			property_value.float_value = if(property_value.float_value is null, null, :value3)
+		set	property_value.str_value = if(property.value_type = "string", :value1, null),
+			property_value.date_value = if(property.value_type = "date", :value2, null),
+			property_value.float_value = if(property.value_type = "float", :value3, null)
 		where property_value.property_id = property.id
 		and property_value.config_id = :conf_id
 		and property.name = :name';

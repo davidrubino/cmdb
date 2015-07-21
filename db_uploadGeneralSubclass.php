@@ -23,6 +23,24 @@ function updateDB($conn, $name, $value_type, $tab) {
 		$stmt2 = $conn -> prepare($sql2);
 		$stmt2 -> execute(array(':class_id' => $class_id));
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
+		
+		$sql3 = 'select config_item.id from config_item
+		where config_item.class_id = :class_id';
+		$stmt3 = $conn -> prepare($sql3);
+		$stmt3 -> execute(array(':class_id' => $class_id));
+		$row3 = $stmt3 -> fetchAll(PDO::FETCH_ASSOC);
+
+		foreach ($row3 as $row) {
+			$sql4 = 'insert into property_value
+		(property_id, config_id, str_value, date_value, float_value)
+		values
+		((select id from property
+		order by id desc 
+		limit 1), :config_item, NULL, NULL, NULL);';
+			$stmt4 = $conn -> prepare($sql4);
+			$stmt4 -> execute(array(':config_item' => $row[id]));
+			$row4 = $stmt4 -> fetchAll(PDO::FETCH_ASSOC);
+		}
 
 		echo "Update successful!";
 
