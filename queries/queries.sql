@@ -224,3 +224,21 @@ where class_id = 1
 
 delete from class
 where id = 1
+
+-- delete a property --
+delete from property_value
+where exists (
+    select property.id from property
+    where property.id = property_value.property_id
+    and property.name = "model"
+    )
+
+delete from map_class_property
+where exists (
+    select property.id from property
+    where property.id = map_class_property.prop_id
+    and property.name = "model"
+    )
+
+delete from property
+where name = "model"

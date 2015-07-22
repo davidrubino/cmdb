@@ -16,17 +16,6 @@ function customMenu($node) {
 				tree.edit($node);
 			}
 		},
-		"createsubfolder" : {
-			"separator_before" : false,
-			"separator_after" : false,
-			"label" : "New subclass",
-			"action" : function(obj) {
-				$node = tree.create_node($node, {
-					type : "subfolder"
-				});
-				tree.edit($node);
-			}
-		},
 		"createitem" : {
 			"separator_before" : false,
 			"separator_after" : false,
@@ -58,25 +47,13 @@ function customMenu($node) {
 
 	if ($node.type === 'default') {
 		delete items.createitem;
-		delete items.createsubfolder;
 		delete items.remove;
 		delete items.rename;
-	}
-
-	if ($node.type === 'folder') {
-		delete items.createfolder;
-		delete items.createitem;
-	}
-
-	if ($node.type === 'subfolder') {
-		delete items.createfolder;
-		delete items.createsubfolder;
 	}
 
 	if ($node.type === 'file') {
 		delete items.createfolder;
 		delete items.createitem;
-		delete items.createsubfolder;
 	}
 
 	return items;
@@ -86,7 +63,12 @@ $(function() {
 	$("#tree").jstree({
 
 		"core" : {
-			"check_callback" : true,
+			"check_callback" : function(operation) {
+				if(operation === 'delete_node') {
+					return confirm("Are you sure you want to delete this node?");
+				}
+			},
+			
 			"data" : {
 				"type" : "POST",
 				"url" : "db_loadValue.php"
@@ -302,9 +284,7 @@ $(function() {
 		}
 
 	}).on('delete_node.jstree', function(e, data) {
-
 		if (data.node.type == 'file') {
-			if (confirm("You are going to delete " + data.node.text + ". Do you wish to continue?")) {
 				$.ajax({
 					type : "POST",
 					url : "db_deleteConfigItem.php",
@@ -313,28 +293,8 @@ $(function() {
 						$(".tabbable").hide();
 					}
 				});
-			} else {
-				e.cancel();
-			}
-		}
-
-		if (data.node.type == 'subfolder') {
-			if (confirm("You are going to delete the subclass and all the configuration items it contains. Do you wish to continue?")) {
-				$.ajax({
-					type : "POST",
-					url : "db_deleteSubClass.php",
-					data : "id=" + global_id,
-					success : function(data) {
-						$(".tabbable").hide();
-					}
-				});
-			} else {
-				e.cancel();
-			}
-		}
-
-		if (data.node.type == 'folder') {
-			if (confirm("You are going to delete the class and all subsequent items it contains. Do you wish to continue?")) {
+		} else {
+			if (data.node.children.length == 0) {
 				$.ajax({
 					type : "POST",
 					url : "db_deleteClass.php",
@@ -344,15 +304,16 @@ $(function() {
 					}
 				});
 			} else {
-				e.cancel();
+				alert("Folder not empty! Please delete all its children first!");
+				return;
 			}
 		}
 	});
-
 });
 
 $(document).ready(function() {
 	var current = "";
+
 	$("#form-general").on('submit', function(event) {
 		event.preventDefault();
 		data = $(this).serialize();
@@ -506,57 +467,30 @@ $(document).ready(function() {
 		$('.btn-group-subfolder-labor').slideDown(0);
 	});
 
-	$("#rm-general-class-toggler").click(function(e) {
-		$('.highlight-general').remove();
+	$(".rm-toggler").click(function(e) {
+		e.preventDefault();
+		if ($("tr").hasClass("highlight")) {
+			if (confirm("Are you sure you want to permanently delete this property?")) {
+				$.ajax({
+					type : "POST",
+					url : "db_removeProperty.php",
+					data : "name=" + current,
+					success : function(data) {
+						$('.highlight').remove();
+					}
+				});
+			} else {
+				return;
+			}
+		} else {
+			alert("Please select a property to remove!");
+		}
 	});
 
-	$("#rm-general-subclass-toggler").click(function(e) {
-		$('.highlight-general').remove();
-	});
-
-	$("#rm-financial-class-toggler").click(function(e) {
-		$('.highlight-financial').remove();
-	});
-
-	$("#rm-financial-subclass-toggler").click(function(e) {
-		$('.highlight-financial').remove();
-	});
-
-	$("#rm-labor-class-toggler").click(function(e) {
-		$('.highlight-labor').remove();
-	});
-
-	$("#rm-labor-subclass-toggler").click(function(e) {
-		$('.highlight-labor').remove();
-	});
-
-	$('#class-panel-general-data').on('click', 'tr', function(event) {
+	$('.selectable').on('click', 'tr', function(event) {
 		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
+		$('tr').removeClass('highlight');
+		$(this).addClass('highlight');
 	});
 
-	$('#subclass-panel-general-data').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-general').siblings().removeClass('highlight-general');
-	});
-
-	$('#class-panel-financial-data').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
-	});
-
-	$('#subclass-panel-financial-data').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-financial').siblings().removeClass('highlight-financial');
-	});
-
-	$('#class-panel-labor-data').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
-	});
-
-	$('#subclass-panel-labor-data').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		$(this).addClass('highlight-labor').siblings().removeClass('highlight-labor');
-	});
 });

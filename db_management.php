@@ -577,26 +577,6 @@ function insertIntoPropertyValue($conn) {
 			INSERT INTO Property_value
 			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
-			(3, 1000, '10.2.46.8', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
-			(4, 1000, 'physical', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
-			(5, 1000, 'dell', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
-			(6, 1000, '123456789', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
 			(7, 1000, '5.3', NULL, NULL);
 			
 			INSERT INTO Property_value
@@ -637,9 +617,9 @@ function insertIntoPropertyValue($conn) {
 //insertIntoApplication($DB_con);
 //insertIntoDepartment($DB_con);
 //insertIntoMapDepartmentApplication($DB_con);
-insertIntoClass($DB_con);
-insertIntoConfigItem($DB_con);
+//insertIntoClass($DB_con);
+//insertIntoConfigItem($DB_con);
 //insertIntoProperty($DB_con);
-insertIntoMapClassProperty($DB_con);
-insertIntoPropertyValue($DB_con);
+//insertIntoMapClassProperty($DB_con);
+//insertIntoPropertyValue($DB_con);
 ?>

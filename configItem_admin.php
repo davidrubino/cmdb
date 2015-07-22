@@ -100,11 +100,11 @@ if ($permission == 0) {
 											<h3 class="panel-title subclass-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="subclass-panel-general-data"></table>
+											<table class="table selectable" id="subclass-panel-general-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-general-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-general-subclass-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -129,11 +129,11 @@ if ($permission == 0) {
 											<h3 class="panel-title class-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="class-panel-general-data"></table>
+											<table class="table selectable" id="class-panel-general-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-general-class-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-general-class-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -194,11 +194,11 @@ if ($permission == 0) {
 											<h3 class="panel-title subclass-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="subclass-panel-financial-data"></table>
+											<table class="table selectable" id="subclass-panel-financial-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-financial-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-financial-subclass-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -223,11 +223,11 @@ if ($permission == 0) {
 											<h3 class="panel-title class-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="class-panel-financial-data"></table>
+											<table class="table selectable" id="class-panel-financial-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-financial-class-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-financial-class-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -287,11 +287,11 @@ if ($permission == 0) {
 											<h3 class="panel-title subclass-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="subclass-panel-labor-data"></table>
+											<table class="table selectable" id="subclass-panel-labor-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-labor-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-labor-subclass-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
@@ -316,11 +316,11 @@ if ($permission == 0) {
 											<h3 class="panel-title class-title"></h3>
 										</div>
 										<div class="table-responsive">
-											<table class="table" id="class-panel-labor-data"></table>
+											<table class="table selectable" id="class-panel-labor-data"></table>
 										</div>
 										<div class="controls">
 											<a href="#" id="add-labor-class-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" id="rm-labor-class-toggler"><img src="img/remove-icon.png"></a>
+											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
 										</div>
 									</div>
 
