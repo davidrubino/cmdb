@@ -5,10 +5,10 @@ include 'db_connect.php';
 header('Content-Type: application/json');
 
 function retrieveProperties($conn) {
-	$id = 1000;
-	$parent_id = 11;
-	//$id = $_POST['id'];
-	//$parent_id = $_POST['parent_id'];
+	//$id = 1000;
+	//$parent_id = 11;
+	$id = $_POST['id'];
+	$parent_id = $_POST['parent_id'];
 
 	try {
 		$sql = 'select property.name, property.tab,

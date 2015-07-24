@@ -13,7 +13,7 @@ function customMenu($node) {
 				$node = tree.create_node($node, {
 					type : "folder"
 				});
-				tree.edit($node);
+				//tree.edit($node);
 			}
 		},
 		"createitem" : {
@@ -228,7 +228,7 @@ $(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_renameFolder.php",
+				url : "db_renameFile.php",
 				data : "value=" + name + "&id=" + global_id,
 				success : function(data) {
 					alert(old + " was successfully updated to " + name);
@@ -237,7 +237,7 @@ $(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_renameNode.php",
+				url : "db_renameFolder.php",
 				data : "name=" + name + "&class_id=" + global_id,
 				success : function(data) {
 					alert(old + " was successfully updated to " + name);
@@ -262,6 +262,20 @@ $(function() {
 				data : "id=" + global_id,
 				success : function(data) {
 					$(".tabbable").hide();
+				}
+			});
+		}
+		
+	}).on('create_node.jstree', function(e, data) {
+		if (data.node.type == 'file') {
+			console.log("config item");
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "db_createClass.php",
+				data : "id=" + data.node.parent,
+				success : function(data) {
+					alert("New class successfully created!");
 				}
 			});
 		}

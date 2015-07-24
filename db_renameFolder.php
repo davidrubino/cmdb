@@ -3,19 +3,17 @@
 include 'db_connect.php';
 
 function renameFolder($conn) {
-	//$value = "lazy";
-	//$id = 1000;
-	$value = $_POST['value'];
-	$id = $_POST['id'];
+	//$name = "MySQL";
+	//$class_id = 31;
+	$name = $_POST['name'];
+	$class_id = $_POST['class_id'];
 	
 	try {
-		$sql = 'update property_value, property
-		set property_value.str_value = :value
-		where property_value.config_id = :id
-		and property_value.property_id = property.id
-		and property.name = "hostname"';
+		$sql = 'update class
+		set name = :name
+		where id = :class_id';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':value' => $value, ':id' => $id));
+		$stmt -> execute(array(':name' => $name, ':class_id' => $class_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		echo "Update successful!";
 	} catch(PDOException $e) {

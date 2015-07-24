@@ -242,3 +242,9 @@ where exists (
 
 delete from property
 where name = "model"
+
+-- create a class --
+insert into class
+(name, parent_id)
+values
+('SQLite', 3);
