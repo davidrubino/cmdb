@@ -24,9 +24,14 @@ function updateDB($conn, $name, $value_type, $tab) {
 		$stmt2 -> execute(array(':class_id' => $class_id));
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
 
-		$sql3 = 'select config_item.id from config_item, class
-		where config_item.class_id = class.id
-		and class.parent_id = :class_id';
+		$sql3 = 'select config_item.id from config_item
+		where exists (
+		    select property.name from property, property_value, map_class_property
+		    where config_item.id = property_value.config_id
+		    and property_value.property_id = property.id
+		    and property.id = map_class_property.prop_id
+		    and map_class_property.class_id = :class_id
+		    )';
 		$stmt3 = $conn -> prepare($sql3);
 		$stmt3 -> execute(array(':class_id' => $class_id));
 		$row3 = $stmt3 -> fetchAll(PDO::FETCH_ASSOC);

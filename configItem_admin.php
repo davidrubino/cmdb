@@ -43,7 +43,7 @@ if ($permission == 0) {
 			<div class="col-md-4" id="tree"></div>
 			<div class="col-md-8">
 
-				<div class="tabbable">
+				<div class="tabbable" style="display: none">
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a class="active" href="#general" data-toggle="tab">General</a>
@@ -87,35 +87,6 @@ if ($permission == 0) {
 										</button>
 										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
 										</input>
-									</div>
-								</form>
-							</div>
-
-							<div id="subfolderData_general">
-								<form class="form-horizontal" id="form-general-subclass" role="form" method="post">
-									<h2 class="name"></h2>
-
-									<div class="panel panel-primary subclass-panel">
-										<div class="panel-heading">
-											<h3 class="panel-title subclass-title"></h3>
-										</div>
-										<div class="table-responsive">
-											<table class="table selectable" id="subclass-panel-general-data"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-general-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
-										</div>
-									</div>
-
-									<div class="btn-group-subfolder-general" style="display: none">
-										<div class="col-sm-12 controls">
-											<button type="submit" class="btn btn-large btn-primary">
-												Save settings
-											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-											</input>
-										</div>
 									</div>
 								</form>
 							</div>
@@ -185,35 +156,6 @@ if ($permission == 0) {
 								</form>
 							</div>
 
-							<div id="subfolderData_financial">
-								<form class="form-horizontal" id="form-financial-subclass" role="form" method="post">
-									<h2 class="name"></h2>
-
-									<div class="panel panel-primary subclass-panel">
-										<div class="panel-heading">
-											<h3 class="panel-title subclass-title"></h3>
-										</div>
-										<div class="table-responsive">
-											<table class="table selectable" id="subclass-panel-financial-data"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-financial-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
-										</div>
-									</div>
-
-									<div class="btn-group-subfolder-financial" style="display: none">
-										<div class="col-sm-12 controls">
-											<button type="submit" class="btn btn-large btn-primary">
-												Save settings
-											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-											</input>
-										</div>
-									</div>
-								</form>
-							</div>
-
 							<div id="folderData_financial">
 								<form class="form-horizontal" id="form-financial-class" role="form" method="post">
 									<h2 class="name"></h2>
@@ -275,35 +217,6 @@ if ($permission == 0) {
 										</input>
 									</div>
 
-								</form>
-							</div>
-
-							<div id="subfolderData_labor">
-								<form class="form-horizontal" id="form-labor-subclass" role="form" method="post">
-									<h2 class="name"></h2>
-
-									<div class="panel panel-primary subclass-panel">
-										<div class="panel-heading">
-											<h3 class="panel-title subclass-title"></h3>
-										</div>
-										<div class="table-responsive">
-											<table class="table selectable" id="subclass-panel-labor-data"></table>
-										</div>
-										<div class="controls">
-											<a href="#" id="add-labor-subclass-toggler"><img src="img/add-icon.png"></a>
-											<a href="#" class="rm-toggler"><img src="img/remove-icon.png"></a>
-										</div>
-									</div>
-
-									<div class="btn-group-subfolder-labor" style="display: none">
-										<div class="col-sm-12 controls">
-											<button type="submit" class="btn btn-large btn-primary">
-												Save settings
-											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
-											</input>
-										</div>
-									</div>
 								</form>
 							</div>
 

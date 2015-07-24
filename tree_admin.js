@@ -63,12 +63,16 @@ $(function() {
 	$("#tree").jstree({
 
 		"core" : {
-			"check_callback" : function(operation) {
-				if(operation === 'delete_node') {
-					return confirm("Are you sure you want to delete this node?");
+			"check_callback" : function(operation, node) {
+				if (operation === 'delete_node') {
+					if (node.children.length == 0) {
+						return confirm("Are you sure you want to delete this node?");
+					} else {
+						alert("Folder not empty! Please delete all of its children first!");
+						return false;
+					}
 				}
 			},
-			
 			"data" : {
 				"type" : "POST",
 				"url" : "db_loadValue.php"
@@ -82,9 +86,6 @@ $(function() {
 			},
 			"folder" : {
 
-			},
-			"subfolder" : {
-
 			}
 		},
 
@@ -96,21 +97,19 @@ $(function() {
 
 	}).on('select_node.jstree', function(e, data) {
 		var path = $("#tree").jstree(true).get_path(data.node, ":");
-		var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
-		var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
 		$('.name').html(path);
-		$('.class-title').html(grandparent_name);
-		$('.subclass-title').html(grandparent_name + ':' + parent_name);
 
 		if (data.node.type == "file") {
+			var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
+			var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
+			$('.class-title').html(grandparent_name);
+			$('.subclass-title').html(grandparent_name + ':' + parent_name);
+
 			$(".tabbable").show();
+
 			$("#fileData_general").show();
 			$("#fileData_financial").show();
 			$("#fileData_labor").show();
-
-			$("#subfolderData_general").hide();
-			$("#subfolderData_financial").hide();
-			$("#subfolderData_labor").hide();
 
 			$("#folderData_general").hide();
 			$("#folderData_financial").hide();
@@ -171,50 +170,17 @@ $(function() {
 			});
 		}
 
-		if (data.node.type == "subfolder") {
-			$(".tabbable").show();
-			$("#subfolderData_general").show();
-			$("#subfolderData_financial").show();
-			$("#subfolderData_labor").show();
-
-			$("#fileData_general").hide();
-			$("#fileData_financial").hide();
-			$("#fileData_labor").hide();
-
-			$("#folderData_general").hide();
-			$("#folderData_financial").hide();
-			$("#folderData_labor").hide();
-
-			global_id = data.node.id;
-
-			$.ajax({
-				type : "POST",
-				url : "db_loadSubClassProperties.php",
-				data : "class_id=" + global_id,
-				success : function(data) {
-					var htmlResult_general = new Array();
-					var htmlResult_financial = new Array();
-					var htmlResult_labor = new Array();
-					for (var i = 0; i < data.length; i++) {
-						if (data[i].tab == 'general') {
-							htmlResult_general.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-						if (data[i].tab == 'financial') {
-							htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-						if (data[i].tab == 'labor') {
-							htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-					}
-					$("#subclass-panel-general-data").html(htmlResult_general);
-					$("#subclass-panel-financial-data").html(htmlResult_financial);
-					$("#subclass-panel-labor-data").html(htmlResult_labor);
-				}
-			});
-		}
-
 		if (data.node.type == "folder") {
+			var item_path = $("#tree").jstree(true).get_path(data.node);
+			item_path.shift();
+			var string = "";
+			for (var i = 0; i < item_path.length; i++) {
+				string += item_path[i] + ":";
+			}
+			$('.class-title').html(string);
+
 			$(".tabbable").show();
+
 			$("#folderData_general").show();
 			$("#folderData_financial").show();
 			$("#folderData_labor").show();
@@ -222,10 +188,6 @@ $(function() {
 			$("#fileData_general").hide();
 			$("#fileData_financial").hide();
 			$("#fileData_labor").hide();
-
-			$("#subfolderData_general").hide();
-			$("#subfolderData_financial").hide();
-			$("#subfolderData_labor").hide();
 
 			global_id = data.node.id;
 
@@ -285,28 +247,23 @@ $(function() {
 
 	}).on('delete_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
-				$.ajax({
-					type : "POST",
-					url : "db_deleteConfigItem.php",
-					data : "id=" + global_id,
-					success : function(data) {
-						$(".tabbable").hide();
-					}
-				});
+			$.ajax({
+				type : "POST",
+				url : "db_deleteConfigItem.php",
+				data : "id=" + global_id,
+				success : function(data) {
+					$(".tabbable").hide();
+				}
+			});
 		} else {
-			if (data.node.children.length == 0) {
-				$.ajax({
-					type : "POST",
-					url : "db_deleteClass.php",
-					data : "id=" + global_id,
-					success : function(data) {
-						$(".tabbable").hide();
-					}
-				});
-			} else {
-				alert("Folder not empty! Please delete all its children first!");
-				return;
-			}
+			$.ajax({
+				type : "POST",
+				url : "db_deleteClass.php",
+				data : "id=" + global_id,
+				success : function(data) {
+					$(".tabbable").hide();
+				}
+			});
 		}
 	});
 });
@@ -322,19 +279,6 @@ $(document).ready(function() {
 			type : "POST",
 			url : "db_uploadGeneral.php",
 			data : data
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
-	$("#form-general-subclass").on('submit', function(event) {
-		event.preventDefault();
-		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_uploadGeneralSubclass.php",
-			data : form_data + "&class_id=" + global_id
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -366,19 +310,6 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#form-financial-subclass").on('submit', function(event) {
-		event.preventDefault();
-		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_uploadFinancialSubclass.php",
-			data : form_data + "&class_id=" + global_id
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
 	$("#form-financial-class").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
@@ -405,19 +336,6 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#form-labor-subclass").on('submit', function(event) {
-		event.preventDefault();
-		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_uploadLaborSubclass.php",
-			data : form_data + "&class_id=" + global_id
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
 	$("#form-labor-class").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
@@ -437,34 +355,16 @@ $(document).ready(function() {
 		$('.btn-group-folder-general').slideDown(0);
 	});
 
-	$("#add-general-subclass-toggler").click(function(e) {
-		e.preventDefault();
-		$('#subclass-panel-general-data').append('<tr><td><input name="general-subclass" value="my data"></td><td><select class="form-control" name="select-general-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-subfolder-general').slideDown(0);
-	});
-
 	$("#add-financial-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-financial-data').append('<tr><td><input name="financial-class" value="my data"></td><td><select class="form-control" name="select-financial-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-financial').slideDown(0);
 	});
 
-	$("#add-financial-subclass-toggler").click(function(e) {
-		e.preventDefault();
-		$('#subclass-panel-financial-data').append('<tr><td><input name="financial-subclass" value="my data"></td><td><select class="form-control" name="select-financial-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-subfolder-financial').slideDown(0);
-	});
-
 	$("#add-labor-class-toggler").click(function(e) {
 		e.preventDefault();
 		$('#class-panel-labor-data').append('<tr><td><input name="labor-class" value="my data"></td><td><select class="form-control" name="select-labor-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-labor').slideDown(0);
-	});
-
-	$("#add-labor-subclass-toggler").click(function(e) {
-		e.preventDefault();
-		$('#subclass-panel-labor-data').append('<tr><td><input name="labor-subclass" value="my data"></td><td><select class="form-control" name="select-labor-subclass"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-subfolder-labor').slideDown(0);
 	});
 
 	$(".rm-toggler").click(function(e) {

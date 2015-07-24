@@ -4,6 +4,7 @@ include 'db_connect.php';
 
 function deleteClass($conn) {
 	$id = $_POST['id'];
+	//$id = 42;
 
 	try {
 		$sql = 'delete from property
@@ -16,7 +17,7 @@ function deleteClass($conn) {
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		
 		$sql1 = 'delete from map_class_property
-		where class.id = :id';
+		where class_id = :id';
 		$stmt1 = $conn -> prepare($sql1);
 		$stmt1 -> execute(array(':id' => $id));
 		$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);
@@ -26,6 +27,8 @@ function deleteClass($conn) {
 		$stmt2 = $conn -> prepare($sql2);
 		$stmt2 -> execute(array(':id' => $id));
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
+		
+		echo "Class deleted!";
 
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

@@ -2,26 +2,6 @@
 
 include 'db_connect.php';
 
-function createUsers($conn) {
-	try {
-		$sql = "
-		CREATE TABLE User (
-		user_id INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-		user_name VARCHAR(25) NOT NULL , 
-		user_email VARCHAR(50) NOT NULL , 
-		user_pass VARCHAR(60) NOT NULL , 
-		user_fname VARCHAR(60) NOT NULL, 
-		user_lname VARCHAR(60) NOT NULL,
-		isAdmin BOOLEAN NOT NULL,
-		UNIQUE (user_name), 
-		UNIQUE (user_email)
-		); 
-		";
-	} catch(PDOException $e) {
-		echo $sql . "<br>" . $e -> getMessage();
-	}
-}
-
 function dropTables($conn) {
 	try {
 		$sql = "
@@ -35,6 +15,7 @@ function dropTables($conn) {
 		DROP TABLE Property;
 		DROP TABLE Config_item;
 		DROP TABLE Class;
+		DROP TABLE User;
 		";
 		$conn -> exec($sql);
 		echo "Tables dropped successfully";
@@ -47,6 +28,18 @@ function dropTables($conn) {
 function createTables($conn) {
 	try {
 		$sql = "
+		CREATE TABLE User (
+		user_id INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		user_name VARCHAR(25) NOT NULL , 
+		user_email VARCHAR(50) NOT NULL , 
+		user_pass VARCHAR(60) NOT NULL , 
+		user_fname VARCHAR(60) NOT NULL, 
+		user_lname VARCHAR(60) NOT NULL,
+		isAdmin BOOLEAN NOT NULL,
+		UNIQUE (user_name), 
+		UNIQUE (user_email)
+		); 
+		
 		CREATE TABLE Class (
 		id int NOT NULL,
 		name varchar(255),

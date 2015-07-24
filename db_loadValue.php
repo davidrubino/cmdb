@@ -33,7 +33,7 @@ function retrieveValues($conn) {
 					}
 					array_push($config_items, ['id' => $row_ci['id'], 'text' => $result, 'type' => 'file']);
 				}
-				array_push($children_nodes, ['id' => $row_children['id'], 'text' => $row_children['name'], 'type' => 'subfolder', 'children' => $config_items, 'state' => ['opened' => false]]);
+				array_push($children_nodes, ['id' => $row_children['id'], 'text' => $row_children['name'], 'type' => 'folder', 'children' => $config_items, 'state' => ['opened' => false]]);
 			}
 			array_push($nodes, ['id' => $row['id'], 'text' => $row['name'], 'type' => 'folder', 'children' => $children_nodes, 'state' => ['opened' => false]]);
 		}
