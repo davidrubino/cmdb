@@ -13,7 +13,6 @@ function customMenu($node) {
 				$node = tree.create_node($node, {
 					type : "folder"
 				});
-				//tree.edit($node);
 			}
 		},
 		"createitem" : {
@@ -24,7 +23,6 @@ function customMenu($node) {
 				$node = tree.create_node($node, {
 					type : "file"
 				});
-				tree.edit($node);
 			}
 		},
 		"rename" : {
@@ -194,7 +192,7 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_loadClassProperties.php",
-				data : "class_id=" + global_id,
+				data : "class_id=" + data.node.id,
 				success : function(data) {
 					var htmlResult_general = new Array();
 					var htmlResult_financial = new Array();
@@ -229,7 +227,7 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_renameFile.php",
-				data : "value=" + name + "&id=" + global_id,
+				data : "name=" + name + "&id=" + data.node.id,
 				success : function(data) {
 					alert(old + " was successfully updated to " + name);
 				}
@@ -238,7 +236,7 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_renameFolder.php",
-				data : "name=" + name + "&class_id=" + global_id,
+				data : "name=" + name + "&class_id=" + data.node.id,
 				success : function(data) {
 					alert(old + " was successfully updated to " + name);
 				}
@@ -250,7 +248,7 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_deleteConfigItem.php",
-				data : "id=" + global_id,
+				data : "id=" + data.node.id,
 				success : function(data) {
 					$(".tabbable").hide();
 				}
@@ -259,16 +257,23 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_deleteClass.php",
-				data : "id=" + global_id,
+				data : "id=" + data.node.id,
 				success : function(data) {
 					$(".tabbable").hide();
 				}
 			});
 		}
-		
+
 	}).on('create_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
-			console.log("config item");
+			$.ajax({
+				type : "POST",
+				url : "db_createConfigItem.php",
+				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1],
+				success : function(data) {
+					alert("New item successfully created!");
+				}
+			});
 		} else {
 			$.ajax({
 				type : "POST",
@@ -403,6 +408,7 @@ $(document).ready(function() {
 
 	$('.selectable').on('click', 'tr', function(event) {
 		current = $(this).find("td")[0].innerHTML;
+		console.log($(this).find("td"));
 		$('tr').removeClass('highlight');
 		$(this).addClass('highlight');
 	});

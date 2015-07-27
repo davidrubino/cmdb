@@ -248,3 +248,8 @@ insert into class
 (name, parent_id)
 values
 ('SQLite', 3);
+
+-- create a config item --
+insert into config_item
+(id, class_id)
+select max(id) + 1, 5 from config_item;

@@ -5,7 +5,6 @@ include 'db_connect.php';
 header('Content-Type: application/json');
 
 function retrieveProperties($conn) {
-	//$class_id = 11;
 	$class_id = $_POST['class_id'];
 	
 	try {

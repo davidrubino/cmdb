@@ -20,16 +20,13 @@ function retrieveValues($conn) {
 
 				//select the config items of each subclass
 				foreach ($conn->query($sql_ci) as $row_ci) {
-					$sql_ci_name = "select property_value.id, property_value.str_value from property_value, property
-					where property_value.config_id = {$row_ci['id']}
-					and property_value.property_id = property.id
-					and property.name = 'hostname'
-					";
+					$sql_ci_name = "select config_item.name from config_item
+					where config_item.id = {$row_ci['id']}";
 					$result = "";
 					
 					//select the hostname of each config item
 					foreach ($conn->query($sql_ci_name) as $ci_name) {
-						$result = $ci_name['str_value'];
+						$result = $ci_name['name'];
 					}
 					array_push($config_items, ['id' => $row_ci['id'], 'text' => $result, 'type' => 'file']);
 				}

@@ -49,6 +49,7 @@ function createTables($conn) {
 		
 		CREATE TABLE Config_item (
 		id int NOT NULL,
+		name varchar(255),
 		class_id int,
 		PRIMARY KEY (id),
 		FOREIGN KEY (class_id) REFERENCES Class(id)
@@ -332,14 +333,14 @@ function insertIntoConfigItem($conn) {
 	try {
 		$sql = "
 		INSERT INTO Config_item
-		(id, class_id)
+		(id, name, class_id)
 		VALUES
-		(1000, 5);
+		(1000, 'bashful', 5);
 		
 		INSERT INTO Config_item
-		(id, class_id)
+		(id, name, class_id)
 		VALUES
-		(1101, 5);
+		(1101, 'doc', 5);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Config_item";
@@ -453,16 +454,6 @@ function insertIntoPropertyValue($conn) {
 			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
 			(1, 1101, 'doc', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
-			(2, 1000, '5.3', NULL, NULL);
-			
-			INSERT INTO Property_value
-			(property_id, config_id, str_value, date_value, float_value)
-			VALUES
-			(2, 1101, '6', NULL, NULL);
 			
 			INSERT INTO Property_value
 			(property_id, config_id, str_value, date_value, float_value)
