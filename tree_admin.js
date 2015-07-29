@@ -288,7 +288,7 @@ $(function() {
 });
 
 $(document).ready(function() {
-	var current = "";
+	var current_name = "";
 
 	$("#form-general").on('submit', function(event) {
 		event.preventDefault();
@@ -309,8 +309,8 @@ $(document).ready(function() {
 
 		$.ajax({
 			type : "POST",
-			url : "db_uploadGeneralClass.php",
-			data : form_data + "&class_id=" + global_id
+			url : "db_createProperty.php",
+			data : form_data + "&class_id=" + global_id + "&tab=general"
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -335,8 +335,8 @@ $(document).ready(function() {
 
 		$.ajax({
 			type : "POST",
-			url : "db_uploadFinancialClass.php",
-			data : form_data + "&class_id=" + global_id
+			url : "db_createProperty.php",
+			data : form_data + "&class_id=" + global_id + "&tab=financial"
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -361,8 +361,8 @@ $(document).ready(function() {
 
 		$.ajax({
 			type : "POST",
-			url : "db_uploadLaborClass.php",
-			data : form_data + "&class_id=" + global_id
+			url : "db_createProperty.php",
+			data : form_data + "&class_id=" + global_id + "&tab=labor"
 		}).done(function(msg) {
 			alert("Update successful!");
 		});
@@ -370,19 +370,19 @@ $(document).ready(function() {
 
 	$("#add-general-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-general-data').append('<tr><td><input name="general-class" value="my data"></td><td><select class="form-control" name="select-general-class" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-general-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-general').slideDown(0);
 	});
 
 	$("#add-financial-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-financial-data').append('<tr><td><input name="financial-class" value="my data"></td><td><select class="form-control" name="select-financial-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-financial-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-financial').slideDown(0);
 	});
 
 	$("#add-labor-class-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-labor-data').append('<tr><td><input name="labor-class" value="my data"></td><td><select class="form-control" name="select-labor-class"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('#class-panel-labor-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
 		$('.btn-group-folder-labor').slideDown(0);
 	});
 
@@ -393,7 +393,7 @@ $(document).ready(function() {
 				$.ajax({
 					type : "POST",
 					url : "db_removeProperty.php",
-					data : "name=" + current,
+					data : "name=" + current_name + "&id=" + global_id,
 					success : function(data) {
 						$('.highlight').remove();
 					}
@@ -407,8 +407,7 @@ $(document).ready(function() {
 	});
 
 	$('.selectable').on('click', 'tr', function(event) {
-		current = $(this).find("td")[0].innerHTML;
-		console.log($(this).find("td"));
+		current_name = $(this).find("td")[0].innerHTML;
 		$('tr').removeClass('highlight');
 		$(this).addClass('highlight');
 	});

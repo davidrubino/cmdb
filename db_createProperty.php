@@ -2,10 +2,13 @@
 
 include 'db_connect.php';
 
-function updateDB($conn, $name, $value_type, $tab) {
+function updateDB($conn) {
 	try {
+		$name = $_POST['property-name'];
+		$value_type = $_POST['property-type'];
 		$class_id = $_POST['class_id'];
-
+		$tab = $_POST['tab'];
+		
 		$sql1 = 'insert into property
 		(name, value_type, tab)
 		values
@@ -13,7 +16,7 @@ function updateDB($conn, $name, $value_type, $tab) {
 		$stmt1 = $conn -> prepare($sql1);
 		$stmt1 -> execute(array(':name' => $name, ':value_type' => $value_type, ':tab' => $tab));
 		$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);
-
+		
 		$sql2 = 'insert into map_class_property
 		(class_id, prop_id)
 		values
@@ -23,15 +26,9 @@ function updateDB($conn, $name, $value_type, $tab) {
 		$stmt2 = $conn -> prepare($sql2);
 		$stmt2 -> execute(array(':class_id' => $class_id));
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
-
-		$sql3 = 'select config_item.id from config_item
-		where exists (
-		    select property.name from property, property_value, map_class_property
-		    where config_item.id = property_value.config_id
-		    and property_value.property_id = property.id
-		    and property.id = map_class_property.prop_id
-		    and map_class_property.class_id = :class_id
-		    )';
+		
+		$sql3 ='select config_item.id from config_item
+		where config_item.class_id = :class_id';
 		$stmt3 = $conn -> prepare($sql3);
 		$stmt3 -> execute(array(':class_id' => $class_id));
 		$row3 = $stmt3 -> fetchAll(PDO::FETCH_ASSOC);
@@ -47,19 +44,17 @@ function updateDB($conn, $name, $value_type, $tab) {
 			$stmt4 -> execute(array(':config_item' => $row[id]));
 			$row4 = $stmt4 -> fetchAll(PDO::FETCH_ASSOC);
 		}
-
-		echo "Update successful!";
+		
+		echo "Property successfully created!";
+		
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}
 }
 
 if ($_POST) {
-	if (isset($_POST['financial-class'])) {
-		$name = $_POST['financial-class'];
-		$value_type = $_POST['select-financial-class'];
-		$tab = "financial";
-		updateDB($DB_con, $name, $value_type, $tab);
+	if (isset($_POST['property-name'])) {
+		updateDB($DB_con);
 	}
 }
 ?>
