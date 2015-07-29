@@ -14,29 +14,24 @@ function updateDB($conn, $value, $name, $conf_id) {
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':value1' => $value, ':value2' => $value, ':value3' => $value, ':name' => $name, ':conf_id' => $conf_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}
 }
 
 if ($_POST) {
-	if (isset($_POST['financialA'])) {
-		for ($i = 0; $i < count($_POST['financialA']); $i++) {
-			$conf_id = key($_POST['financialA'][$i]);
-			$name = key($_POST['financialA'][$i][$conf_id]);
-			$value = current($_POST['financialA'][$i][$conf_id]);
-			updateDB($DB_con, $value, $name, $conf_id);
-		}
+	for ($i = 0; $i < count($_POST['classValue']); $i++) {
+		$conf_id = key($_POST['classValue'][$i]);
+		$name = key($_POST['classValue'][$i][$conf_id]);
+		$value = current($_POST['classValue'][$i][$conf_id]);
+		updateDB($DB_con, $value, $name, $conf_id);
 	}
 
-	if (isset($_POST['financialB'])) {
-		for ($i = 0; $i < count($_POST['financialB']); $i++) {
-			$conf_id = key($_POST['financialB'][$i]);
-			$name = key($_POST['financialB'][$i][$conf_id]);
-			$value = current($_POST['financialB'][$i][$conf_id]);
-			updateDB($DB_con, $value, $name, $conf_id);
-		}
+	for ($i = 0; $i < count($_POST['subclassValue']); $i++) {
+		$conf_id = key($_POST['subclassValue'][$i]);
+		$name = key($_POST['subclassValue'][$i][$conf_id]);
+		$value = current($_POST['subclassValue'][$i][$conf_id]);
+		updateDB($DB_con, $value, $name, $conf_id);
 	}
 }
 ?>

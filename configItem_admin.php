@@ -46,7 +46,7 @@ if ($permission == 0) {
 				<div class="tabbable" style="display: none">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a class="active" href="#general" data-toggle="tab">General</a>
+							<a href="#general" data-toggle="tab">General</a>
 						</li>
 						<li>
 							<a href="#financial" data-toggle="tab">Financial</a>
