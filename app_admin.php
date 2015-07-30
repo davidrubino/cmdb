@@ -12,8 +12,8 @@ $stmt -> execute(array(":user_id" => $user_id));
 $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 
 $permission = $userRow['isAdmin'];
-if ($permission == 1) {
-	$user -> redirect('app_admin.php');
+if ($permission == 0) {
+	$user -> redirect('app.php');
 }
 ?>
 
@@ -28,6 +28,7 @@ if ($permission == 1) {
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
+		<link href="dist/themes/default/style.min.css" rel="stylesheet">
 
 	</head>
 
@@ -38,8 +39,11 @@ if ($permission == 1) {
 		?>
 
 		<div class="container">
-			<div class="jumbotron">
-				<h1>Applications User</h1>
+			<div class="col-md-4" id="tree"></div>
+			<div class="col-md-8">
+				<div class="jumbotron">
+					<h1>Applications Admin</h1>
+				</div>
 			</div>
 		</div>
 
@@ -49,6 +53,8 @@ if ($permission == 1) {
 
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="dist/jstree.min.js"></script>
+		<script src="app_tree.js"></script>
 		<script src="menu.js"></script>
 
 	</body>

@@ -73,7 +73,14 @@ $(function() {
 			},
 			"data" : {
 				"type" : "POST",
-				"url" : "db_loadValue.php"
+				"url" : function(node) {
+					return node.id === '#' ? 'db_treeLoaderRoot.php' : 'db_treeLoader.php';
+				},
+				"data" : function(node) {
+					return {
+						'id' : node.id
+					};
+				}
 			}
 		},
 
@@ -91,9 +98,10 @@ $(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
+		console.log(data.node.id);
 		var path = $("#tree").jstree(true).get_path(data.node, ":");
 		$('.name').html(path);
 
