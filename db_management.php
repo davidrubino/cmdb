@@ -86,9 +86,10 @@ function createTables($conn) {
 		);
 		
 		CREATE TABLE Application (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL,
 		name varchar(255),
 		folder_id int,
+		PRIMARY KEY (id),
 		FOREIGN KEY (folder_id) REFERENCES Folder(id)
 		);
 		";
@@ -382,6 +383,26 @@ function insertIntoFolder($conn) {
 		(name, parent_id)
 		VALUES
 		('Payroll', 1);
+		
+		INSERT INTO Folder
+		(name, parent_id)
+		VALUES
+		('Recruitement', 1);
+		
+		INSERT INTO Folder
+		(name, parent_id)
+		VALUES
+		('Domain Name System', NULL);
+		
+		INSERT INTO Folder
+		(name, parent_id)
+		VALUES
+		('DNS Lookup', 4);
+		
+		INSERT INTO Folder
+		(name, parent_id)
+		VALUES
+		('DNS Provider', 4);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Folder";
@@ -395,9 +416,24 @@ function insertIntoApplication($conn) {
 	try {
 		$sql = "
 		INSERT INTO Application
-		(name, folder_id)
+		(id, name, folder_id)
 		VALUES
-		('ADP', 2);
+		(1000, 'ADP', 2);
+		
+		INSERT INTO Application
+		(id, name, folder_id)
+		VALUES
+		(1001, 'MyPayrollHR', 2);
+		
+		INSERT INTO Application
+		(id, name, folder_id)
+		VALUES
+		(1002, 'DNS Made Easy', 6);
+		
+		INSERT INTO Application
+		(id, name, folder_id)
+		VALUES
+		(1003, 'Dyn', 6);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Application";

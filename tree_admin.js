@@ -101,7 +101,6 @@ $(function() {
 		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
-		console.log(data.node.id);
 		var path = $("#tree").jstree(true).get_path(data.node, ":");
 		$('.name').html(path);
 
@@ -229,27 +228,20 @@ $(function() {
 
 	}).on('rename_node.jstree', function(e, data) {
 		var name = data.text;
-		var old = data.old;
-
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_renameFile.php",
-				data : "name=" + name + "&id=" + data.node.id,
-				success : function(data) {
-					alert(old + " was successfully updated to " + name);
-				}
+				url : "db_renameConfigItem.php",
+				data : "name=" + name + "&id=" + data.node.id
 			});
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_renameFolder.php",
-				data : "name=" + name + "&class_id=" + data.node.id,
-				success : function(data) {
-					alert(old + " was successfully updated to " + name);
-				}
+				url : "db_renameClass.php",
+				data : "name=" + name + "&class_id=" + data.node.id
 			});
 		}
+		$("#tree").jstree("refresh");
 
 	}).on('delete_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
@@ -271,27 +263,23 @@ $(function() {
 				}
 			});
 		}
+		$("#tree").jstree("refresh");
 
 	}).on('create_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
 				url : "db_createConfigItem.php",
-				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1],
-				success : function(data) {
-					alert("New item successfully created!");
-				}
+				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1]
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "db_createClass.php",
-				data : "id=" + data.node.parent,
-				success : function(data) {
-					alert("New class successfully created!");
-				}
+				data : "id=" + data.node.parent
 			});
 		}
+		$("#tree").jstree("refresh");
 	});
 });
 

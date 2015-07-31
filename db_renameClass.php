@@ -2,23 +2,23 @@
 
 include 'db_connect.php';
 
-function renameFile($conn) {
+function renameClass($conn) {
 	$name = $_POST['name'];
-	$id = $_POST['id'];
-
+	$class_id = $_POST['class_id'];
+	
 	try {
-		$sql = 'update config_item
+		$sql = 'update class
 		set name = :name
-		where id = :id';
+		where id = :class_id';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':name' => $name, ':id' => $id));
+		$stmt -> execute(array(':name' => $name, ':class_id' => $class_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		echo "Update successful!";
-
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}
 }
 
-renameFile($DB_con);
+renameClass($DB_con);
+
 ?>

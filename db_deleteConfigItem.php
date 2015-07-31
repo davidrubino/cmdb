@@ -3,7 +3,6 @@
 include 'db_connect.php';
 
 function deleteConfigItem($conn) {
-	//$id = 1105;
 	$id = $_POST['id'];
 
 	try {
@@ -19,7 +18,7 @@ function deleteConfigItem($conn) {
 		$stmt2 -> execute(array(':id' => $id));
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
 		
-		echo "Update successful!";
+		echo "Config item deleted!";
 		
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

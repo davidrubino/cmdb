@@ -2,7 +2,7 @@
 
 include 'db_connect.php';
 
-function createClass($conn) {
+function createConfigItem($conn) {
 	$class_id = $_POST['class_id'];
 	$parent_id = $_POST['parent_id'];
 
@@ -41,5 +41,5 @@ function createClass($conn) {
 	}
 }
 
-createClass($DB_con);
+createConfigItem($DB_con);
 ?>

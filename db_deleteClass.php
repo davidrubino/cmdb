@@ -4,7 +4,6 @@ include 'db_connect.php';
 
 function deleteClass($conn) {
 	$id = $_POST['id'];
-	//$id = 42;
 
 	try {
 		$sql = 'delete from property

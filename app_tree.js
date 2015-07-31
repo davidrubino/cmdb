@@ -96,5 +96,54 @@ $(function() {
 
 		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
 
+	}).on('rename_node.jstree', function(e, data) {
+		var name = data.text;
+
+		if (data.node.type == 'file') {
+			$.ajax({
+				type : "POST",
+				url : "db_renameApplication.php",
+				data : "name=" + name + "&id=" + data.node.id,
+			});
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "db_renameFolder.php",
+				data : "name=" + name + "&parent_id=" + data.node.id,
+			});
+		}
+		$("#tree").jstree("refresh");
+
+	}).on('delete_node.jstree', function(e, data) {
+		if (data.node.type == 'file') {
+			$.ajax({
+				type : "POST",
+				url : "db_deleteApplication.php",
+				data : "id=" + data.node.id
+			});
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "db_deleteFolder.php",
+				data : "id=" + data.node.id
+			});
+		}
+		$("#tree").jstree("refresh");
+
+	}).on('create_node.jstree', function(e, data) {
+		if (data.node.type == 'file') {
+			$.ajax({
+				type : "POST",
+				url : "db_createApplication.php",
+				data : "folder_id=" + data.node.parent
+			});
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "db_createFolder.php",
+				data : "id=" + data.node.parent
+			});
+		}
+		$("#tree").jstree("refresh");
 	});
-}); 
+});
