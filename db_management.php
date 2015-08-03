@@ -5,6 +5,8 @@ include 'db_connect.php';
 function dropTables($conn) {
 	try {
 		$sql = "
+		DROP TABLE Map_configitem_organizer;
+		DROP TABLE Organizer;
 		DROP TABLE Application;
 		DROP TABLE Folder;
 		DROP TABLE Property_value;
@@ -91,6 +93,21 @@ function createTables($conn) {
 		folder_id int,
 		PRIMARY KEY (id),
 		FOREIGN KEY (folder_id) REFERENCES Folder(id)
+		);
+		
+		CREATE TABLE Organizer (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		name varchar(255),
+		application_id int,
+		FOREIGN KEY (application_id) REFERENCES Application(id)
+		);
+		
+		CREATE TABLE Map_configitem_organizer (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		organizer_id int,
+		configitem_id int,
+		FOREIGN KEY (organizer_id) REFERENCES Organizer(id),
+		FOREIGN KEY (configitem_id) REFERENCES Config_item(id)
 		);
 		";
 		$conn -> exec($sql);
@@ -443,6 +460,48 @@ function insertIntoApplication($conn) {
 	}
 }
 
+function insertIntoOrganizer($conn) {
+	try {
+		$sql = "
+		INSERT INTO Organizer
+		(name, application_id)
+		VALUES
+		('App Servers', 1000);
+		
+		INSERT INTO Organizer
+		(name, application_id)
+		VALUES
+		('App Databases', 1000);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Organizer";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
+function insertIntoMapConfigitemOrganizer($conn) {
+	try {
+		$sql = "
+		INSERT INTO Map_configitem_organizer
+		(organizer_id, configitem_id)
+		VALUES
+		(1, 1000);
+		
+		INSERT INTO Map_configitem_organizer
+		(organizer_id, configitem_id)
+		VALUES
+		(1, 1101);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Map_configitem_organizer";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
 //dropTables($DB_con);
 //createTables($DB_con);
 //insertIntoClass($DB_con);
@@ -452,4 +511,6 @@ function insertIntoApplication($conn) {
 //insertIntoPropertyValue($DB_con);
 //insertIntoFolder($DB_con);
 //insertIntoApplication($DB_con);
+//insertIntoOrganizer($DB_con);
+//insertIntoMapConfigitemOrganizer($DB_con);
 ?>

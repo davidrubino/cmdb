@@ -29,6 +29,8 @@ if ($permission == 0) {
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
+		<link href="dist-vis/vis.css" rel="stylesheet">
+		<link href="css/graph.css" rel="stylesheet">
 
 	</head>
 
@@ -40,11 +42,7 @@ if ($permission == 0) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-8">
-				<div class="jumbotron">
-					<h1>Applications Admin</h1>
-				</div>
-			</div>
+			<div class="col-md-8" id="mynetwork"></div>
 		</div>
 
 		<?php
@@ -56,6 +54,8 @@ if ($permission == 0) {
 		<script src="dist/jstree.min.js"></script>
 		<script src="app_tree.js"></script>
 		<script src="menu.js"></script>
+		<script src="dist-vis/vis.js"></script>
+		<script src="graph_content.js"></script>
 
 	</body>
 </html>
