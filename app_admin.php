@@ -42,7 +42,7 @@ if ($permission == 0) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-8" id="mynetwork"></div>
+			<div class="col-md-8" id="mynetwork" style="display: none"></div>
 		</div>
 
 		<?php

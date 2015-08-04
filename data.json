@@ -1,0 +1,75 @@
+{
+    "nodes": [
+        {
+            "id": 0,
+            "label": "ADP",
+            "level": 1,
+            "properties": {
+                "type": "application"
+            }
+        },
+        {
+        	"id": 1,
+            "label": "App Servers",
+            "level": 2,
+            "properties": {
+                "type": "organizer"
+            }
+        },
+        {
+        	"id": 2,
+            "label": "CI",
+            "level": 3,
+            "properties": {
+                "type": "config_item"
+            }
+        },
+        {
+        	"id": 3,
+            "label": "CI",
+            "level": 3,
+            "properties": {
+                "type": "config_item"
+            }
+        },
+        {
+        	"id": 4,
+            "label": "CI",
+            "level": 3,
+            "properties": {
+                "type": "config_item"
+            }
+        }
+    ],
+    
+    "edges": [
+        {
+            "id": "0",
+            "type": "HAS_CHILDREN",
+            "from": 0,
+            "to": 1,
+            "properties": []
+        },
+        {
+            "id": "1",
+            "type": "HAS_CHILDREN",
+            "from": 1,
+            "to": 2,
+            "properties": []
+        },
+        {
+            "id": "2",
+            "type": "HAS_CHILDREN",
+            "from": 1,
+            "to": 3,
+            "properties": []
+        },
+        {
+            "id": "3",
+            "type": "HAS_CHILDREN",
+            "from": 1,
+            "to": 4,
+            "properties": []
+        }
+     ]
+}

@@ -145,5 +145,12 @@ $(function() {
 			});
 		}
 		$("#tree").jstree("refresh");
+	}).on('select_node.jstree', function(e, data) {
+		if (data.node.type == "file") {
+			$("#mynetwork").show();
+		}
+		else {
+			$("#mynetwork").hide();
+		}
 	});
 });
