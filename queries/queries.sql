@@ -255,9 +255,5 @@ insert into config_item
 select max(id) + 1, 5 from config_item;
 
 -- import values for the graph --
-select application.name, organizer.name, config_item.name
-from application, organizer, config_item, map_configitem_organizer
-where application.id = 1000
-and application.id = organizer.application_id
-and organizer.id = map_configitem_organizer.organizer_id
-and map_configitem_organizer.configitem_id = config_item.id
+select id, name, type, parent_id
+from graph

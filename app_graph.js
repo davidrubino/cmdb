@@ -6,10 +6,19 @@ var options = {
 		hierarchical : {
 			direction : 'UD'
 		}
+	},
+	nodes : {
+		icon : {
+			face : 'FontAwesome',
+			code : '\uf10a',
+			size : 50,
+			color : '#2B7CE9'
+		},
+		shape : 'icon'
 	}
 };
 
-var json = $.getJSON("data.json").done(function(data) {
+var json = $.getJSON("db_createGraph.php").done(function(data) {
 	var g = {
 		nodes : data.nodes,
 		edges : data.edges

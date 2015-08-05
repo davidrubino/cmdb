@@ -5,7 +5,7 @@
             "label": "ADP",
             "level": 1,
             "properties": {
-                "type": "application"
+                "type": "app"
             }
         },
         {
@@ -45,31 +45,23 @@
     "edges": [
         {
             "id": "0",
-            "type": "HAS_CHILDREN",
             "from": 0,
-            "to": 1,
-            "properties": []
+            "to": 1
         },
         {
             "id": "1",
-            "type": "HAS_CHILDREN",
             "from": 1,
-            "to": 2,
-            "properties": []
+            "to": 2
         },
         {
             "id": "2",
-            "type": "HAS_CHILDREN",
             "from": 1,
-            "to": 3,
-            "properties": []
+            "to": 3
         },
         {
             "id": "3",
-            "type": "HAS_CHILDREN",
             "from": 1,
-            "to": 4,
-            "properties": []
+            "to": 4
         }
      ]
 }

@@ -31,6 +31,7 @@ if ($permission == 0) {
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
 		<link href="dist-vis/vis.css" rel="stylesheet">
 		<link href="css/graph.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" >
 
 	</head>
 
@@ -42,7 +43,7 @@ if ($permission == 0) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-8" id="mynetwork" style="display: none"></div>
+			<div class="col-md-8" id="mynetwork"></div>
 		</div>
 
 		<?php
@@ -55,7 +56,7 @@ if ($permission == 0) {
 		<script src="app_tree.js"></script>
 		<script src="menu.js"></script>
 		<script src="dist-vis/vis.js"></script>
-		<script src="graph_content.js"></script>
+		<script src="app_graph.js"></script>
 
 	</body>
 </html>
