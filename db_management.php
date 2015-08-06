@@ -97,7 +97,7 @@ function createTables($conn) {
 		CREATE TABLE Graph (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255),
-		type int,
+		type varchar(255),
 		parent_id int,
 		FOREIGN KEY (parent_id) REFERENCES Graph(id)
 		);
@@ -458,27 +458,27 @@ function insertIntoGraph($conn) {
 		INSERT INTO Graph
 		(name, type, parent_id)
 		VALUES
-		('ADP', 0, NULL);
+		('ADP', 'app', NULL);
 		
 		INSERT INTO Graph
 		(name, type, parent_id)
 		VALUES
-		('App Servers', 1, 1);
+		('App Servers', 'folder', 1);
 		
 		INSERT INTO Graph
 		(name, type, parent_id)
 		VALUES
-		('CI', 2, 2);
+		('CI', 'config_item', 2);
 		
 		INSERT INTO Graph
 		(name, type, parent_id)
 		VALUES
-		('CI', 2, 2);
+		('CI', 'config_item', 2);
 		
 		INSERT INTO Graph
 		(name, type, parent_id)
 		VALUES
-		('CI', 2, 2);
+		('CI', 'config_item', 2);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Graph";

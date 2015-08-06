@@ -42,7 +42,11 @@ function createGraph($conn) {
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 		foreach ($row as $i) {
-			array_push($nodes, ['id' => $i['id'], 'label' => $i['name'], 'level' => getLevel($conn, $i['id']), 'properties' => ['type' => $i['type']]]);
+			array_push($nodes, ['id' => $i['id'],
+								'group' => $i['type'],
+								'label' => $i['name'],
+								'level' => getLevel($conn, $i['id'])]);
+								
 			if ($i['parent_id'] != null) {
 				$count++;
 				array_push($edges, ['id' => $count, 'from' => $i['parent_id'], 'to' => $i['id']]);

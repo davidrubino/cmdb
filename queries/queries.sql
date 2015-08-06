@@ -257,3 +257,9 @@ select max(id) + 1, 5 from config_item;
 -- import values for the graph --
 select id, name, type, parent_id
 from graph
+
+-- insert new folder into graph --
+insert into graph
+(name, type, parent_id)
+values
+('App Databases', 'folder', 1)

@@ -43,7 +43,18 @@ if ($permission == 0) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-8" id="mynetwork"></div>
+			<div class="col-md-6" id="mynetwork"></div>
+			<div class="col-md-2">
+				<button type="submit" class="btn btn-large btn-primary" id="add-folder">
+					Add folder
+				</button>
+				<button type="submit" class="btn btn-large btn-primary" id="add-config-item">
+					Add configuration item
+				</button>
+				<button type="submit" class="btn btn-large btn-primary" id="remove-item">
+					Remove item
+				</button>
+			</div>
 		</div>
 
 		<?php
