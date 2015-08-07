@@ -1,6 +1,8 @@
 var container,
     options,
-    g;
+    g,
+    node_id,
+    size;
 
 function setContainer() {
 	container = document.getElementById('mynetwork');
@@ -52,31 +54,17 @@ function setGraph(data) {
 	};
 }
 
-function resetAllNodes() {
-	g.length=0;
+function getGroup(id) {
+	for ( i = 0; i < g.nodes.length; i++) {
+		if (g.nodes[i].id == id) {
+			return g.nodes[i].group;
+		}
+	}
 }
 
-var json = $.getJSON("app_db_createGraph.php").done(function(data) {
-	setContainer();
-	setOptions();
-	setGraph(data);
-	
-	var node_id = -1;
-
-	var network = new vis.Network(container, g, options);
-	network.fit();
-
-	network.on("selectNode", function(params) {
-		node_id = params.nodes[0];
-	});
-
-	network.on("deselectNode", function(params) {
-		node_id = -1;
-	});
-
-	$("#add-folder").click(function(e) {
-		e.preventDefault();
-		if (node_id != -1) {
+function addFolder() {
+	if (node_id != -1) {
+		if (getGroup(node_id) != "config_item") {
 			$.ajax({
 				type : "POST",
 				url : "app_db_createFolder.php",
@@ -85,16 +73,95 @@ var json = $.getJSON("app_db_createGraph.php").done(function(data) {
 					location.reload();
 				}
 			});
+		} else {
+			alert("A configuration item cannot be a parent node!");
+		}
+	} else {
+		alert("Please select a parent node!");
+	}
+}
+
+function loadConfigItem() {
+	if (node_id != -1) {
+		if (getGroup(node_id) != "config_item") {
+			$.ajax({
+				type : "POST",
+				url : "app_db_loadConfigItems.php",
+				success : function(data) {
+					var items = new Array();
+					for (var i = 0; i < data.length; i++) {
+						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value)" value="' + data[i].name + '">');
+					}
+					$(".span-cfg").html(items);
+				}
+			});
+		} else {
+			alert("A configuration item cannot be a parent node!");
+		}
+	} else {
+		alert("Please select a parent node!");
+	}
+}
+
+function addConfigItem(value) {
+	$.ajax({
+		type : "POST",
+		url : "app_db_addConfigItems.php",
+		data : "value=" + value + "&parent_id=" + node_id,
+		success : function() {
+			location.reload();
 		}
 	});
+}
 
-	$("#add-config-item").click(function(e) {
-		e.preventDefault();
-		alert("add config item");
+function renameFolder() {
+	if (node_id != -1) {
+		if (getGroup(node_id) == "folder") {
+			alert("rename item");
+		} else {
+			alert("Only folders can be renamed!");
+		}
+	} else {
+		alert("Please select an item to rename!");
+	}
+}
+
+function removeItem() {
+	if (node_id != -1) {
+		if (size < 2) {
+			if (confirm("Are you sure you want to delete this node?")) {
+				$.ajax({
+					type : "POST",
+					url : "app_db_removeItem.php",
+					data : "id=" + node_id,
+					success : function() {
+						location.reload();
+					}
+				});
+			}
+		} else {
+			alert("Folder not empty! Please delete all children first!");
+		}
+	} else {
+		alert("Please select an item to remove!");
+	}
+}
+
+var json = $.getJSON("app_db_createGraph.php").done(function(data) {
+	setContainer();
+	setOptions();
+	setGraph(data);
+	node_id = -1;
+
+	var network = new vis.Network(container, g, options);
+	network.fit();
+
+	network.on("selectNode", function(params) {
+		node_id = params.nodes[0];
+		size = params.edges.length;
 	});
 
-	$("#remove-item").click(function(e) {
-		e.preventDefault();
-		alert("remove item");
+	network.on("deselectNode", function(params) {
+		node_id = -1;
 	});
 });

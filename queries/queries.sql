@@ -263,3 +263,10 @@ insert into graph
 (name, type, parent_id)
 values
 ('App Databases', 'folder', 1)
+
+-- remove item from graph --
+delete from graph
+where id = 15;
+
+-- select all config items --
+select name from config_item;

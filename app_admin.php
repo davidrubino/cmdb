@@ -45,15 +45,11 @@ if ($permission == 0) {
 			<div class="col-md-4" id="tree"></div>
 			<div class="col-md-6" id="mynetwork"></div>
 			<div class="col-md-2">
-				<button type="submit" class="btn btn-large btn-primary" id="add-folder">
-					Add folder
-				</button>
-				<button type="submit" class="btn btn-large btn-primary" id="add-config-item">
-					Add configuration item
-				</button>
-				<button type="submit" class="btn btn-large btn-primary" id="remove-item">
-					Remove item
-				</button>
+				<input class="btn btn-large btn-primary i-graph" type="button" onclick="addFolder()" value="Add folder">
+				<input class="btn btn-large btn-primary i-graph" type="button" onclick="loadConfigItem()" value="Add configuration item">
+				<span class="span-cfg"></span>
+				<input class="btn btn-large btn-primary i-graph" type="button" onclick="renameFolder()" value="Rename folder">
+				<input class="btn btn-large btn-primary i-graph" type="button" onclick="removeItem()" value="Remove item">
 			</div>
 		</div>
 
