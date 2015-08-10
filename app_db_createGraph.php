@@ -28,6 +28,8 @@ function getLevel($conn, $id) {
 }
 
 function createGraph($conn) {
+	$application_id = $_POST['application_id'];
+	
 	try {
 		$nodes = array();
 		$edges = array();
@@ -36,9 +38,10 @@ function createGraph($conn) {
 		$sql = "
 		select id, name, type, parent_id
 		from graph
+		where application_id = :application_id
 		";
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute();
+		$stmt -> execute(array(':application_id' => $application_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 		foreach ($row as $i) {

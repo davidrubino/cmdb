@@ -99,7 +99,9 @@ function createTables($conn) {
 		name varchar(255),
 		type varchar(255),
 		parent_id int,
-		FOREIGN KEY (parent_id) REFERENCES Graph(id)
+		application_id int,
+		FOREIGN KEY (parent_id) REFERENCES Graph(id),
+		FOREIGN KEY (application_id) REFERENCES Application(id)
 		);
 		";
 		$conn -> exec($sql);
@@ -392,26 +394,6 @@ function insertIntoFolder($conn) {
 		(name, parent_id)
 		VALUES
 		('Payroll', 1);
-		
-		INSERT INTO Folder
-		(name, parent_id)
-		VALUES
-		('Recruitement', 1);
-		
-		INSERT INTO Folder
-		(name, parent_id)
-		VALUES
-		('Domain Name System', NULL);
-		
-		INSERT INTO Folder
-		(name, parent_id)
-		VALUES
-		('DNS Lookup', 4);
-		
-		INSERT INTO Folder
-		(name, parent_id)
-		VALUES
-		('DNS Provider', 4);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Folder";
@@ -428,21 +410,6 @@ function insertIntoApplication($conn) {
 		(id, name, folder_id)
 		VALUES
 		(1000, 'ADP', 2);
-		
-		INSERT INTO Application
-		(id, name, folder_id)
-		VALUES
-		(1001, 'MyPayrollHR', 2);
-		
-		INSERT INTO Application
-		(id, name, folder_id)
-		VALUES
-		(1002, 'DNS Made Easy', 6);
-		
-		INSERT INTO Application
-		(id, name, folder_id)
-		VALUES
-		(1003, 'Dyn', 6);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Application";
@@ -456,29 +423,29 @@ function insertIntoGraph($conn) {
 	try {
 		$sql = "
 		INSERT INTO Graph
-		(name, type, parent_id)
+		(name, type, parent_id, application_id)
 		VALUES
-		('ADP', 'app', NULL);
+		('ADP', 'app', NULL, 1000);
 		
 		INSERT INTO Graph
-		(name, type, parent_id)
+		(name, type, parent_id, application_id)
 		VALUES
-		('App Servers', 'folder', 1);
+		('App Servers', 'folder', 1, 1000);
 		
 		INSERT INTO Graph
-		(name, type, parent_id)
+		(name, type, parent_id, application_id)
 		VALUES
-		('CI', 'config_item', 2);
+		('CI', 'config_item', 2, 1000);
 		
 		INSERT INTO Graph
-		(name, type, parent_id)
+		(name, type, parent_id, application_id)
 		VALUES
-		('CI', 'config_item', 2);
+		('CI', 'config_item', 2, 1000);
 		
 		INSERT INTO Graph
-		(name, type, parent_id)
+		(name, type, parent_id, application_id)
 		VALUES
-		('CI', 'config_item', 2);
+		('CI', 'config_item', 2, 1000);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Graph";

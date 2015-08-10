@@ -43,12 +43,22 @@ if ($permission == 0) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-6" id="mynetwork"></div>
-			<div class="col-md-2">
+			<div class="col-md-6" id="mynetwork" style="display:none"></div>
+			<div class="col-md-2" id="control-panel" style="display:none">
 				<input class="btn btn-large btn-primary i-graph" type="button" onclick="addFolder()" value="Add folder">
 				<input class="btn btn-large btn-primary i-graph" type="button" onclick="loadConfigItem()" value="Add configuration item">
 				<span class="span-cfg"></span>
 				<input class="btn btn-large btn-primary i-graph" type="button" onclick="renameFolder()" value="Rename folder">
+
+				<span class="cat1" style="display:none">
+					<form class="form-horizontal" role="form" method="post">
+						<input class="form-control i-graph" name="txt-name">
+						<button class="btn btn-sm btn-info i-graph" type="submit">
+							Save
+						</button>
+						<input class="btn btn-sm btn-info i-graph" type="button" onclick="document.location.href='app_admin.php';" value="Cancel">
+					</form> </span>
+
 				<input class="btn btn-large btn-primary i-graph" type="button" onclick="removeItem()" value="Remove item">
 			</div>
 		</div>
@@ -63,7 +73,6 @@ if ($permission == 0) {
 		<script src="app_tree.js"></script>
 		<script src="menu.js"></script>
 		<script src="dist-vis/vis.js"></script>
-		<script src="app_graph.js"></script>
 
 	</body>
 </html>
