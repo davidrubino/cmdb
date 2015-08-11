@@ -3,9 +3,17 @@ $(function() {
 
 		"core" : {
 			"check_callback" : true,
+
 			"data" : {
 				"type" : "POST",
-				"url" : "db_loadValue.php",
+				"url" : function(node) {
+					return node.id === '#' ? 'db_treeLoaderRoot.php' : 'db_treeLoader.php';
+				},
+				"data" : function(node) {
+					return {
+						'id' : node.id
+					};
+				}
 			}
 		},
 
@@ -87,4 +95,4 @@ $(function() {
 			core.check_callback(false);
 		}
 	});
-}); 
+});

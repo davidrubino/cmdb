@@ -13,7 +13,7 @@ $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 
 $permission = $userRow['isAdmin'];
 if ($permission == 1) {
-	$user -> redirect('configItem_admin.php');
+	$user -> redirect('ci_admin.php');
 }
 ?>
 
@@ -126,7 +126,7 @@ if ($permission == 1) {
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
-		<script src="tree.js"></script>
+		<script src="ci_tree.js"></script>
 		<script src="menu.js"></script>
 
 	</body>

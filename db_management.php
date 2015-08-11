@@ -100,8 +100,10 @@ function createTables($conn) {
 		type varchar(255),
 		parent_id int,
 		application_id int,
-		FOREIGN KEY (parent_id) REFERENCES Graph(id),
+		FOREIGN KEY (parent_id) REFERENCES Graph(id)
+		ON DELETE CASCADE,
 		FOREIGN KEY (application_id) REFERENCES Application(id)
+		ON DELETE CASCADE
 		);
 		";
 		$conn -> exec($sql);

@@ -16,7 +16,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 					<a href="home.php">Home</a>
 				</li>
 				<li>
-					<a href="configItem.php">Configuration Items</a>
+					<a href="ci.php">Configuration Items</a>
 				</li>
 				<li>
 					<a href="app.php">Applications</a>

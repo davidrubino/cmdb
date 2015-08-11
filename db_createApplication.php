@@ -14,6 +14,19 @@ function createApplication($conn) {
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 		echo "Application created!";
+		echo "<br>";
+		
+		$sql_graph = 'insert into graph
+		(name, type, parent_id, application_id)
+		values
+		("New node", "app", NULL, (select id from application
+			order by id desc 
+			limit 1))';
+		$stmt_graph = $conn -> prepare($sql_graph);
+		$stmt_graph -> execute();
+		$row_graph = $stmt_graph -> fetchAll(PDO::FETCH_ASSOC);
+
+		echo "Graph created!";
 
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

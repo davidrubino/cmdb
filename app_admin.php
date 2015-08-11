@@ -70,7 +70,7 @@ if ($permission == 0) {
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
-		<script src="app_tree.js"></script>
+		<script src="app_admin_tree.js"></script>
 		<script src="menu.js"></script>
 		<script src="dist-vis/vis.js"></script>
 

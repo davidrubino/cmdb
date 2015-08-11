@@ -13,7 +13,19 @@ function renameApplication($conn) {
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':name' => $name, ':id' => $id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-		echo "Update successful!";
+		
+		echo "Application updated!";
+		echo "<br>";
+		
+		$sql_graph = 'update graph
+		set name = :name
+		where application_id = :id
+		and type = "app"';
+		$stmt_graph = $conn -> prepare($sql_graph);
+		$stmt_graph -> execute(array(':name' => $name, ':id' => $id));
+		$row_graph = $stmt_graph -> fetchAll(PDO::FETCH_ASSOC);
+		
+		echo "Graph updated!";
 
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

@@ -14,7 +14,7 @@ $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 $permission = $userRow['isAdmin'];
 
 if ($permission == 0) {
-	$user -> redirect('configItem.php');
+	$user -> redirect('ci.php');
 }
 ?>
 
@@ -85,7 +85,7 @@ if ($permission == 0) {
 										<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
 											Save settings
 										</button>
-										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 										</input>
 									</div>
 								</form>
@@ -113,7 +113,7 @@ if ($permission == 0) {
 											<button type="submit" class="btn btn-large btn-primary">
 												Save settings
 											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 											</input>
 										</div>
 									</div>
@@ -149,7 +149,7 @@ if ($permission == 0) {
 										<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
 											Save settings
 										</button>
-										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 										</input>
 									</div>
 
@@ -178,7 +178,7 @@ if ($permission == 0) {
 											<button type="submit" class="btn btn-large btn-primary">
 												Save settings
 											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 											</input>
 										</div>
 									</div>
@@ -213,7 +213,7 @@ if ($permission == 0) {
 										<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
 											Save settings
 										</button>
-										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+										<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 										</input>
 									</div>
 
@@ -242,7 +242,7 @@ if ($permission == 0) {
 											<button type="submit" class="btn btn-large btn-primary">
 												Save settings
 											</button>
-											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='configItem_admin.php';">
+											<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 											</input>
 										</div>
 									</div>
@@ -263,7 +263,7 @@ if ($permission == 0) {
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
-		<script src="tree_admin.js"></script>
+		<script src="ci_admin_tree.js"></script>
 		<script src="menu.js"></script>
 
 	</body>

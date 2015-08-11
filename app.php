@@ -28,6 +28,10 @@ if ($permission == 1) {
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
+		<link href="dist/themes/default/style.min.css" rel="stylesheet">
+		<link href="dist-vis/vis.css" rel="stylesheet">
+		<link href="css/graph.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" >
 
 	</head>
 
@@ -38,9 +42,8 @@ if ($permission == 1) {
 		?>
 
 		<div class="container">
-			<div class="jumbotron">
-				<h1>Applications User</h1>
-			</div>
+			<div class="col-md-4" id="tree"></div>
+			<div class="col-md-8" id="mynetwork" style="display:none"></div>
 		</div>
 
 		<?php
@@ -49,7 +52,10 @@ if ($permission == 1) {
 
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="dist/jstree.min.js"></script>
+		<script src="app_tree.js"></script>
 		<script src="menu.js"></script>
+		<script src="dist-vis/vis.js"></script>
 
 	</body>
 </html>
