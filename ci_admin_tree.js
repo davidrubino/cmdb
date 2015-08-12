@@ -1,6 +1,7 @@
-var global_id = -1;
-var global_parent_id = -1;
-var global_grandparent_id = -1;
+var global_id,
+    global_parent_id,
+    global_grandparent_id,
+    current_name;
 
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
@@ -57,9 +58,85 @@ function customMenu($node) {
 	return items;
 }
 
-$(function() {
-	$("#tree").jstree({
+function initializeTabs() {
+	$('#tabs').tabs();
+}
 
+function getCurrentTab() {
+	var active = $('#tabs').tabs('option', 'active');
+	var tab = $("#tabs ul>li a").eq(active).attr("href");
+	return tab.substring(1);
+}
+
+function getCurrentId() {
+	return global_id;
+}
+
+function getFullPath(node) {
+	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
+}
+
+function createProperty(data, id, tab) {
+	$.ajax({
+		type : "POST",
+		url : "db_createProperty.php",
+		data : data + "&class_id=" + id + "&tab=" + tab,
+		success : function() {
+			location.reload();
+		}
+	});
+}
+
+function removeProperty(name, id) {
+	if ($("tr").hasClass("highlight")) {
+		if (confirm("Are you sure you want to permanently delete this property?")) {
+			$.ajax({
+				type : "POST",
+				url : "db_removeProperty.php",
+				data : "name=" + name + "&id=" + id,
+				success : function(data) {
+					$('.highlight').remove();
+				}
+			});
+		} else {
+			return;
+		}
+	} else {
+		alert("Please select a property to remove!");
+	}
+}
+
+function getProperties(tab, id) {
+	$.ajax({
+		type : "POST",
+		url : "db_loadClassProperties.php",
+		data : "tab=" + tab + "&class_id=" + id,
+		success : function(data) {
+			var htmlResult = new Array();
+			for (var i = 0; i < data.length; i++) {
+				htmlResult.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
+			}
+			$(".property-table").html(htmlResult);
+		}
+	});
+}
+
+function editValues(data) {
+	$.ajax({
+		type : "POST",
+		url : "db_updateValues.php",
+		data : data,
+		success : function() {
+			alert("Update successful!");
+		}
+	});
+}
+
+
+$(document).ready(function() {
+	initializeTabs();
+
+	$("#tree").jstree({
 		"core" : {
 			"check_callback" : function(operation, node) {
 				if (operation === 'delete_node') {
@@ -101,8 +178,7 @@ $(function() {
 		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
-		var path = $("#tree").jstree(true).get_path(data.node, ":");
-		$('.name').html(path);
+		getFullPath(data.node);
 
 		if (data.node.type == "file") {
 			var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
@@ -110,7 +186,8 @@ $(function() {
 			$('.class-title').html(grandparent_name);
 			$('.subclass-title').html(grandparent_name + ':' + parent_name);
 
-			$(".tabbable").show();
+			initializeTabs();
+			$("#tabs").show();
 
 			$("#fileData_general").show();
 			$("#fileData_financial").show();
@@ -184,7 +261,8 @@ $(function() {
 			}
 			$('.class-title').html(string);
 
-			$(".tabbable").show();
+			initializeTabs();
+			$("#tabs").show();
 
 			$("#folderData_general").show();
 			$("#folderData_financial").show();
@@ -195,35 +273,11 @@ $(function() {
 			$("#fileData_labor").hide();
 
 			global_id = data.node.id;
-
-			$.ajax({
-				type : "POST",
-				url : "db_loadClassProperties.php",
-				data : "class_id=" + data.node.id,
-				success : function(data) {
-					var htmlResult_general = new Array();
-					var htmlResult_financial = new Array();
-					var htmlResult_labor = new Array();
-					for (var i = 0; i < data.length; i++) {
-						if (data[i].tab == 'general') {
-							htmlResult_general.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-						if (data[i].tab == 'financial') {
-							htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-						if (data[i].tab == 'labor') {
-							htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
-						}
-					}
-					$("#class-panel-general-data").html(htmlResult_general);
-					$("#class-panel-financial-data").html(htmlResult_financial);
-					$("#class-panel-labor-data").html(htmlResult_labor);
-				}
-			});
+			getProperties(getCurrentTab(), getCurrentId());
 		}
 
 		if (data.node.type == "default") {
-			$(".tabbable").hide();
+			$("#tabs").hide();
 		}
 
 	}).on('rename_node.jstree', function(e, data) {
@@ -281,125 +335,35 @@ $(function() {
 		}
 		$("#tree").jstree("refresh");
 	});
-});
 
-$(document).ready(function() {
-	var current_name = "";
-
-	$("#form-general").on('submit', function(event) {
-		event.preventDefault();
-		data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_updateValues.php",
-			data : data
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
+	$('#tabs').tabs({
+		activate : function(event, ui) {
+			getProperties(getCurrentTab(), getCurrentId());
+			$('.btn-group').hide();
+		}
 	});
 
-	$("#form-general-class").on('submit', function(event) {
+	$(".property-form").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_createProperty.php",
-			data : form_data + "&class_id=" + global_id + "&tab=general"
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
+		createProperty(form_data, global_id, getCurrentTab());
 	});
 
-	$("#form-financial").on('submit', function(event) {
-		event.preventDefault();
-		data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_updateValues.php",
-			data : data
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
-	$("#form-financial-class").on('submit', function(event) {
+	$(".value-form").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_createProperty.php",
-			data : form_data + "&class_id=" + global_id + "&tab=financial"
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
+		editValues(form_data);
 	});
 
-	$("#form-labor").on('submit', function(event) {
-		event.preventDefault();
-		data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_updateValues.php",
-			data : data
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
-	$("#form-labor-class").on('submit', function(event) {
-		event.preventDefault();
-		var form_data = $(this).serialize();
-
-		$.ajax({
-			type : "POST",
-			url : "db_createProperty.php",
-			data : form_data + "&class_id=" + global_id + "&tab=labor"
-		}).done(function(msg) {
-			alert("Update successful!");
-		});
-	});
-
-	$("#add-general-class-toggler").click(function(e) {
+	$(".add-toggler").click(function(e) {
 		e.preventDefault();
-		$('#class-panel-general-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-folder-general').slideDown(0);
-	});
-
-	$("#add-financial-class-toggler").click(function(e) {
-		e.preventDefault();
-		$('#class-panel-financial-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-folder-financial').slideDown(0);
-	});
-
-	$("#add-labor-class-toggler").click(function(e) {
-		e.preventDefault();
-		$('#class-panel-labor-data').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type"><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
-		$('.btn-group-folder-labor').slideDown(0);
+		$('.property-table').append('<tr><td><input name="property-name" value="my data"></td><td><select class="form-control" name="property-type" ><option value="string">String</option><option value="date">Date</option><option value="float">Float</option></select></td></tr>');
+		$('.btn-group').slideDown(0);
 	});
 
 	$(".rm-toggler").click(function(e) {
 		e.preventDefault();
-		if ($("tr").hasClass("highlight")) {
-			if (confirm("Are you sure you want to permanently delete this property?")) {
-				$.ajax({
-					type : "POST",
-					url : "db_removeProperty.php",
-					data : "name=" + current_name + "&id=" + global_id,
-					success : function(data) {
-						$('.highlight').remove();
-					}
-				});
-			} else {
-				return;
-			}
-		} else {
-			alert("Please select a property to remove!");
-		}
+		removeProperty(current_name, global_id);
 	});
 
 	$('.selectable').on('click', 'tr', function(event) {

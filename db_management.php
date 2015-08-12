@@ -66,6 +66,7 @@ function createTables($conn) {
 		prop_id int,
 		FOREIGN KEY (class_id) REFERENCES Class(id),
 		FOREIGN KEY (prop_id) REFERENCES Property(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Property_value (
@@ -75,7 +76,8 @@ function createTables($conn) {
 		str_value varchar(255),
 		date_value date,
 		float_value float,
-		FOREIGN KEY (property_id) REFERENCES Property(id),
+		FOREIGN KEY (property_id) REFERENCES Property(id)
+		ON DELETE CASCADE,
 		FOREIGN KEY (config_id) REFERENCES Config_item(id)
 		);
 		
