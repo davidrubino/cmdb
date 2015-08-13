@@ -65,7 +65,7 @@ if ($permission == 0) {
 									<h3 class="panel-title class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="class-panel-general"></table>
+									<table class="table value-table"></table>
 								</div>
 							</div>
 
@@ -74,17 +74,14 @@ if ($permission == 0) {
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="subclass-panel-general"></table>
+									<table class="table subvalue-table"></table>
 								</div>
 							</div>
 
-							<div class="btn-group-file">
-								<button type="submit" name="general-btn-save" class="btn btn-large btn-primary">
-									Save settings
-								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
-							</div>
+							<button type="submit" class="btn btn-large btn-primary">
+								Save
+							</button>
+							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
 					</div>
 
@@ -92,7 +89,7 @@ if ($permission == 0) {
 						<form class="property-form" role="form" method="post">
 							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
 									<table class="table selectable property-table"></table>
@@ -103,12 +100,11 @@ if ($permission == 0) {
 								</div>
 							</div>
 
-							<div class="col-sm-12 controls btn-group" style="display: none">
+							<div class="btn-group" style="display: none">
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
 								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
 							</div>
 						</form>
 					</div>
@@ -122,7 +118,7 @@ if ($permission == 0) {
 									<h3 class="panel-title class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="class-panel-financial"></table>
+									<table class="table value-table"></table>
 								</div>
 							</div>
 
@@ -131,18 +127,14 @@ if ($permission == 0) {
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="subclass-panel-financial"></table>
+									<table class="table subvalue-table"></table>
 								</div>
 							</div>
 
-							<div class="btn-group-file">
-								<button type="submit" name="financial-btn-save" class="btn btn-large btn-primary">
-									Save settings
-								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
-							</div>
-
+							<button type="submit" class="btn btn-large btn-primary">
+								Save
+							</button>
+							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
 					</div>
 
@@ -150,7 +142,7 @@ if ($permission == 0) {
 						<form class="property-form" role="form" method="post">
 							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
 									<table class="table selectable property-table"></table>
@@ -166,7 +158,6 @@ if ($permission == 0) {
 									Save
 								</button>
 								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
 							</div>
 						</form>
 					</div>
@@ -180,7 +171,7 @@ if ($permission == 0) {
 									<h3 class="panel-title class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="class-panel-labor"></table>
+									<table class="table value-table"></table>
 								</div>
 							</div>
 
@@ -189,18 +180,14 @@ if ($permission == 0) {
 									<h3 class="panel-title subclass-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="subclass-panel-labor"></table>
+									<table class="table subvalue-table"></table>
 								</div>
 							</div>
 
-							<div class="btn-group-file">
-								<button type="submit" name="labor-btn-save" class="btn btn-large btn-primary">
-									Save settings
-								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
-							</div>
-
+							<button type="submit" class="btn btn-large btn-primary">
+								Save
+							</button>
+							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
 					</div>
 
@@ -208,7 +195,7 @@ if ($permission == 0) {
 						<form class="property-form" role="form" method="post">
 							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
 									<table class="table selectable property-table"></table>
@@ -224,7 +211,6 @@ if ($permission == 0) {
 									Save
 								</button>
 								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
-								</input>
 							</div>
 						</form>
 					</div>

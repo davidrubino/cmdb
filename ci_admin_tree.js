@@ -106,17 +106,62 @@ function removeProperty(name, id) {
 	}
 }
 
-function getProperties(tab, id) {
+function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
 		url : "db_loadClassProperties.php",
 		data : "tab=" + tab + "&class_id=" + id,
 		success : function(data) {
 			var htmlResult = new Array();
+			var title = new Array();
 			for (var i = 0; i < data.length; i++) {
-				htmlResult.push('<tr><td>' + data[i].name + '</td><td>' + data[i].value_type + '</td></tr>');
+				for (var j = 0; j < data[i].content.length; j++) {
+					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td>' + data[i].content[j].value_type + '</td></tr>');
+					title.push(data[i].title[j].name);
+				}
 			}
-			$(".property-table").html(htmlResult);
+			$(table).html(htmlResult);
+			$(classTitle).html(title);
+		}
+	});
+}
+
+function getValues(id, parent_id, tab, table, classTitle) {
+	$.ajax({
+		type : "POST",
+		url : "db_loadClassValues.php",
+		data : "id=" + id + "&parent_id=" + parent_id + "&tab=" + tab,
+		success : function(data) {
+			var htmlResult = new Array();
+			var title = new Array();
+			for (var i = 0; i < data.length; i++) {
+				for (var j = 0; j < data[i].content.length; j++) {
+					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="classValue[' + i + '][' + global_id + '][' + data[i].content[j].name + ']" value="' + data[i].content[j].value + '"></td></tr>');
+					title.push(data[i].title[j].name);
+				}
+			}
+			$(table).html(htmlResult);
+			$(classTitle).html(title);
+		}
+	});
+}
+
+function getSubValues(id, parent_id, tab, table, classTitle) {
+	$.ajax({
+		type : "POST",
+		url : "db_loadSubClassValues.php",
+		data : "id=" + id + "&parent_id=" + parent_id + "&tab=" + tab,
+		success : function(data) {
+			var htmlResult = new Array();
+			var title = new Array();
+			for (var i = 0; i < data.length; i++) {
+				for (var j = 0; j < data[i].content.length; j++) {
+					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="subclassValue[' + i + '][' + global_id + '][' + data[i].content[j].name + ']" value="' + data[i].content[j].value + '"></td></tr>');
+					title.push(data[i].title[j].name);
+				}
+			}
+			$(table).html(htmlResult);
+			$(classTitle).html(title);
 		}
 	});
 }
@@ -181,11 +226,6 @@ $(document).ready(function() {
 		getFullPath(data.node);
 
 		if (data.node.type == "file") {
-			var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
-			var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
-			$('.class-title').html(grandparent_name);
-			$('.subclass-title').html(grandparent_name + ':' + parent_name);
-
 			initializeTabs();
 			$("#tabs").show();
 
@@ -201,66 +241,12 @@ $(document).ready(function() {
 			global_parent_id = data.node.parent;
 			global_grandparent_id = data.node.parents[1];
 
-			$.ajax({
-				type : "POST",
-				url : "db_loadClassValues.php",
-				data : "id=" + global_id + "&grandparent_id=" + global_grandparent_id,
-				success : function(data) {
-					var htmlResult_general = new Array();
-					var htmlResult_financial = new Array();
-					var htmlResult_labor = new Array();
-					for (var i = 0; i < data.length; i++) {
-						if (data[i].tab == 'general') {
-							htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input name="classValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-						if (data[i].tab == 'financial') {
-							htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input name="classValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-						if (data[i].tab == 'labor') {
-							htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input name="classValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-					}
-					$("#class-panel-general").html(htmlResult_general);
-					$("#class-panel-financial").html(htmlResult_financial);
-					$("#class-panel-labor").html(htmlResult_labor);
-				}
-			});
+			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
+			getSubValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
 
-			$.ajax({
-				type : "POST",
-				url : "db_loadSubClassValues.php",
-				data : "id=" + global_id + "&parent_id=" + global_parent_id,
-				success : function(data) {
-					var htmlResult_general = new Array();
-					var htmlResult_financial = new Array();
-					var htmlResult_labor = new Array();
-					for (var i = 0; i < data.length; i++) {
-						if (data[i].tab == 'general') {
-							htmlResult_general.push('<tr><td>' + data[i].name + '</td><td><input name="subclassValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-						if (data[i].tab == 'financial') {
-							htmlResult_financial.push('<tr><td>' + data[i].name + '</td><td><input name="subclassValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-						if (data[i].tab == 'labor') {
-							htmlResult_labor.push('<tr><td>' + data[i].name + '</td><td><input name="subclassValue[' + i + '][' + global_id + '][' + data[i].name + ']" value="' + data[i].value + '"></td></tr>');
-						}
-					}
-					$("#subclass-panel-general").html(htmlResult_general);
-					$("#subclass-panel-financial").html(htmlResult_financial);
-					$("#subclass-panel-labor").html(htmlResult_labor);
-				}
-			});
 		}
 
 		if (data.node.type == "folder") {
-			var item_path = $("#tree").jstree(true).get_path(data.node);
-			item_path.shift();
-			var string = "";
-			for (var i = 0; i < item_path.length; i++) {
-				string += item_path[i] + ":";
-			}
-			$('.class-title').html(string);
-
 			initializeTabs();
 			$("#tabs").show();
 
@@ -273,7 +259,7 @@ $(document).ready(function() {
 			$("#fileData_labor").hide();
 
 			global_id = data.node.id;
-			getProperties(getCurrentTab(), getCurrentId());
+			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
 		}
 
 		if (data.node.type == "default") {
@@ -338,7 +324,9 @@ $(document).ready(function() {
 
 	$('#tabs').tabs({
 		activate : function(event, ui) {
-			getProperties(getCurrentTab(), getCurrentId());
+			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
+			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
+			getSubValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
 			$('.btn-group').hide();
 		}
 	});
