@@ -110,8 +110,9 @@ function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
 		url : "db_loadClassProperties.php",
-		data : "tab=" + tab + "&class_id=" + id,
+		data : "tab=" + tab + "&id=" + id,
 		success : function(data) {
+			console.log(data);
 			var htmlResult = new Array();
 			var title = new Array();
 			for (var i = 0; i < data.length; i++) {
@@ -136,7 +137,7 @@ function getValues(id, parent_id, tab, table, classTitle) {
 			var title = new Array();
 			for (var i = 0; i < data.length; i++) {
 				for (var j = 0; j < data[i].content.length; j++) {
-					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="classValue[' + i + '][' + global_id + '][' + data[i].content[j].name + ']" value="' + data[i].content[j].value + '"></td></tr>');
+					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="' + data[i].content[j].name + '" value="' + data[i].content[j].value + '"></td></tr>');
 					title.push(data[i].title[j].name);
 				}
 			}
@@ -146,34 +147,11 @@ function getValues(id, parent_id, tab, table, classTitle) {
 	});
 }
 
-function getSubValues(id, parent_id, tab, table, classTitle) {
-	$.ajax({
-		type : "POST",
-		url : "db_loadSubClassValues.php",
-		data : "id=" + id + "&parent_id=" + parent_id + "&tab=" + tab,
-		success : function(data) {
-			var htmlResult = new Array();
-			var title = new Array();
-			for (var i = 0; i < data.length; i++) {
-				for (var j = 0; j < data[i].content.length; j++) {
-					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="subclassValue[' + i + '][' + global_id + '][' + data[i].content[j].name + ']" value="' + data[i].content[j].value + '"></td></tr>');
-					title.push(data[i].title[j].name);
-				}
-			}
-			$(table).html(htmlResult);
-			$(classTitle).html(title);
-		}
-	});
-}
-
-function editValues(data) {
+function editValues(id, name, value) {
 	$.ajax({
 		type : "POST",
 		url : "db_updateValues.php",
-		data : data,
-		success : function() {
-			alert("Update successful!");
-		}
+		data : "id=" + id + "&name=" + name + "&value=" + value
 	});
 }
 
@@ -242,8 +220,7 @@ $(document).ready(function() {
 			global_grandparent_id = data.node.parents[1];
 
 			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
-			getSubValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
-
+			getValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
 		}
 
 		if (data.node.type == "folder") {
@@ -326,7 +303,7 @@ $(document).ready(function() {
 		activate : function(event, ui) {
 			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
 			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
-			getSubValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
+			getValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
 			$('.btn-group').hide();
 		}
 	});
@@ -339,8 +316,26 @@ $(document).ready(function() {
 
 	$(".value-form").on('submit', function(event) {
 		event.preventDefault();
-		var form_data = $(this).serialize();
-		editValues(form_data);
+		var elem = document.getElementsByClassName('value-form');
+		var index = -1;
+		
+		if (getCurrentTab() == "general") {
+			index = 0;
+		} else {
+			if (getCurrentTab() == "financial") {
+				index = 1;
+			} else {
+				index = 2;
+			}
+		}
+
+		for (var i= 0; i < elem[index].length; i++) {
+			if (elem[index][i].type == "text") {
+				var name = elem[index][i].name;
+				var value = elem[index][i].value;
+				editValues(getCurrentId(), name, value);
+			}
+		}
 	});
 
 	$(".add-toggler").click(function(e) {

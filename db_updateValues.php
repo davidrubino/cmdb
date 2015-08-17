@@ -2,7 +2,11 @@
 
 include 'db_connect.php';
 
-function updateDB($conn, $value, $name, $conf_id) {
+function updateDB($conn) {
+	$conf_id = $_POST['id'];
+	$name = $_POST['name'];
+	$value = $_POST['value'];
+
 	try {
 		$sql = 'update property_value, property
 		set	property_value.str_value = if(property.value_type = "string", :value1, null),
@@ -14,24 +18,13 @@ function updateDB($conn, $value, $name, $conf_id) {
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':value1' => $value, ':value2' => $value, ':value3' => $value, ':name' => $name, ':conf_id' => $conf_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+		echo "Update successful!";
+
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}
 }
 
-if ($_POST) {
-	for ($i = 0; $i < count($_POST['classValue']); $i++) {
-		$conf_id = key($_POST['classValue'][$i]);
-		$name = key($_POST['classValue'][$i][$conf_id]);
-		$value = current($_POST['classValue'][$i][$conf_id]);
-		updateDB($DB_con, $value, $name, $conf_id);
-	}
-
-	for ($i = 0; $i < count($_POST['subclassValue']); $i++) {
-		$conf_id = key($_POST['subclassValue'][$i]);
-		$name = key($_POST['subclassValue'][$i][$conf_id]);
-		$value = current($_POST['subclassValue'][$i][$conf_id]);
-		updateDB($DB_con, $value, $name, $conf_id);
-	}
-}
+updateDB($DB_con);
 ?>
