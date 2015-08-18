@@ -110,9 +110,8 @@ function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
 		url : "db_loadClassProperties.php",
-		data : "tab=" + tab + "&id=" + id,
+		data : "tab=" + tab + "&class_id=" + id,
 		success : function(data) {
-			console.log(data);
 			var htmlResult = new Array();
 			var title = new Array();
 			for (var i = 0; i < data.length; i++) {
@@ -127,22 +126,22 @@ function getProperties(tab, id, table, classTitle) {
 	});
 }
 
-function getValues(id, parent_id, tab, table, classTitle) {
+function getValues(id, tab) {
 	$.ajax({
 		type : "POST",
 		url : "db_loadClassValues.php",
-		data : "id=" + id + "&parent_id=" + parent_id + "&tab=" + tab,
+		data : "id=" + id + "&tab=" + tab,
 		success : function(data) {
-			var htmlResult = new Array();
-			var title = new Array();
+			var htmlContainer = new Array();
 			for (var i = 0; i < data.length; i++) {
-				for (var j = 0; j < data[i].content.length; j++) {
-					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td><input name="' + data[i].content[j].name + '" value="' + data[i].content[j].value + '"></td></tr>');
-					title.push(data[i].title[j].name);
+				for (var k = 0; k < data[i].title.length; k++) {
+					htmlContainer.push('<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title">' + data[i].title[k].name + '</h3></div><div class="table-responsive"><table class="table value-table"></table></div></div>');
+					for (var j = 0; j < data[i].content.length; j++) {
+						$('.value-table').html('<tr><td>' + data[i].content[j].name + '</td><td><input name="' + data[i].content[j].name + '" value="' + data[i].content[j].value + '"></td></tr>');
+					}
 				}
 			}
-			$(table).html(htmlResult);
-			$(classTitle).html(title);
+			$('.value-form').html(htmlContainer);
 		}
 	});
 }
@@ -219,8 +218,7 @@ $(document).ready(function() {
 			global_parent_id = data.node.parent;
 			global_grandparent_id = data.node.parents[1];
 
-			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
-			getValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
+			getValues(getCurrentId(), getCurrentTab());
 		}
 
 		if (data.node.type == "folder") {
@@ -302,8 +300,7 @@ $(document).ready(function() {
 	$('#tabs').tabs({
 		activate : function(event, ui) {
 			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
-			getValues(getCurrentId(), global_grandparent_id, getCurrentTab(), ".value-table", ".class-title");
-			getValues(getCurrentId(), global_parent_id, getCurrentTab(), ".subvalue-table", ".subclass-title");
+			getValues(getCurrentId(), getCurrentTab());
 			$('.btn-group').hide();
 		}
 	});
@@ -318,7 +315,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		var elem = document.getElementsByClassName('value-form');
 		var index = -1;
-		
+
 		if (getCurrentTab() == "general") {
 			index = 0;
 		} else {
@@ -329,7 +326,7 @@ $(document).ready(function() {
 			}
 		}
 
-		for (var i= 0; i < elem[index].length; i++) {
+		for (var i = 0; i < elem[index].length; i++) {
 			if (elem[index][i].type == "text") {
 				var name = elem[index][i].name;
 				var value = elem[index][i].value;

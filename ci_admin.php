@@ -60,24 +60,6 @@ if ($permission == 0) {
 				<div id="general">
 					<div id="fileData_general">
 						<form class="value-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table value-table"></table>
-								</div>
-							</div>
-
-							<div class="panel panel-primary subclass-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table subvalue-table"></table>
-								</div>
-							</div>
-
 							<button type="submit" class="btn btn-large btn-primary">
 								Save
 							</button>
@@ -113,24 +95,6 @@ if ($permission == 0) {
 				<div id="financial">
 					<div id="fileData_financial">
 						<form class="value-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table value-table"></table>
-								</div>
-							</div>
-
-							<div class="panel panel-primary subclass-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table subvalue-table"></table>
-								</div>
-							</div>
-
 							<button type="submit" class="btn btn-large btn-primary">
 								Save
 							</button>
@@ -166,24 +130,6 @@ if ($permission == 0) {
 				<div id="labor">
 					<div id="fileData_labor">
 						<form class="value-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table value-table"></table>
-								</div>
-							</div>
-
-							<div class="panel panel-primary subclass-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table subvalue-table"></table>
-								</div>
-							</div>
-
 							<button type="submit" class="btn btn-large btn-primary">
 								Save
 							</button>
