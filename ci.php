@@ -12,6 +12,7 @@ $stmt -> execute(array(":user_id" => $user_id));
 $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 
 $permission = $userRow['isAdmin'];
+
 if ($permission == 1) {
 	$user -> redirect('ci_admin.php');
 }
@@ -28,7 +29,9 @@ if ($permission == 1) {
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
+		<link href="css/ci.css" rel="stylesheet">
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
+		<link href="jquery/jquery-ui.min.css" rel="stylesheet">
 
 	</head>
 
@@ -40,80 +43,74 @@ if ($permission == 1) {
 
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
-			<div class="col-md-8">
+			<div class="col-md-8" id="tabs" style="display: none">
+				<h2 class="name"></h2>
+				<ul>
+					<li class="active">
+						<a href="#general">General</a>
+					</li>
+					<li>
+						<a href="#financial">Financial</a>
+					</li>
+					<li>
+						<a href="#labor">Labor</a>
+					</li>
+				</ul>
 
-				<div class="tabbable">
-					<ul class="nav nav-tabs">
-						<li class="active">
-							<a href="#general" data-toggle="tab">General</a>
-						</li>
-						<li>
-							<a href="#financial" data-toggle="tab">Financial</a>
-						</li>
-						<li>
-							<a href="#labor" data-toggle="tab">Labor</a>
-						</li>
-					</ul>
+				<div id="general">
+					<div id="fileData_general">
+						<form class="value-form" role="form" method="post"></form>
+					</div>
 
-					<div class="tab-content">
-						<div class="tab-pane active" id="general">
-							<h2 class="name"></h2>
-							<div class="panel panel-primary">
+					<div id="folderData_general">
+						<form class="property-form" role="form" method="post">
+							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="class-panel-general"></table>
+									<table class="table selectable property-table"></table>
 								</div>
 							</div>
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table" id="subclass-panel-general"></table>
-								</div>
-							</div>
-						</div>
+						</form>
+					</div>
+				</div>
 
-						<div class="tab-pane" id="financial">
-							<h2 class="name"></h2>
-							<div class="panel panel-primary">
+				<div id="financial">
+					<div id="fileData_financial">
+						<form class="value-form" role="form" method="post"></form>
+					</div>
+
+					<div id="folderData_financial">
+						<form class="property-form" role="form" method="post">
+							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="class-panel-financial"></table>
+									<table class="table selectable property-table"></table>
 								</div>
 							</div>
-							<div class="panel panel-primary">
+						</form>
+					</div>
+				</div>
+
+				<div id="labor">
+					<div id="fileData_labor">
+						<form class="value-form" role="form" method="post"></form>
+					</div>
+
+					<div id="folderData_labor">
+						<form class="property-form" role="form" method="post">
+							<div class="panel panel-primary class-panel">
 								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
+									<h3 class="panel-title property-class-title"></h3>
 								</div>
 								<div class="table-responsive">
-									<table class="table" id="subclass-panel-financial"></table>
+									<table class="table selectable property-table"></table>
 								</div>
 							</div>
-						</div>
-						<div class="tab-pane" id="labor">
-							<h2 class="name"></h2>
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table" id="class-panel-labor"></table>
-								</div>
-							</div>
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title subclass-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table" id="subclass-panel-labor"></table>
-								</div>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -124,6 +121,7 @@ if ($permission == 1) {
 		?>
 
 		<script src="jquery/jquery-1.11.3.js"></script>
+		<script src="jquery/jquery-ui.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="dist/jstree.min.js"></script>
 		<script src="ci_tree.js"></script>

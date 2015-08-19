@@ -60,11 +60,8 @@ if ($permission == 0) {
 				<div id="general">
 					<div id="fileData_general">
 						<form class="value-form" role="form" method="post">
-							<button type="submit" class="btn btn-large btn-primary">
-								Save
-							</button>
-							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
+						<input type="button" value="Cancel" class="btn btn-large btn-default">
 					</div>
 
 					<div id="folderData_general">
@@ -86,7 +83,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
+								<input type="button" value="Cancel" class="btn btn-large btn-default">
 							</div>
 						</form>
 					</div>
@@ -95,11 +92,8 @@ if ($permission == 0) {
 				<div id="financial">
 					<div id="fileData_financial">
 						<form class="value-form" role="form" method="post">
-							<button type="submit" class="btn btn-large btn-primary">
-								Save
-							</button>
-							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
+						<input type="button" value="Cancel" class="btn btn-large btn-default">
 					</div>
 
 					<div id="folderData_financial">
@@ -121,7 +115,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
+								<input type="button" value="Cancel" class="btn btn-large btn-default">
 							</div>
 						</form>
 					</div>
@@ -130,11 +124,8 @@ if ($permission == 0) {
 				<div id="labor">
 					<div id="fileData_labor">
 						<form class="value-form" role="form" method="post">
-							<button type="submit" class="btn btn-large btn-primary">
-								Save
-							</button>
-							<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
 						</form>
+						<input type="button" value="Cancel" class="btn btn-large btn-default">
 					</div>
 
 					<div id="folderData_labor">
@@ -156,7 +147,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default" onclick="document.location.href='ci_admin.php';">
+								<input type="button" value="Cancel" class="btn btn-large btn-default">
 							</div>
 						</form>
 					</div>

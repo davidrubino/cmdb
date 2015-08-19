@@ -1,9 +1,72 @@
-$(function() {
-	$("#tree").jstree({
+var global_id,
+    global_parent_id,
+    global_grandparent_id,
+    current_name;
 
+function initializeTabs() {
+	$('#tabs').tabs();
+}
+
+function getCurrentTab() {
+	var active = $('#tabs').tabs('option', 'active');
+	var tab = $("#tabs ul>li a").eq(active).attr("href");
+	return tab.substring(1);
+}
+
+function getCurrentId() {
+	return global_id;
+}
+
+function getFullPath(node) {
+	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
+}
+
+function getProperties(tab, id, table, classTitle) {
+	$.ajax({
+		type : "POST",
+		url : "db_loadClassProperties.php",
+		data : "tab=" + tab + "&class_id=" + id,
+		success : function(data) {
+			var htmlResult = new Array();
+			var title = new Array();
+			for (var i = 0; i < data.length; i++) {
+				for (var j = 0; j < data[i].content.length; j++) {
+					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td>' + data[i].content[j].value_type + '</td></tr>');
+					title.push(data[i].title[j].name);
+				}
+			}
+			$(table).html(htmlResult);
+			$(classTitle).html(title);
+		}
+	});
+}
+
+function getValues(id, tab) {
+	$.ajax({
+		type : "POST",
+		url : "db_loadClassValues.php",
+		data : "id=" + id + "&tab=" + tab,
+		success : function(data) {
+			var htmlContainer = new Array();
+			for (var i = 0; i < data.length; i++) {
+				for (var k = 0; k < data[i].title.length; k++) {
+					for (var j = 0; j < data[i].content.length; j++) {
+						htmlContainer.push('<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title">' + data[i].title[k].name + '</h3></div><div class="table-responsive"><table class="table value-table"><tr><td>' + data[i].content[j].name + '</td><td>' + data[i].content[j].value + '</td></tr></table></div></div>');
+					}
+				}
+			}
+			$('.value-form').html(htmlContainer);
+		}
+	});
+}
+
+
+$(document).ready(function() {
+	initializeTabs();
+
+	$("#tree").jstree({
 		"core" : {
 			"check_callback" : true,
-
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
@@ -16,83 +79,66 @@ $(function() {
 				}
 			}
 		},
-
 		"types" : {
 			"file" : {
 				"icon" : "img/file-icon.png",
 				"valid_children" : []
+			},
+			"folder" : {
+
 			}
 		},
 
-		"plugins" : ["massload", "search", "sort", "state", "types", "unique", "wholerow", "themes", "json_data", "ui"]
+		"plugins" : ["json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
+		getFullPath(data.node);
 
-		var path = $("#tree").jstree(true).get_path(data.node, ":");
-		var grandparent_name = $("#tree").jstree(true).get_path(data.node)[1];
-		var parent_name = $("#tree").jstree(true).get_path(data.node)[2];
-		$('.name').html(path);
-		$('.class-title').html(grandparent_name);
-		$('.subclass-title').html(grandparent_name + ':' + parent_name);
+		if (data.node.type == "file") {
+			initializeTabs();
+			$("#tabs").show();
 
-		var id = data.node.id;
-		var parent_id = data.node.parent;
-		var grandparent_id = data.node.parents[1];
+			$("#fileData_general").show();
+			$("#fileData_financial").show();
+			$("#fileData_labor").show();
 
-		$.ajax({
-			type : "POST",
-			url : "db_loadClassValues.php",
-			data : "id=" + id + "&grandparent_id=" + grandparent_id,
-			success : function(data) {
-				var htmlResult_general = new Array();
-				var htmlResult_financial = new Array();
-				var htmlResult_labor = new Array();
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].tab == 'general') {
-						htmlResult_general.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-					if (data[i].tab == 'financial') {
-						htmlResult_financial.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-					if (data[i].tab == 'labor') {
-						htmlResult_labor.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-				}
-				$("#class-panel-general").html(htmlResult_general);
-				$("#class-panel-financial").html(htmlResult_financial);
-				$("#class-panel-labor").html(htmlResult_labor);
-			}
-		});
+			$("#folderData_general").hide();
+			$("#folderData_financial").hide();
+			$("#folderData_labor").hide();
 
-		$.ajax({
-			type : "POST",
-			url : "db_loadSubClassValues.php",
-			data : "id=" + id + "&parent_id=" + parent_id,
-			success : function(data) {
-				var htmlResult_general = new Array();
-				var htmlResult_financial = new Array();
-				var htmlResult_labor = new Array();
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].tab == 'general') {
-						htmlResult_general.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-					if (data[i].tab == 'financial') {
-						htmlResult_financial.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-					if (data[i].tab == 'labor') {
-						htmlResult_labor.push("<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>");
-					}
-				}
-				$("#subclass-panel-general").html(htmlResult_general);
-				$("#subclass-panel-financial").html(htmlResult_financial);
-				$("#subclass-panel-labor").html(htmlResult_labor);
-			}
-		});
+			global_id = data.node.id;
+			global_parent_id = data.node.parent;
+			global_grandparent_id = data.node.parents[1];
 
-	}).bind('delete_node.jstree', function(e, data) {
-		// Check medatada, assuming that root's parent_id is NULL:
-		if (data.node.parent == '#') {
-			core.check_callback(false);
+			getValues(getCurrentId(), getCurrentTab());
+		}
+
+		if (data.node.type == "folder") {
+			initializeTabs();
+			$("#tabs").show();
+
+			$("#folderData_general").show();
+			$("#folderData_financial").show();
+			$("#folderData_labor").show();
+
+			$("#fileData_general").hide();
+			$("#fileData_financial").hide();
+			$("#fileData_labor").hide();
+
+			global_id = data.node.id;
+			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
+		}
+
+		if (data.node.type == "default") {
+			$("#tabs").hide();
+		}
+	});
+
+	$('#tabs').tabs({
+		activate : function(event, ui) {
+			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
+			getValues(getCurrentId(), getCurrentTab());
+			$('.btn-group').hide();
 		}
 	});
 });

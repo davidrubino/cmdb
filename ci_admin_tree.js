@@ -135,12 +135,12 @@ function getValues(id, tab) {
 			var htmlContainer = new Array();
 			for (var i = 0; i < data.length; i++) {
 				for (var k = 0; k < data[i].title.length; k++) {
-					htmlContainer.push('<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title">' + data[i].title[k].name + '</h3></div><div class="table-responsive"><table class="table value-table"></table></div></div>');
 					for (var j = 0; j < data[i].content.length; j++) {
-						$('.value-table').html('<tr><td>' + data[i].content[j].name + '</td><td><input name="' + data[i].content[j].name + '" value="' + data[i].content[j].value + '"></td></tr>');
+						htmlContainer.push('<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title">' + data[i].title[k].name + '</h3></div><div class="table-responsive"><table class="table value-table"><tr><td>' + data[i].content[j].name + '</td><td><input name="' + data[i].content[j].name + '" value="' + data[i].content[j].value + '"></td></tr></table></div></div>');
 					}
 				}
 			}
+			htmlContainer.push('<button type="submit" class="btn btn-large btn-primary">Save</button>');
 			$('.value-form').html(htmlContainer);
 		}
 	});
@@ -344,6 +344,11 @@ $(document).ready(function() {
 	$(".rm-toggler").click(function(e) {
 		e.preventDefault();
 		removeProperty(current_name, global_id);
+	});
+	
+	$(".btn-default").click(function(e) {
+		e.preventDefault();
+		document.location.href='ci_admin.php';
 	});
 
 	$('.selectable').on('click', 'tr', function(event) {
