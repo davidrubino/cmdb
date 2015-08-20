@@ -22,7 +22,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 					<a href="app.php">Applications</a>
 				</li>
 				<li>
-					<a href="dataCenter.php">Data Center</a>
+					<a href="dc.php">Data Center</a>
 				</li>
 				<li>
 					<a href="hr.php">Human Resources</a>

@@ -5,6 +5,7 @@ include 'db_connect.php';
 function dropTables($conn) {
 	try {
 		$sql = "
+		DROP TABLE Data_center;
 		DROP TABLE Graph;
 		DROP TABLE Application;
 		DROP TABLE Folder;
@@ -106,6 +107,11 @@ function createTables($conn) {
 		ON DELETE CASCADE,
 		FOREIGN KEY (application_id) REFERENCES Application(id)
 		ON DELETE CASCADE
+		);
+		
+		CREATE TABLE Data_center (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		name varchar(255)
 		);
 		";
 		$conn -> exec($sql);
@@ -459,6 +465,32 @@ function insertIntoGraph($conn) {
 	}
 }
 
+function insertIntoDataCenter($conn) {
+	try {
+		$sql = "
+		INSERT INTO Data_center
+		(name)
+		VALUES
+		('Menomonee Falls');
+		
+		INSERT INTO Data_center
+		(name)
+		VALUES
+		('Germantown');
+		
+		INSERT INTO Data_center
+		(name)
+		VALUES
+		('Philadelphia');
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Data_center";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
 //dropTables($DB_con);
 //createTables($DB_con);
 //insertIntoClass($DB_con);
@@ -469,4 +501,5 @@ function insertIntoGraph($conn) {
 //insertIntoFolder($DB_con);
 //insertIntoApplication($DB_con);
 //insertIntoGraph($DB_con);
+//insertIntoDataCenter($DB_con);
 ?>
