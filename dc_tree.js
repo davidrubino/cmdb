@@ -1,3 +1,54 @@
+function clickableGrid(rows, cols, callback) {
+	var i = "";
+	var grid = document.createElement('table');
+	grid.className = 'grid';
+
+	for (var r = 0; r < rows + 1; ++r) {
+		var tr = grid.appendChild(document.createElement('tr'));
+
+		for (var c = 0; c < 1; ++c) {
+			var numberCell = tr.appendChild(document.createElement('td'));
+			if (r != 0) {
+				numberCell.innerHTML = r;
+			}
+		}
+
+		for (var c = 1; c < cols + 1; ++c) {
+			if (r == 0) {
+				var letterCell = tr.appendChild(document.createElement('td'));
+				letterCell.innerHTML = colName(c - 1);
+			} else {
+				var cell = tr.appendChild(document.createElement('td'));
+				i = colName(c - 1) + '' + r;
+				cell.innerHTML = i;
+				cell.addEventListener('click', (function(el, r, c, i) {
+					return function() {
+						callback(el, r, c, i);
+					};
+				})(cell, r, c, i), false);
+			}
+		}
+	}
+	return grid;
+}
+
+function colName(n) {
+	var ordA = 'a'.charCodeAt(0);
+	var ordZ = 'z'.charCodeAt(0);
+	var len = ordZ - ordA + 1;
+
+	var s = "";
+	while (n >= 0) {
+		s = String.fromCharCode(n % len + ordA) + s;
+		n = Math.floor(n / len) - 1;
+	}
+	return s;
+}
+
+function grayOutCell(el) {
+	el.className = 'grayed';
+}
+
 $(function() {
 	$("#tree").jstree({
 
@@ -26,8 +77,31 @@ $(function() {
 		},
 
 		"plugins" : ["json_data", "massload", "sort", "themes", "types", "ui", "unique", "wholerow"]
+	});
 
-	}).on('select_node.jstree', function(e, data) {
-		$('.col-md-8').html("selected");
+	var lastClicked;
+	var grid = clickableGrid(10, 10, function(el, row, col, i) {
+		console.log("You clicked on element:", el);
+		console.log("You clicked on row:", row);
+		console.log("You clicked on col:", col);
+		console.log("You clicked on item #:", i);
+
+		if (el.className != 'grayed') {
+			el.className = 'clicked';
+			currentCell = el;
+			if (lastClicked) {
+				if (lastClicked.className != 'grayed') {
+					lastClicked.className = '';
+				}
+			}
+			lastClicked = el;
+		}
+	});
+
+	$('#mygraph').append(grid);
+
+	$("#gray-out").click(function(e) {
+		e.preventDefault();
+		grayOutCell(lastClicked);
 	});
 });

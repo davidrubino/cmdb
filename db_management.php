@@ -5,7 +5,6 @@ include 'db_connect.php';
 function dropTables($conn) {
 	try {
 		$sql = "
-		DROP TABLE Data_center;
 		DROP TABLE Graph;
 		DROP TABLE Application;
 		DROP TABLE Folder;
@@ -14,6 +13,9 @@ function dropTables($conn) {
 		DROP TABLE Property;
 		DROP TABLE Config_item;
 		DROP TABLE Class;
+		DROP TABLE Cabinet;
+		DROP TABLE Tile;
+		DROP TABLE Data_center;
 		DROP TABLE User;
 		";
 		$conn -> exec($sql);
@@ -37,7 +39,36 @@ function createTables($conn) {
 		isAdmin BOOLEAN NOT NULL,
 		UNIQUE (user_name), 
 		UNIQUE (user_email)
-		); 
+		);
+		
+		CREATE TABLE Data_center (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		name varchar(255),
+		count_rows int,
+		count_columns int,
+		label_rows varchar(255),
+		label_columns varchar(255),
+		tile_dim int
+		);
+		
+		CREATE TABLE Tile (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		x int,
+		y int,
+		label varchar(255),
+		grayed_out int,
+		data_center_id int,
+		FOREIGN KEY (data_center_id) REFERENCES Data_center(id)
+		);
+		
+		CREATE TABLE Cabinet (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		height int,
+		width int,
+		color varchar(255),
+		tile_id int,
+		FOREIGN KEY (tile_id) REFERENCES Tile(id)
+		);
 		
 		CREATE TABLE Class (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -50,8 +81,10 @@ function createTables($conn) {
 		id int NOT NULL,
 		name varchar(255),
 		class_id int,
+		cabinet_id int,
 		PRIMARY KEY (id),
-		FOREIGN KEY (class_id) REFERENCES Class(id)
+		FOREIGN KEY (class_id) REFERENCES Class(id),
+		FOREIGN KEY (cabinet_id) REFERENCES Cabinet(id)
 		);
 		
 		CREATE TABLE Property (
@@ -108,16 +141,69 @@ function createTables($conn) {
 		FOREIGN KEY (application_id) REFERENCES Application(id)
 		ON DELETE CASCADE
 		);
-		
-		CREATE TABLE Data_center (
-		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		name varchar(255)
-		);
 		";
 		$conn -> exec($sql);
 		echo "Tables created successfully";
 		echo "<br>";
 	} catch(PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
+function insertIntoDataCenter($conn) {
+	try {
+		$sql = "
+		INSERT INTO Data_center
+		(name, count_rows, count_columns, label_rows, label_columns, tile_dim)
+		VALUES
+		('Germantown', 10, 12, '1', 'A', 2);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Data_center";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
+function insertIntoTile($conn) {
+	try {
+		$sql = "
+		INSERT INTO Tile
+		(x, y, label, grayed_out, data_center_id)
+		VALUES
+		(0, 0, 'A1', 0, 1);
+		
+		INSERT INTO Tile
+		(x, y, label, grayed_out, data_center_id)
+		VALUES
+		(2, 0, 'B1', 0, 1);
+		
+		INSERT INTO Tile
+		(x, y, label, grayed_out, data_center_id)
+		VALUES
+		(0, 2, 'A2', 0, 1);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Tile";
+		echo "<br>";
+	} catch (PDOException $e) {
+		echo $sql . "<br>" . $e -> getMessage();
+	}
+}
+
+function insertIntoCabinet($conn) {
+	try {
+		$sql = "
+		INSERT INTO Cabinet
+		(height, width, color, tile_id)
+		VALUES
+		(84, 48, 'white', 1);
+		";
+		$conn -> exec($sql);
+		echo "Values inserted into Cabinet";
+		echo "<br>";
+	} catch (PDOException $e) {
 		echo $sql . "<br>" . $e -> getMessage();
 	}
 }
@@ -212,14 +298,14 @@ function insertIntoConfigItem($conn) {
 	try {
 		$sql = "
 		INSERT INTO Config_item
-		(id, name, class_id)
+		(id, name, class_id, cabinet_id)
 		VALUES
-		(1000, 'bashful', 5);
+		(1000, 'bashful', 5, NULL);
 		
 		INSERT INTO Config_item
-		(id, name, class_id)
+		(id, name, class_id, cabinet_id)
 		VALUES
-		(1101, 'doc', 5);
+		(1101, 'doc', 5, NULL);
 		";
 		$conn -> exec($sql);
 		echo "Values inserted into Config_item";
@@ -465,34 +551,11 @@ function insertIntoGraph($conn) {
 	}
 }
 
-function insertIntoDataCenter($conn) {
-	try {
-		$sql = "
-		INSERT INTO Data_center
-		(name)
-		VALUES
-		('Menomonee Falls');
-		
-		INSERT INTO Data_center
-		(name)
-		VALUES
-		('Germantown');
-		
-		INSERT INTO Data_center
-		(name)
-		VALUES
-		('Philadelphia');
-		";
-		$conn -> exec($sql);
-		echo "Values inserted into Data_center";
-		echo "<br>";
-	} catch (PDOException $e) {
-		echo $sql . "<br>" . $e -> getMessage();
-	}
-}
-
 //dropTables($DB_con);
 //createTables($DB_con);
+//insertIntoDataCenter($DB_con);
+//insertIntoTile($DB_con);
+//insertIntoCabinet($DB_con);
 //insertIntoClass($DB_con);
 //insertIntoConfigItem($DB_con);
 //insertIntoProperty($DB_con);
@@ -501,5 +564,4 @@ function insertIntoDataCenter($conn) {
 //insertIntoFolder($DB_con);
 //insertIntoApplication($DB_con);
 //insertIntoGraph($DB_con);
-//insertIntoDataCenter($DB_con);
 ?>
