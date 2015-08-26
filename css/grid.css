@@ -14,9 +14,7 @@
 }
 
 .grid td.clicked {
-	background-color: yellow;
-	font-weight: bold;
-	color: red;
+	border: solid;
 }
 
 .grid td.grayed {
