@@ -2,22 +2,22 @@
 
 include 'db_connect.php';
 
-function deleteConfigItem($conn) {
+function deleteDataCenter($conn) {
 	$id = $_POST['id'];
 
 	try {
-		$sql = 'delete from config_item
+		$sql = 'delete from data_center
 		where id = :id';
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':id' => $id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		
-		echo "Config item deleted!";
+		echo "Data center deleted!";
 		
 	} catch(PDOException $e) {
 		echo $e -> getMessage();
 	}
 }
 
-deleteConfigItem($DB_con);
+deleteDataCenter($DB_con);
 ?>

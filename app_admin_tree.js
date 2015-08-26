@@ -125,7 +125,7 @@ $(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_deleteApplication.php",
+				url : "app_db_deleteApplication.php",
 				data : "id=" + data.node.id,
 				success : function() {
 					$("#mynetwork").hide();
@@ -135,7 +135,7 @@ $(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_deleteFolder.php",
+				url : "app_db_deleteFolder.php",
 				data : "id=" + data.node.id
 			});
 		}
@@ -344,7 +344,7 @@ function removeItem() {
 			if (confirm("Are you sure you want to delete this node?")) {
 				$.ajax({
 					type : "POST",
-					url : "app_db_removeItem.php",
+					url : "app_db_deleteItem.php",
 					data : "id=" + node_id,
 					success : function() {
 						location.reload();

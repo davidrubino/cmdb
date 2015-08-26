@@ -2,7 +2,7 @@
 
 include 'db_connect.php';
 
-function removeItem($conn) {
+function deleteItem($conn) {
 	$id = $_POST['id'];
 
 	try {
@@ -22,5 +22,5 @@ function removeItem($conn) {
 	}
 }
 
-removeItem($DB_con);
+deleteItem($DB_con);
 ?>

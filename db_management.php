@@ -59,6 +59,7 @@ function createTables($conn) {
 		grayed_out int,
 		data_center_id int,
 		FOREIGN KEY (data_center_id) REFERENCES Data_center(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Cabinet (
@@ -68,6 +69,7 @@ function createTables($conn) {
 		color varchar(255),
 		tile_id int,
 		FOREIGN KEY (tile_id) REFERENCES Tile(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Class (
@@ -75,6 +77,7 @@ function createTables($conn) {
 		name varchar(255),
 		parent_id int,
 		FOREIGN KEY (parent_id) REFERENCES Class(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Config_item (
@@ -83,8 +86,10 @@ function createTables($conn) {
 		class_id int,
 		cabinet_id int,
 		PRIMARY KEY (id),
-		FOREIGN KEY (class_id) REFERENCES Class(id),
+		FOREIGN KEY (class_id) REFERENCES Class(id)
+		ON DELETE CASCADE,
 		FOREIGN KEY (cabinet_id) REFERENCES Cabinet(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Property (
@@ -98,7 +103,8 @@ function createTables($conn) {
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		class_id int,
 		prop_id int,
-		FOREIGN KEY (class_id) REFERENCES Class(id),
+		FOREIGN KEY (class_id) REFERENCES Class(id)
+		ON DELETE CASCADE,
 		FOREIGN KEY (prop_id) REFERENCES Property(id)
 		ON DELETE CASCADE
 		);
@@ -113,6 +119,7 @@ function createTables($conn) {
 		FOREIGN KEY (property_id) REFERENCES Property(id)
 		ON DELETE CASCADE,
 		FOREIGN KEY (config_id) REFERENCES Config_item(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Folder (
@@ -120,6 +127,7 @@ function createTables($conn) {
 		name varchar(255),
 		parent_id int,
 		FOREIGN KEY (parent_id) REFERENCES Folder(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Application (
@@ -128,6 +136,7 @@ function createTables($conn) {
 		folder_id int,
 		PRIMARY KEY (id),
 		FOREIGN KEY (folder_id) REFERENCES Folder(id)
+		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Graph (

@@ -92,7 +92,7 @@ function removeProperty(name, id) {
 		if (confirm("Are you sure you want to permanently delete this property?")) {
 			$.ajax({
 				type : "POST",
-				url : "db_removeProperty.php",
+				url : "db_deleteProperty.php",
 				data : "name=" + name + "&id=" + id,
 				success : function(data) {
 					$('.highlight').remove();

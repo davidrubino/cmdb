@@ -2,7 +2,7 @@
 
 include 'db_connect.php';
 
-function removeProperty($conn) {
+function deleteProperty($conn) {
 	$name = $_POST['name'];
 	$id = $_POST['id'];
 
@@ -45,5 +45,5 @@ function removeProperty($conn) {
 	}
 }
 
-removeProperty($DB_con);
+deleteProperty($DB_con);
 ?>

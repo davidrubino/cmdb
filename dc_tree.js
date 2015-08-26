@@ -88,10 +88,72 @@ function addColumn() {
 	$("tr:first>td:last").html(colName(countCols - 1));
 }
 
+function customMenu($node) {
+	var tree = $("#tree").jstree(true);
+	var items = {
+		"createfile" : {
+			"separator_before" : false,
+			"separator_after" : false,
+			"label" : "New data center",
+			"action" : function(obj) {
+				$node = tree.create_node($node, {
+					type : "file"
+				});
+			}
+		},
+		"rename" : {
+			"separator_before" : false,
+			"separator_after" : false,
+			"label" : "Rename",
+			"action" : function(obj) {
+				tree.edit($node);
+			}
+		},
+		"remove" : {
+			"separator_before" : false,
+			"separator_after" : false,
+			"label" : "Remove",
+			"action" : function(obj) {
+				tree.delete_node($node);
+			}
+		}
+	};
+
+	if ($node.type === 'default') {
+		delete items.remove;
+		delete items.rename;
+	}
+
+	if ($node.type === 'file') {
+		delete items.createfile;
+	}
+
+	return items;
+}
+
+function buildGrid(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getGriddimensions.php",
+		data : "id=" + id,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				console.log(data[i].count_rows);
+				console.log(data[i].count_columns);
+			}
+		}
+	});
+}
+
 $(function() {
 	$("#tree").jstree({
 
 		"core" : {
+			"check_callback" : function(operation, node) {
+				if (operation === 'delete_node') {
+					return confirm("Are you sure you want to delete this node?");
+				}
+			},
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
@@ -109,13 +171,49 @@ $(function() {
 			"file" : {
 				"icon" : "img/file-icon.png",
 				"valid_children" : []
-			},
-			"folder" : {
-
 			}
 		},
 
-		"plugins" : ["json_data", "massload", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"contextmenu" : {
+			"items" : customMenu
+		},
+
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
+
+	}).on('rename_node.jstree', function(e, data) {
+		$.ajax({
+			type : "POST",
+			url : "dc_db_renameDataCenter.php",
+			data : "name=" + data.text + "&id=" + data.node.id,
+		});
+		$("#tree").jstree("refresh");
+
+	}).on('delete_node.jstree', function(e, data) {
+		$.ajax({
+			type : "POST",
+			url : "dc_db_deleteDataCenter.php",
+			data : "id=" + data.node.id,
+			success : function(data) {
+				$(".tabbable").hide();
+			}
+		});
+		$("#tree").jstree("refresh");
+
+	}).on('create_node.jstree', function(e, data) {
+		$.ajax({
+			type : "POST",
+			url : "dc_db_createDataCenter.php",
+			data : "id=" + data.node.id
+		});
+		$("#tree").jstree("refresh");
+		
+	}).on('select_node.jstree', function(e, data) {
+		if (data.node.type == "file") {
+			$('.col-md-9').show();
+			buildGrid(data.node.id);
+		} else {
+			$('.col-md-9').hide();
+		}
 	});
 
 	var lastClicked;

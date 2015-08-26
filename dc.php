@@ -33,14 +33,16 @@ $user_id = $_SESSION['user_session'];
 
 		<div class="container">
 			<div class="col-md-3" id="tree"></div>
-			<div class="col-md-9" id="mygraph"></div>
-			<div>
-				<input class="btn btn-large btn-primary i-graph" id="activate" type="button" value="Activate cell">
-				<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
-				<input class="btn btn-large btn-primary i-graph" id="addDC" type="button" value="Add data center">
-				<input class="btn btn-large btn-primary i-graph" id="rmDC" type="button" value="Remove data center">
-				<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
-				<input class="btn btn-large btn-primary i-graph" id="addCol" type="button" value="Add column">
+			<div class="col-md-9" style="display: none">
+				<div id="mygraph"></div>
+				<div>
+					<input class="btn btn-large btn-primary i-graph" id="activate" type="button" value="Activate cell">
+					<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
+					<input class="btn btn-large btn-primary i-graph" id="addDC" type="button" value="Add data center">
+					<input class="btn btn-large btn-primary i-graph" id="rmDC" type="button" value="Remove data center">
+					<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
+					<input class="btn btn-large btn-primary i-graph" id="addCol" type="button" value="Add column">
+				</div>
 			</div>
 		</div>
 
