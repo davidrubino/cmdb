@@ -1,5 +1,34 @@
 var countRows,
-    countCols;
+    countCols,
+    lastClicked,
+    grid,
+    rows,
+    cols,
+    node_id;
+
+function setRows(nb_rows) {
+	rows = nb_rows;
+}
+
+function setColumns(nb_cols) {
+	cols = nb_cols;
+}
+
+function setNodeId(id) {
+	node_id = id;
+}
+
+function getRows() {
+	return rows;
+}
+
+function getColumns() {
+	return cols;
+}
+
+function getNodeId() {
+	return node_id;
+}
 
 function clickableGrid(rows, cols, callback) {
 	var i = "";
@@ -59,33 +88,36 @@ function activateCell(el) {
 	$(el).removeClass("grayed");
 }
 
-function addDataCenter(cell) {
+function addCabinet(cell) {
 	if (cell.className.indexOf("grayed") == -1) {
 		$(cell).html("DC");
 	}
 }
 
-function removeDataCenter(cell) {
+function removeCabinet(cell) {
 	$(cell).html("");
 }
 
-function addRow(grid, rows, cols) {
-	var i = "";
-	countRows++;
-	var tr = grid.appendChild(document.createElement('tr'));
-	for (var c = 0; c < 1; ++c) {
-		var numberCell = tr.appendChild(document.createElement('td'));
-		numberCell.innerHTML = countRows;
-	}
-	for (var c = 1; c < cols + 1; ++c) {
-		var cell = tr.appendChild(document.createElement('td'));
-	}
+function addRow(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_addRow.php",
+		data : "id=" + id,
+		success : function() {
+			location.reload();
+		}
+	});
 }
 
-function addColumn() {
-	countCols++;
-	$("tr").append(document.createElement('td'));
-	$("tr:first>td:last").html(colName(countCols - 1));
+function addColumn(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_addColumn.php",
+		data : "id=" + id,
+		success : function() {
+			location.reload();
+		}
+	});
 }
 
 function customMenu($node) {
@@ -138,8 +170,27 @@ function buildGrid(id) {
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				console.log(data[i].count_rows);
-				console.log(data[i].count_columns);
+				setRows(data[i].count_rows);
+				setColumns(data[i].count_columns);
+				grid = clickableGrid(getRows(), getColumns(), function(el, row, col, i) {
+					i = el.innerHTML;
+					console.log("You clicked on element:", el);
+					console.log("You clicked on row:", row);
+					console.log("You clicked on col:", col);
+					console.log("You clicked on item #:", i);
+					$(el).addClass("clicked");
+
+					if (el.className != 'grayed') {
+						currentCell = el;
+						if (lastClicked) {
+							if (lastClicked.className != 'grayed') {
+								$(lastClicked).removeClass("clicked");
+							}
+						}
+						lastClicked = el;
+					}
+				});
+				$('#mygraph').html(grid);
 			}
 		}
 	});
@@ -178,7 +229,7 @@ $(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('rename_node.jstree', function(e, data) {
 		$.ajax({
@@ -206,39 +257,16 @@ $(function() {
 			data : "id=" + data.node.id
 		});
 		$("#tree").jstree("refresh");
-		
+
 	}).on('select_node.jstree', function(e, data) {
+		setNodeId(data.node.id);
 		if (data.node.type == "file") {
 			$('.col-md-9').show();
-			buildGrid(data.node.id);
+			buildGrid(getNodeId());
 		} else {
 			$('.col-md-9').hide();
 		}
 	});
-
-	var lastClicked;
-	var rows = 10;
-	var cols = 10;
-	var grid = clickableGrid(rows, cols, function(el, row, col, i) {
-		i = el.innerHTML;
-		console.log("You clicked on element:", el);
-		console.log("You clicked on row:", row);
-		console.log("You clicked on col:", col);
-		console.log("You clicked on item #:", i);
-		$(el).addClass("clicked");
-
-		if (el.className != 'grayed') {
-			currentCell = el;
-			if (lastClicked) {
-				if (lastClicked.className != 'grayed') {
-					$(lastClicked).removeClass("clicked");
-				}
-			}
-			lastClicked = el;
-		}
-	});
-
-	$('#mygraph').append(grid);
 
 	$("#gray-out").click(function(e) {
 		e.preventDefault();
@@ -250,23 +278,31 @@ $(function() {
 		activateCell(lastClicked);
 	});
 
-	$('#addDC').click(function(e) {
+	$('#addCabinet').click(function(e) {
 		e.preventDefault();
-		addDataCenter(lastClicked);
+		addCabinet(lastClicked);
 	});
 
-	$('#rmDC').click(function(e) {
+	$('#rmCabinet').click(function(e) {
 		e.preventDefault();
-		removeDataCenter(lastClicked);
+		removeCabinet(lastClicked);
 	});
 
 	$('#addRow').click(function(e) {
 		e.preventDefault();
-		addRow(grid, rows, cols);
+		addRow(getNodeId());
 	});
 
 	$('#addCol').click(function(e) {
 		e.preventDefault();
-		addColumn();
+		addColumn(getNodeId());
+	});
+
+	$('#rmRow').click(function(e) {
+		e.preventDefault();
+	});
+	
+	$('#rmCol').click(function(e) {
+		e.preventDefault();
 	});
 });

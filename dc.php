@@ -38,10 +38,12 @@ $user_id = $_SESSION['user_session'];
 				<div>
 					<input class="btn btn-large btn-primary i-graph" id="activate" type="button" value="Activate cell">
 					<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
-					<input class="btn btn-large btn-primary i-graph" id="addDC" type="button" value="Add data center">
-					<input class="btn btn-large btn-primary i-graph" id="rmDC" type="button" value="Remove data center">
+					<input class="btn btn-large btn-primary i-graph" id="addCabinet" type="button" value="Add cabinet">
+					<input class="btn btn-large btn-primary i-graph" id="rmCabinet" type="button" value="Remove cabinet">
 					<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
 					<input class="btn btn-large btn-primary i-graph" id="addCol" type="button" value="Add column">
+					<input class="btn btn-large btn-primary i-graph" id="rmRow" type="button" value="Remove row">
+					<input class="btn btn-large btn-primary i-graph" id="rmCol" type="button" value="Remove column">
 				</div>
 			</div>
 		</div>
