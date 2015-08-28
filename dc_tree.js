@@ -1,10 +1,10 @@
-var countRows,
-    countCols,
-    lastClicked,
+var lastClicked,
     grid,
     rows,
     cols,
-    node_id;
+    node_id,
+    selected_row = -1,
+    select_col = -1;
 
 function setRows(nb_rows) {
 	rows = nb_rows;
@@ -16,6 +16,14 @@ function setColumns(nb_cols) {
 
 function setNodeId(id) {
 	node_id = id;
+}
+
+function setSelectedRow(row) {
+	selected_row = row;
+}
+
+function setSelectedCol(col) {
+	selected_col = col;
 }
 
 function getRows() {
@@ -30,10 +38,16 @@ function getNodeId() {
 	return node_id;
 }
 
+function getSelectedRow() {
+	return selected_row;
+}
+
+function getSelectedCol() {
+	return selected_col;
+}
+
 function clickableGrid(rows, cols, callback) {
 	var i = "";
-	countRows = rows;
-	countCols = cols;
 	var grid = document.createElement('table');
 	grid.className = 'grid';
 
@@ -90,7 +104,7 @@ function activateCell(el) {
 
 function addCabinet(cell) {
 	if (cell.className.indexOf("grayed") == -1) {
-		$(cell).html("DC");
+		$(cell).html("C");
 	}
 }
 
@@ -113,6 +127,28 @@ function addColumn(id) {
 	$.ajax({
 		type : "POST",
 		url : "dc_db_addColumn.php",
+		data : "id=" + id,
+		success : function() {
+			location.reload();
+		}
+	});
+}
+
+function removeRow(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_rmRow.php",
+		data : "id=" + id,
+		success : function() {
+			location.reload();
+		}
+	});
+}
+
+function removeColumn(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_rmColumn.php",
 		data : "id=" + id,
 		success : function() {
 			location.reload();
@@ -174,10 +210,8 @@ function buildGrid(id) {
 				setColumns(data[i].count_columns);
 				grid = clickableGrid(getRows(), getColumns(), function(el, row, col, i) {
 					i = el.innerHTML;
-					console.log("You clicked on element:", el);
-					console.log("You clicked on row:", row);
-					console.log("You clicked on col:", col);
-					console.log("You clicked on item #:", i);
+					setSelectedRow(row);
+					setSelectedCol(col);
 					$(el).addClass("clicked");
 
 					if (el.className != 'grayed') {
@@ -189,6 +223,11 @@ function buildGrid(id) {
 						}
 						lastClicked = el;
 					}
+
+					console.log("You clicked on element:", el);
+					console.log("You clicked on row:", getSelectedRow());
+					console.log("You clicked on col:", getSelectedCol());
+					console.log("You clicked on item #:", i);
 				});
 				$('#mygraph').html(grid);
 			}
@@ -300,9 +339,11 @@ $(function() {
 
 	$('#rmRow').click(function(e) {
 		e.preventDefault();
+		removeRow(getNodeId());
 	});
-	
+
 	$('#rmCol').click(function(e) {
 		e.preventDefault();
+		removeColumn(getNodeId());
 	});
 });
