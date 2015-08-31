@@ -24,3 +24,8 @@
 .controls {
 	margin: 1em auto;
 }
+
+.error {
+	color: red;
+	display: none;
+}

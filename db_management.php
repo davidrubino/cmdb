@@ -43,12 +43,12 @@ function createTables($conn) {
 		
 		CREATE TABLE Data_center (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		name varchar(255),
-		count_rows int,
-		count_columns int,
-		label_rows varchar(255),
-		label_columns varchar(255),
-		tile_dim int
+		name varchar(255) NOT NULL,
+		count_rows int NOT NULL,
+		count_columns int NOT NULL,
+		label_rows varchar(255) NOT NULL,
+		label_columns varchar(255) NOT NULL,
+		tile_dim int NOT NULL
 		);
 		
 		CREATE TABLE Tile (

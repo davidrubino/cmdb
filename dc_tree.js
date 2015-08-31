@@ -46,7 +46,15 @@ function getSelectedCol() {
 	return selected_col;
 }
 
-function clickableGrid(rows, cols, callback) {
+function previousChar(c) {
+	return String.fromCharCode(c.charCodeAt(0) - 1);
+}
+
+function nextChar(c) {
+	return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+
+function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 	var i = "";
 	var grid = document.createElement('table');
 	grid.className = 'grid';
@@ -55,16 +63,24 @@ function clickableGrid(rows, cols, callback) {
 		var tr = grid.appendChild(document.createElement('tr'));
 
 		for (var c = 0; c < 1; ++c) {
-			var numberCell = tr.appendChild(document.createElement('td'));
+			var xCell = tr.appendChild(document.createElement('td'));
 			if (r != 0) {
-				numberCell.innerHTML = r;
+				if ($.isNumeric(labelRows)) {
+					xCell.innerHTML = labelRows - 1;
+				} else {
+					xCell.innerHTML = previousChar(labelRows);
+				}
 			}
 		}
 
 		for (var c = 1; c < cols + 1; ++c) {
 			if (r == 0) {
-				var letterCell = tr.appendChild(document.createElement('td'));
-				letterCell.innerHTML = colName(c - 1);
+				var yCell = tr.appendChild(document.createElement('td'));
+				if ($.isNumeric(labelCols)) {
+					yCell.innerHTML = labelCols;
+				} else {
+					yCell.innerHTML = labelCols;
+				}
 			} else {
 				var cell = tr.appendChild(document.createElement('td'));
 				cell.innerHTML = i;
@@ -74,6 +90,18 @@ function clickableGrid(rows, cols, callback) {
 					};
 				})(cell, r, c, i), false);
 			}
+
+			if ($.isNumeric(labelCols)) {
+				labelCols++;
+			} else {
+				labelCols = nextChar(labelCols);
+			}
+		}
+
+		if ($.isNumeric(labelRows)) {
+			labelRows++;
+		} else {
+			labelRows = nextChar(labelRows);
 		}
 	}
 	return grid;
@@ -156,6 +184,17 @@ function removeColumn(id) {
 	});
 }
 
+function createDataCenter(data) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_createDataCenter.php",
+		data : data,
+		success : function() {
+			location.reload();
+		}
+	});
+}
+
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
 	var items = {
@@ -202,13 +241,13 @@ function customMenu($node) {
 function buildGrid(id) {
 	$.ajax({
 		type : "POST",
-		url : "dc_db_getGriddimensions.php",
+		url : "dc_db_getDataCenterProperties.php",
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
 				setRows(data[i].count_rows);
 				setColumns(data[i].count_columns);
-				grid = clickableGrid(getRows(), getColumns(), function(el, row, col, i) {
+				grid = clickableGrid(getRows(), getColumns(), data[i].label_rows, data[i].label_columns, function(el, row, col, i) {
 					i = el.innerHTML;
 					setSelectedRow(row);
 					setSelectedCol(col);
@@ -284,27 +323,96 @@ $(function() {
 			url : "dc_db_deleteDataCenter.php",
 			data : "id=" + data.node.id,
 			success : function(data) {
-				$(".tabbable").hide();
+				location.reload();
 			}
 		});
-		$("#tree").jstree("refresh");
 
 	}).on('create_node.jstree', function(e, data) {
-		$.ajax({
-			type : "POST",
-			url : "dc_db_createDataCenter.php",
-			data : "id=" + data.node.id
-		});
-		$("#tree").jstree("refresh");
+		$("#grid-form").show();
 
 	}).on('select_node.jstree', function(e, data) {
 		setNodeId(data.node.id);
 		if (data.node.type == "file") {
-			$('.col-md-9').show();
+			$('#grid-controls').show();
 			buildGrid(getNodeId());
 		} else {
-			$('.col-md-9').hide();
+			$('#grid-controls').hide();
 		}
+	});
+
+	$(".property-form").on('submit', function(event) {
+		event.preventDefault();
+		var form_data = $(this).serialize();
+		if ($(".error").is(":visible")) {
+			alert("There are errors on this page!");
+		} else {
+			createDataCenter(form_data);
+		}
+	});
+
+	$('#name').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-name").hide();
+		} else {
+			$("#error-name").show();
+		}
+	});
+
+	$('#count_rows').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-count_rows").hide();
+		} else {
+			$("#error-count_rows").show();
+		}
+	});
+
+	$('#count_columns').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-count_columns").hide();
+		} else {
+			$("#error-count_columns").show();
+		}
+	});
+
+	$('#label_rows').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-label_rows").hide();
+		} else {
+			$("#error-label_rows").show();
+		}
+	});
+
+	$('#label_columns').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-label_columns").hide();
+		} else {
+			$("#error-label_columns").show();
+		}
+	});
+
+	$('#tile_dim').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid) {
+			$("#error-tile_dim").hide();
+		} else {
+			$("#error-tile_dim").show();
+		}
+	});
+
+	$(".btn-default").click(function(e) {
+		e.preventDefault();
+		document.location.href = 'dc.php';
 	});
 
 	$("#gray-out").click(function(e) {
@@ -339,11 +447,23 @@ $(function() {
 
 	$('#rmRow').click(function(e) {
 		e.preventDefault();
-		removeRow(getNodeId());
+		if (getRows() > 1) {
+			if (confirm("The last row will be deleted. Continue?")) {
+				removeRow(getNodeId());
+			}
+		} else {
+			alert("You cannot remove the last row!");
+		}
 	});
 
 	$('#rmCol').click(function(e) {
 		e.preventDefault();
-		removeColumn(getNodeId());
+		if (getColumns() > 1) {
+			if (confirm("The last column will be deleted. Continue?")) {
+				removeColumn(getNodeId());
+			}
+		} else {
+			alert("You cannot remove the last column!");
+		}
 	});
 });
