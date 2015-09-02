@@ -8,7 +8,7 @@ function getGridDimensions($conn) {
 	$id = $_POST['id'];
 	
 	try {
-		$sql = 'select count_rows, count_columns, label_rows, label_columns
+		$sql = 'select count_rows, count_columns, label_rows, label_columns, tile_dim
 		from data_center
 		where id = :id';
 		$stmt = $conn -> prepare($sql);

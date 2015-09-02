@@ -46,12 +46,69 @@ function getSelectedCol() {
 	return selected_col;
 }
 
-function previousChar(c) {
-	return String.fromCharCode(c.charCodeAt(0) - 1);
+function getXValue(x, dim) {
+	return x * dim;
 }
 
-function nextChar(c) {
-	return String.fromCharCode(c.charCodeAt(0) + 1);
+function getYValue(y, dim) {
+	return y * dim;
+}
+
+function getLabel(row, col, labelRows, labelCols) {
+	if ($.isNumeric(labelRows)) {
+		for (var i = 1; i < row; i++) {
+			labelRows++;
+		}
+	} else {
+		for (var i = 1; i < row; i++) {
+			labelRows = nextChar(labelRows);
+		}
+
+	}
+
+	if ($.isNumeric(labelCols)) {
+		for (var i = 0; i < col - 1; i++) {
+			labelCols++;
+		}
+	} else {
+		for (var i = 0; i < col - 1; i++) {
+			labelCols = nextChar(labelCols);
+		}
+	}
+
+	return labelRows + '-' + labelCols;
+}
+
+function isGrayedOut(el) {
+	return el.className == 'grayed';
+}
+
+function previousChar(s) {
+	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
+		var c = a.charCodeAt(0);
+		switch(c) {
+		case 65:
+			return 'Z';
+		case 97:
+			return 'z';
+		default:
+			return String.fromCharCode(--c);
+		}
+	});
+}
+
+function nextChar(s) {
+	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
+		var c = a.charCodeAt(0);
+		switch(c) {
+		case 90:
+			return 'AA';
+		case 122:
+			return 'aa';
+		default:
+			return String.fromCharCode(++c);
+		}
+	});
 }
 
 function clickableGrid(rows, cols, labelRows, labelCols, callback) {
@@ -76,14 +133,9 @@ function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 		for (var c = 1; c < cols + 1; ++c) {
 			if (r == 0) {
 				var yCell = tr.appendChild(document.createElement('td'));
-				if ($.isNumeric(labelCols)) {
-					yCell.innerHTML = labelCols;
-				} else {
-					yCell.innerHTML = labelCols;
-				}
+				yCell.innerHTML = labelCols;
 			} else {
 				var cell = tr.appendChild(document.createElement('td'));
-				cell.innerHTML = i;
 				cell.addEventListener('click', (function(el, r, c, i) {
 					return function() {
 						callback(el, r, c, i);
@@ -195,6 +247,14 @@ function createDataCenter(data) {
 	});
 }
 
+function createTile(x, y, label, html_row, html_col, data_center_id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_createTile.php",
+		data : "x=" + x + "&y=" + y + "&label=" + label + "&html_row=" + html_row + "&html_col=" + html_col + "&data_center_id=" + data_center_id
+	});
+}
+
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
 	var items = {
@@ -239,6 +299,11 @@ function customMenu($node) {
 }
 
 function buildGrid(id) {
+	var label_rows;
+	var label_cols;
+	var tile_dim;
+	var grayed_out;
+
 	$.ajax({
 		type : "POST",
 		url : "dc_db_getDataCenterProperties.php",
@@ -247,26 +312,28 @@ function buildGrid(id) {
 			for (var i = 0; i < data.length; i++) {
 				setRows(data[i].count_rows);
 				setColumns(data[i].count_columns);
-				grid = clickableGrid(getRows(), getColumns(), data[i].label_rows, data[i].label_columns, function(el, row, col, i) {
-					i = el.innerHTML;
+				label_rows = data[i].label_rows;
+				label_cols = data[i].label_columns;
+				tile_dim = data[i].tile_dim;
+
+				grid = clickableGrid(getRows(), getColumns(), data[i].label_rows, data[i].label_columns, function(el, row, col) {
 					setSelectedRow(row);
 					setSelectedCol(col);
 					$(el).addClass("clicked");
-
-					if (el.className != 'grayed') {
-						currentCell = el;
-						if (lastClicked) {
-							if (lastClicked.className != 'grayed') {
-								$(lastClicked).removeClass("clicked");
-							}
-						}
-						lastClicked = el;
+					if (lastClicked) {
+						$(lastClicked).removeClass("clicked");
 					}
+					lastClicked = el;
 
-					console.log("You clicked on element:", el);
-					console.log("You clicked on row:", getSelectedRow());
-					console.log("You clicked on col:", getSelectedCol());
-					console.log("You clicked on item #:", i);
+					console.log("x: ", getXValue(getSelectedCol(), tile_dim));
+					console.log("y: ", getYValue(getSelectedRow(), tile_dim));
+					console.log("html_row: ", getSelectedRow());
+					console.log("html_col: ", getSelectedCol());
+					console.log("label_rows: ", label_rows);
+					console.log("label_cols: ", label_cols);
+					console.log("label: ", getLabel(getSelectedRow(), getSelectedCol(), label_rows, label_cols));
+					console.log("grayed_out: ", isGrayedOut(el));
+					console.log("data_center_id: ", getNodeId());
 				});
 				$('#mygraph').html(grid);
 			}

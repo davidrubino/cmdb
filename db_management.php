@@ -57,6 +57,8 @@ function createTables($conn) {
 		y int,
 		label varchar(255),
 		grayed_out int,
+		html_row int,
+		html_col int,
 		data_center_id int,
 		FOREIGN KEY (data_center_id) REFERENCES Data_center(id)
 		ON DELETE CASCADE
