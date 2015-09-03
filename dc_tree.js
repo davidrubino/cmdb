@@ -4,7 +4,8 @@ var lastClicked,
     cols,
     node_id,
     selected_row = -1,
-    select_col = -1;
+    select_col = -1,
+    tile_prop;
 
 function setRows(nb_rows) {
 	rows = nb_rows;
@@ -24,6 +25,14 @@ function setSelectedRow(row) {
 
 function setSelectedCol(col) {
 	selected_col = col;
+}
+
+function setTileProperties(prop) {
+	tile_prop = prop;
+}
+
+function getTileProperties() {
+	return tile_prop;
 }
 
 function getRows() {
@@ -173,9 +182,8 @@ function colName(n) {
 }
 
 function grayOutCell(el) {
-	if (el.innerHTML == "") {
-		$(el).addClass("grayed");
-	}
+	$(el).addClass("grayed");
+	console.log(el);
 }
 
 function activateCell(el) {
@@ -247,11 +255,28 @@ function createDataCenter(data) {
 	});
 }
 
-function createTile(x, y, label, html_row, html_col, data_center_id) {
+function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center_id) {
 	$.ajax({
 		type : "POST",
 		url : "dc_db_createTile.php",
-		data : "x=" + x + "&y=" + y + "&label=" + label + "&html_row=" + html_row + "&html_col=" + html_col + "&data_center_id=" + data_center_id
+		data : "id=" + id + "&x=" + x + "&y=" + y + "&label=" + label + "&grayed_out=" + grayed_out + "&html_row=" + html_row + "&html_col=" + html_col + "&data_center_id=" + data_center_id,
+		success : function() {
+			console.log("tile created: " + x + " " + y);
+		}
+	});
+}
+
+function loadTiles(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getTiles.php",
+		data : "id=" + id,
+		success : function(data) {
+			for(var i =0; i<data.length; i++) {
+				console.log(data[i].html_row);
+				console.log(data[i].html_col);
+			}
+		}
 	});
 }
 
@@ -325,6 +350,7 @@ function buildGrid(id) {
 					}
 					lastClicked = el;
 
+					console.log("id: ", getNodeId() + getSelectedRow() + getSelectedCol());
 					console.log("x: ", getXValue(getSelectedCol(), tile_dim));
 					console.log("y: ", getYValue(getSelectedRow(), tile_dim));
 					console.log("html_row: ", getSelectedRow());
@@ -334,8 +360,21 @@ function buildGrid(id) {
 					console.log("label: ", getLabel(getSelectedRow(), getSelectedCol(), label_rows, label_cols));
 					console.log("grayed_out: ", isGrayedOut(el));
 					console.log("data_center_id: ", getNodeId());
+
+					var tileProp = {
+						id : getNodeId() + getSelectedRow() + getSelectedCol(),
+						x : getXValue(getSelectedCol(), tile_dim),
+						y : getYValue(getSelectedRow(), tile_dim),
+						label : getLabel(getSelectedRow(), getSelectedCol(), label_rows, label_cols),
+						grayed_out : isGrayedOut(el),
+						html_row : getSelectedRow(),
+						html_col : getSelectedCol(),
+						data_center_id : getNodeId()
+					};
+					setTileProperties(tileProp);
 				});
 				$('#mygraph').html(grid);
+				loadTiles(getNodeId());
 			}
 		}
 	});
@@ -484,7 +523,17 @@ $(function() {
 
 	$("#gray-out").click(function(e) {
 		e.preventDefault();
-		grayOutCell(lastClicked);
+		console.log(tile_prop);
+		if (lastClicked.innerHTML == "") {
+			if (!isGrayedOut(lastClicked)) {
+				//createTile(tile_prop.id, tile_prop.x, tile_prop.y, tile_prop.label, 1, tile_prop.html_row, tile_prop.html_col, tile_prop.data_center_id);
+				grayOutCell(lastClicked);
+			} else {
+				alert("The cell is already grayed out!");
+			}
+		} else {
+			alert("There is a cabinet in this cell!");
+		}
 	});
 
 	$('#activate').click(function(e) {
