@@ -124,6 +124,7 @@ function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 	var i = "";
 	var grid = document.createElement('table');
 	grid.className = 'grid';
+	grid.id = 'table';
 
 	for (var r = 0; r < rows + 1; ++r) {
 		var tr = grid.appendChild(document.createElement('tr'));
@@ -181,23 +182,29 @@ function colName(n) {
 	return s;
 }
 
-function grayOutCell(el) {
-	$(el).addClass("grayed");
-	console.log(el);
+function grayOutCell(x, y) {
+	var table = document.getElementById("table");
+	var row = table.rows[x];
+	var cell = row.cells[y];
+	$(cell).addClass("grayed");
 }
 
-function activateCell(el) {
-	$(el).removeClass("grayed");
+function deleteTile(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_deleteTile.php",
+		data : "id=" + id,
+		success : function() {
+			location.reload();
+		}
+	});
 }
 
-function addCabinet(cell) {
-	if (cell.className.indexOf("grayed") == -1) {
-		$(cell).html("C");
-	}
-}
-
-function removeCabinet(cell) {
-	$(cell).html("");
+function addCabinet(x, y) {
+	var table = document.getElementById("table");
+	var row = table.rows[x];
+	var cell = row.cells[y];
+	$(cell).html("C");
 }
 
 function addRow(id) {
@@ -272,9 +279,32 @@ function loadTiles(id) {
 		url : "dc_db_getTiles.php",
 		data : "id=" + id,
 		success : function(data) {
-			for(var i =0; i<data.length; i++) {
-				console.log(data[i].html_row);
-				console.log(data[i].html_col);
+			for (var i = 0; i < data.length; i++) {
+				grayOutCell(data[i].html_row, data[i].html_col);
+			}
+		}
+	});
+}
+
+function createCabinet(data, tile_id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_createCabinet.php",
+		data : data + "&tile_id=" + tile_id,
+		success : function(data) {
+			location.reload();
+		}
+	});
+}
+
+function loadCabinets(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getCabinets.php",
+		data : "id=" + id,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				addCabinet(data[i].html_row, data[i].html_col);
 			}
 		}
 	});
@@ -375,6 +405,7 @@ function buildGrid(id) {
 				});
 				$('#mygraph').html(grid);
 				loadTiles(getNodeId());
+				loadCabinets(getNodeId());
 			}
 		}
 	});
@@ -446,13 +477,24 @@ $(function() {
 		}
 	});
 
-	$(".property-form").on('submit', function(event) {
+	$("#form1").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
 		if ($(".error").is(":visible")) {
 			alert("There are errors on this page!");
 		} else {
 			createDataCenter(form_data);
+		}
+	});
+
+	$("#form2").on('submit', function(event) {
+		event.preventDefault();
+		var form_data = $(this).serialize();
+		if ($(".error").is(":visible")) {
+			alert("There are errors on this page!");
+		} else {
+			createTile(tile_prop.id, tile_prop.x, tile_prop.y, tile_prop.label, tile_prop.grayed_out, tile_prop.html_row, tile_prop.html_col, tile_prop.data_center_id);
+			createCabinet(form_data, tile_prop.id);
 		}
 	});
 
@@ -516,6 +558,26 @@ $(function() {
 		}
 	});
 
+	$('#height').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid > 0) {
+			$("#error-height").hide();
+		} else {
+			$("#error-height").show();
+		}
+	});
+
+	$('#width').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid > 0) {
+			$("#error-width").hide();
+		} else {
+			$("#error-width").show();
+		}
+	});
+
 	$(".btn-default").click(function(e) {
 		e.preventDefault();
 		document.location.href = 'dc.php';
@@ -523,32 +585,59 @@ $(function() {
 
 	$("#gray-out").click(function(e) {
 		e.preventDefault();
-		console.log(tile_prop);
-		if (lastClicked.innerHTML == "") {
-			if (!isGrayedOut(lastClicked)) {
-				//createTile(tile_prop.id, tile_prop.x, tile_prop.y, tile_prop.label, 1, tile_prop.html_row, tile_prop.html_col, tile_prop.data_center_id);
-				grayOutCell(lastClicked);
+		if (lastClicked) {
+			if (lastClicked.innerHTML == "") {
+				if (!isGrayedOut(lastClicked)) {
+					grayOutCell(tile_prop.html_row, tile_prop.html_col);
+					createTile(tile_prop.id, tile_prop.x, tile_prop.y, tile_prop.label, 1, tile_prop.html_row, tile_prop.html_col, tile_prop.data_center_id);
+				} else {
+					alert("The cell is already grayed out!");
+				}
 			} else {
-				alert("The cell is already grayed out!");
+				alert("There is a cabinet in this cell!");
 			}
 		} else {
-			alert("There is a cabinet in this cell!");
+			alert("Please select a cell!");
 		}
 	});
 
 	$('#activate').click(function(e) {
 		e.preventDefault();
-		activateCell(lastClicked);
+		if (lastClicked) {
+			if (isGrayedOut(lastClicked)) {
+				deleteTile(tile_prop.id);
+			} else {
+				alert("The cell is already activated!");
+			}
+		} else {
+			alert("Please select a cell!");
+		}
 	});
 
 	$('#addCabinet').click(function(e) {
 		e.preventDefault();
-		addCabinet(lastClicked);
+		if (lastClicked) {
+			if (lastClicked.className.indexOf("grayed") == -1) {
+				$(".col-md-3").show();
+			} else {
+				alert("You cannot add a cabinet to this cell!");
+			}
+		} else {
+			alert("Please select a cell!");
+		}
 	});
 
 	$('#rmCabinet').click(function(e) {
 		e.preventDefault();
-		removeCabinet(lastClicked);
+		if (lastClicked) {
+			if (lastClicked.innerHTML == "C") {
+				deleteTile(tile_prop.id);
+			} else {
+				alert("There is no cabinet on this cell!");
+			}
+		} else {
+			alert("Please select a cabinet to remove!");
+		}
 	});
 
 	$('#addRow').click(function(e) {

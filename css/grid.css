@@ -29,3 +29,7 @@
 	color: red;
 	display: none;
 }
+
+.number-cells {
+	width: 65px;
+}

@@ -270,3 +270,10 @@ where id = 15;
 
 -- select all config items --
 select name from config_item;
+
+-- select all tiles where there is a cabinet --
+select tile.html_row, tile.html_col
+from tile
+where exists (select * from cabinet
+    where cabinet.tile_id = tile.id
+    and tile.data_center_id = 1)

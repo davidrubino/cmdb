@@ -76,10 +76,9 @@ function createTables($conn) {
 		
 		CREATE TABLE Cabinet (
 		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		height int,
-		width int,
-		color varchar(255),
-		tile_id int,
+		height int NOT NULL,
+		width int NOT NULL,
+		tile_id int NOT NULL,
 		FOREIGN KEY (tile_id) REFERENCES Tile(id)
 		ON DELETE CASCADE
 		);
