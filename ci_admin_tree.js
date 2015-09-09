@@ -117,7 +117,9 @@ function getProperties(tab, id, table, classTitle) {
 			for (var i = 0; i < data.length; i++) {
 				for (var j = 0; j < data[i].content.length; j++) {
 					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td>' + data[i].content[j].value_type + '</td></tr>');
-					title.push(data[i].title[j].name);
+				}
+				for (var k = 0; k < data[i].title.length; k++) {
+					title.push(data[i].title[k].name);
 				}
 			}
 			$(table).html(htmlResult);
@@ -197,7 +199,7 @@ $(document).ready(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
 		getFullPath(data.node);
