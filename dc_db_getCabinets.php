@@ -8,11 +8,10 @@ function getCabinets($conn) {
 	$id = $_POST['id'];
 
 	try {
-		$sql = 'select tile.html_row, tile.html_col
-		from tile
-		where exists (select * from cabinet
-		    where cabinet.tile_id = tile.id
-		    and tile.data_center_id = :id)';
+		$sql = 'select tile.html_row, tile.html_col, cabinet.color
+		from tile, cabinet
+		where cabinet.tile_id = tile.id
+		and tile.data_center_id = :id';
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':id' => $id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);

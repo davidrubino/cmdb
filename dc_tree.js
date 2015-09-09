@@ -200,11 +200,12 @@ function deleteTile(id) {
 	});
 }
 
-function addCabinet(x, y) {
+function addCabinet(x, y, color) {
 	var table = document.getElementById("table");
 	var row = table.rows[x];
 	var cell = row.cells[y];
-	$(cell).html("C");
+	$(cell).html("<img src='img/cabinet-icon.png'>");
+	$(cell).css("background-color", color);
 }
 
 function addRow(id) {
@@ -291,7 +292,7 @@ function createCabinet(data, tile_id) {
 		type : "POST",
 		url : "dc_db_createCabinet.php",
 		data : data + "&tile_id=" + tile_id,
-		success : function(data) {
+		success : function() {
 			location.reload();
 		}
 	});
@@ -304,7 +305,7 @@ function loadCabinets(id) {
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				addCabinet(data[i].html_row, data[i].html_col);
+				addCabinet(data[i].html_row, data[i].html_col, data[i].color);
 			}
 		}
 	});

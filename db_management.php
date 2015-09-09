@@ -78,6 +78,7 @@ function createTables($conn) {
 		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		height int NOT NULL,
 		width int NOT NULL,
+		color varchar(255) NOT NULL,
 		tile_id int NOT NULL,
 		FOREIGN KEY (tile_id) REFERENCES Tile(id)
 		ON DELETE CASCADE

@@ -126,6 +126,12 @@ $user_id = $_SESSION['user_session'];
 									</td>
 									<td><span id="error-width" class="error">Please enter a valid width</span></td>
 								</tr>
+								<tr>
+									<td>Color</td>
+									<td>
+									<input type="color" class="number-cells" id="color "name="color">
+									</td>
+								</tr>
 							</table>
 						</div>
 						<div class="col-sm-12 controls btn-group">
