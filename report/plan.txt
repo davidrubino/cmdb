@@ -1,0 +1,10 @@
+1.	Presentation of the company
+2.	The problem: here details why we’re doing this project…
+3.	State of the art: CMDB available on the market
+4.	Problem analysis and our solution: a cloud-based CMDB
+5.	(Why our solution works)
+6.	Technologies used
+7.	Implementation of the solution
+8.	Economic strategy and technological progress regarding our product
+9.	Future of the CMDB app
+10.	Work method and project management

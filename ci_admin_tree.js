@@ -249,16 +249,21 @@ $(document).ready(function() {
 			$.ajax({
 				type : "POST",
 				url : "db_renameConfigItem.php",
-				data : "name=" + name + "&id=" + data.node.id
+				data : "name=" + name + "&id=" + data.node.id,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "db_renameClass.php",
-				data : "name=" + name + "&class_id=" + data.node.id
+				data : "name=" + name + "&class_id=" + data.node.id,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		}
-		$("#tree").jstree("refresh");
 
 	}).on('delete_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
@@ -267,7 +272,8 @@ $(document).ready(function() {
 				url : "db_deleteConfigItem.php",
 				data : "id=" + data.node.id,
 				success : function(data) {
-					$(".tabbable").hide();
+					$("#tabs").hide();
+					$("#tree").jstree("refresh");
 				}
 			});
 		} else {
@@ -276,27 +282,32 @@ $(document).ready(function() {
 				url : "db_deleteClass.php",
 				data : "id=" + data.node.id,
 				success : function(data) {
-					$(".tabbable").hide();
+					$("#tabs").hide();
+					$("#tree").jstree("refresh");
 				}
 			});
 		}
-		$("#tree").jstree("refresh");
 
 	}).on('create_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
 				url : "db_createConfigItem.php",
-				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1]
+				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1],
+				success : function(data) {
+					$("#tree").jstree("refresh");
+				}
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "db_createClass.php",
-				data : "id=" + data.node.parent
+				data : "id=" + data.node.parent,
+				success : function(data) {
+					$("#tree").jstree("refresh");
+				}
 			});
 		}
-		$("#tree").jstree("refresh");
 	});
 
 	$('#tabs').tabs({
@@ -347,10 +358,10 @@ $(document).ready(function() {
 		e.preventDefault();
 		removeProperty(current_name, global_id);
 	});
-	
+
 	$(".btn-default").click(function(e) {
 		e.preventDefault();
-		document.location.href='ci_admin.php';
+		document.location.href = 'ci_admin.php';
 	});
 
 	$('.selectable').on('click', 'tr', function(event) {
