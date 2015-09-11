@@ -135,6 +135,7 @@ function getValues(id, tab) {
 		data : "id=" + id + "&tab=" + tab,
 		success : function(data) {
 			var htmlContainer = new Array();
+			htmlContainer.push('<div class="alert alert-success" role="alert" style="display: none">Update successful!</div>');
 			for (var i = 0; i < data.length; i++) {
 				for (var k = 0; k < data[i].title.length; k++) {
 					for (var j = 0; j < data[i].content.length; j++) {
@@ -143,6 +144,7 @@ function getValues(id, tab) {
 				}
 			}
 			htmlContainer.push('<button type="submit" class="btn btn-large btn-primary">Save</button>');
+			htmlContainer.push('<input type="button" onclick="document.location.href=\'ci_admin.php\';" value="Cancel" class="btn btn-large btn-default">');
 			$('.value-form').html(htmlContainer);
 		}
 	});
@@ -152,7 +154,10 @@ function editValues(id, name, value) {
 	$.ajax({
 		type : "POST",
 		url : "db_updateValues.php",
-		data : "id=" + id + "&name=" + name + "&value=" + value
+		data : "id=" + id + "&name=" + name + "&value=" + value,
+		success : function() {
+			$('.alert-success').show();
+		}
 	});
 }
 
@@ -358,8 +363,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		removeProperty(current_name, global_id);
 	});
-
-	$(".btn-default").click(function(e) {
+	
+	$(".btn-cancel").click(function(e) {
 		e.preventDefault();
 		document.location.href = 'ci_admin.php';
 	});

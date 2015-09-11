@@ -59,9 +59,7 @@ if ($permission == 0) {
 
 				<div id="general">
 					<div id="fileData_general">
-						<form class="value-form" role="form" method="post">
-						</form>
-						<input type="button" value="Cancel" class="btn btn-large btn-default">
+						<form class="value-form" role="form" method="post"></form>
 					</div>
 
 					<div id="folderData_general">
@@ -83,7 +81,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default">
+								<input type="button" value="Cancel" class="btn btn-large btn-default btn-cancel">
 							</div>
 						</form>
 					</div>
@@ -91,9 +89,7 @@ if ($permission == 0) {
 
 				<div id="financial">
 					<div id="fileData_financial">
-						<form class="value-form" role="form" method="post">
-						</form>
-						<input type="button" value="Cancel" class="btn btn-large btn-default">
+						<form class="value-form" role="form" method="post"></form>
 					</div>
 
 					<div id="folderData_financial">
@@ -115,7 +111,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default">
+								<input type="button" value="Cancel" class="btn btn-large btn-default btn-cancel">
 							</div>
 						</form>
 					</div>
@@ -123,9 +119,7 @@ if ($permission == 0) {
 
 				<div id="labor">
 					<div id="fileData_labor">
-						<form class="value-form" role="form" method="post">
-						</form>
-						<input type="button" value="Cancel" class="btn btn-large btn-default">
+						<form class="value-form" role="form" method="post"></form>
 					</div>
 
 					<div id="folderData_labor">
@@ -147,7 +141,7 @@ if ($permission == 0) {
 								<button type="submit" class="btn btn-large btn-primary">
 									Save
 								</button>
-								<input type="button" value="Cancel" class="btn btn-large btn-default">
+								<input type="button" value="Cancel" class="btn btn-large btn-default btn-cancel">
 							</div>
 						</form>
 					</div>
