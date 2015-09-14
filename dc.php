@@ -41,6 +41,7 @@ $user_id = $_SESSION['user_session'];
 						<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
 						<input class="btn btn-large btn-primary i-graph" id="addCabinet" type="button" value="Add cabinet">
 						<input class="btn btn-large btn-primary i-graph" id="rmCabinet" type="button" value="Remove cabinet">
+						<input class="btn btn-large btn-primary i-graph" id="3d" type="button" value="3D">
 					</div>
 					<div class="controls">
 						<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
@@ -51,6 +52,10 @@ $user_id = $_SESSION['user_session'];
 				</div>
 
 				<div id="grid-form" style="display: none">
+					<div class="alert alert-info" id="alert1" role="alert" style="display: none"></div>
+					<div class="alert alert-danger" id="alert2" role="alert" style="display: none">
+						There are errors on this page!
+					</div>
 					<form id="form1" role="form" method="post">
 						<div class="table-responsive">
 							<table class="table">
@@ -102,13 +107,13 @@ $user_id = $_SESSION['user_session'];
 							<button type="submit" class="btn btn-large btn-primary">
 								Save
 							</button>
-							<input type="button" value="Cancel" class="btn btn-large btn-default">
+							<input type="button" value="Cancel" id="create-dc-cancel" class="btn btn-large btn-default">
 						</div>
 					</form>
 				</div>
 			</div>
-			<div class="col-md-3" style="display: none">
-				<div id="cabinet-form">
+			<div class="col-md-3">
+				<div id="cabinet-form" style="display: none">
 					<form id="form2" role="form" method="post">
 						<div class="table-responsive">
 							<table class="table">
@@ -138,7 +143,7 @@ $user_id = $_SESSION['user_session'];
 							<button type="submit" class="btn btn-large btn-primary">
 								Save
 							</button>
-							<input type="button" value="Cancel" class="btn btn-large btn-default">
+							<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
 						</div>
 					</form>
 				</div>

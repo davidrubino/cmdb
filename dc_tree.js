@@ -194,8 +194,16 @@ function deleteTile(id) {
 		type : "POST",
 		url : "dc_db_deleteTile.php",
 		data : "id=" + id,
-		success : function() {
-			location.reload();
+		success : function(data) {
+			var table = document.getElementById("table");
+			var row,
+			    cell;
+			for (var i = 0; i < data.length; i++) {
+				row = table.rows[data[i].html_row];
+				cell = row.cells[data[i].html_col];
+				$(cell).html("");
+				$(cell).css("background-color", "#FFFFFF");
+			}
 		}
 	});
 }
@@ -257,8 +265,10 @@ function createDataCenter(data) {
 		type : "POST",
 		url : "dc_db_createDataCenter.php",
 		data : data,
-		success : function() {
-			location.reload();
+		success : function(data) {
+			$("#alert1").html(data);
+			$("#alert1").show();
+			//$("#tree").jstree("refresh");
 		}
 	});
 }
@@ -293,7 +303,8 @@ function createCabinet(data, tile_id) {
 		url : "dc_db_createCabinet.php",
 		data : data + "&tile_id=" + tile_id,
 		success : function() {
-			location.reload();
+			$("#tree").jstree("refresh");
+			$("#cabinet-form").hide();
 		}
 	});
 }
@@ -452,8 +463,10 @@ $(function() {
 			type : "POST",
 			url : "dc_db_renameDataCenter.php",
 			data : "name=" + data.text + "&id=" + data.node.id,
+			success : function() {
+				$("#tree").jstree("refresh");
+			}
 		});
-		$("#tree").jstree("refresh");
 
 	}).on('delete_node.jstree', function(e, data) {
 		$.ajax({
@@ -470,6 +483,7 @@ $(function() {
 
 	}).on('select_node.jstree', function(e, data) {
 		setNodeId(data.node.id);
+		$("#grid-form").hide();
 		if (data.node.type == "file") {
 			$('#grid-controls').show();
 			buildGrid(getNodeId());
@@ -482,8 +496,9 @@ $(function() {
 		event.preventDefault();
 		var form_data = $(this).serialize();
 		if ($(".error").is(":visible")) {
-			alert("There are errors on this page!");
+			$("#alert2").show();
 		} else {
+			$("#alert2").hide();
 			createDataCenter(form_data);
 		}
 	});
@@ -579,9 +594,15 @@ $(function() {
 		}
 	});
 
-	$(".btn-default").click(function(e) {
+	$("#create-dc-cancel").click(function(e) {
 		e.preventDefault();
-		document.location.href = 'dc.php';
+		$("#grid-form").hide();
+		$("#tree").jstree("refresh");
+	});
+
+	$("#create-cabinet-cancel").click(function(e) {
+		e.preventDefault();
+		$("#cabinet-form").hide();
 	});
 
 	$("#gray-out").click(function(e) {
@@ -618,10 +639,14 @@ $(function() {
 	$('#addCabinet').click(function(e) {
 		e.preventDefault();
 		if (lastClicked) {
-			if (lastClicked.className.indexOf("grayed") == -1) {
-				$(".col-md-3").show();
+			if (lastClicked.innerHTML == "") {
+				if (lastClicked.className.indexOf("grayed") == -1) {
+					$("#cabinet-form").show();
+				} else {
+					alert("You cannot add a cabinet to this cell!");
+				}
 			} else {
-				alert("You cannot add a cabinet to this cell!");
+				alert("There is already a cabinet in this cell!");
 			}
 		} else {
 			alert("Please select a cell!");
@@ -631,13 +656,28 @@ $(function() {
 	$('#rmCabinet').click(function(e) {
 		e.preventDefault();
 		if (lastClicked) {
-			if (lastClicked.innerHTML == "C") {
-				deleteTile(tile_prop.id);
+			if (lastClicked.innerHTML != "") {
+				if (confirm("Are you sure you want to delete this cabinet?")) {
+					deleteTile(tile_prop.id);
+				}
 			} else {
 				alert("There is no cabinet on this cell!");
 			}
 		} else {
 			alert("Please select a cabinet to remove!");
+		}
+	});
+
+	$('#3d').click(function(e) {
+		e.preventDefault();
+		if (lastClicked) {
+			if (lastClicked.innerHTML != "") {
+				alert("3d");
+			} else {
+				alert("There is no cabinet on this cell!");
+			}
+		} else {
+			alert("Please select a cabinet!");
 		}
 	});
 
