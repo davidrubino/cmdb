@@ -2,6 +2,8 @@
 
 include 'db_connect.php';
 
+header('Content-Type: application/json');
+
 function createCabinet($conn) {
 	$height = $_POST['height'];
 	$width = $_POST['width'];
@@ -16,8 +18,15 @@ function createCabinet($conn) {
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':height' => $height, ':width' => $width, ':color' => $color, ':tile_id' => $tile_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-
-		echo "Cabinet created!";
+		
+		$sql_select = 'select * from cabinet
+		order by id desc 
+		limit 1;';
+		$stmt_select = $conn -> prepare($sql_select);
+		$stmt_select -> execute();
+		$row_select = $stmt_select -> fetchAll(PDO::FETCH_ASSOC);
+		
+		echo json_encode($row_select);
 
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

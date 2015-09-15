@@ -52,8 +52,7 @@ $user_id = $_SESSION['user_session'];
 				</div>
 
 				<div id="grid-form" style="display: none">
-					<div class="alert alert-info" id="alert1" role="alert" style="display: none"></div>
-					<div class="alert alert-danger" id="alert2" role="alert" style="display: none">
+					<div class="alert alert-danger" id="alert1" role="alert" style="display: none">
 						There are errors on this page!
 					</div>
 					<form id="form1" role="form" method="post">
@@ -111,53 +110,76 @@ $user_id = $_SESSION['user_session'];
 						</div>
 					</form>
 				</div>
-			</div>
-			<div class="col-md-3">
-				<div id="cabinet-form" style="display: none">
-					<form id="form2" role="form" method="post">
-						<div class="table-responsive">
-							<table class="table">
-								<tr>
-									<td>Height</td>
-									<td>
-									<input type="number" class="number-cells" id="height" name="height" value="7" min="1" max="100">
-									</td>
-									<td><span id="error-height" class="error">Please enter a valid height</span></td>
-								</tr>
-								<tr>
-									<td>Width</td>
-									<td>
-									<input type="number" class="number-cells" id="width" name="width" value="3" min="1" max="100">
-									</td>
-									<td><span id="error-width" class="error">Please enter a valid width</span></td>
-								</tr>
-								<tr>
-									<td>Color</td>
-									<td>
-									<input type="color" class="number-cells" id="color "name="color">
-									</td>
-								</tr>
-							</table>
+
+				<div id="server-design">
+					<div class="table-responsive">
+						<div class="clickable-div second-row">
+							
 						</div>
-						<div class="col-sm-12 controls btn-group">
-							<button type="submit" class="btn btn-large btn-primary">
-								Save
-							</button>
-							<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
+						<div class="clickable-div second-row">
+							
 						</div>
-					</form>
+						<div class="clickable-div second-row">
+							
+						</div>
+						<div class="clickable-div second-row">
+							serverdef
+						</div>
+						<div class="clickable-div second-row">
+							serverabc
+						</div>
+						<div class="clickable-div" id="first-row">
+							nw-router1
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-3">
+					<div id="cabinet-form" style="display: none">
+						<form id="form2" role="form" method="post">
+							<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<td>Height</td>
+										<td>
+										<input type="number" class="number-cells" id="height" name="height" value="7" min="1" max="100">
+										</td>
+										<td><span id="error-height" class="error">Please enter a valid height</span></td>
+									</tr>
+									<tr>
+										<td>Width</td>
+										<td>
+										<input type="number" class="number-cells" id="width" name="width" value="3" min="1" max="100">
+										</td>
+										<td><span id="error-width" class="error">Please enter a valid width</span></td>
+									</tr>
+									<tr>
+										<td>Color</td>
+										<td>
+										<input type="color" class="number-cells" id="color "name="color">
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-sm-12 controls btn-group">
+								<button type="submit" class="btn btn-large btn-primary">
+									Save
+								</button>
+								<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<?php
-		include 'footer.php';
-		?>
+			<?php
+			include 'footer.php';
+			?>
 
-		<script src="jquery/jquery-1.11.3.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<script src="dist/jstree.min.js"></script>
-		<script src="dc_tree.js"></script>
-		<script src="menu.js"></script>
+			<script src="jquery/jquery-1.11.3.js"></script>
+			<script src="bootstrap/js/bootstrap.min.js"></script>
+			<script src="dist/jstree.min.js"></script>
+			<script src="dc_tree.js"></script>
+			<script src="menu.js"></script>
 	</body>
 </html>

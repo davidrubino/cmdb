@@ -266,9 +266,8 @@ function createDataCenter(data) {
 		url : "dc_db_createDataCenter.php",
 		data : data,
 		success : function(data) {
-			$("#alert1").html(data);
-			$("#alert1").show();
-			//$("#tree").jstree("refresh");
+			console.log(data);
+			$("#tree").jstree("refresh");
 		}
 	});
 }
@@ -302,7 +301,10 @@ function createCabinet(data, tile_id) {
 		type : "POST",
 		url : "dc_db_createCabinet.php",
 		data : data + "&tile_id=" + tile_id,
-		success : function() {
+		success : function(data) {
+			for (var i=0; i<data.length; i++) {
+				addCabinet(getSelectedRow(), getSelectedCol(), data[i].color);
+			}
 			$("#tree").jstree("refresh");
 			$("#cabinet-form").hide();
 		}
@@ -496,9 +498,9 @@ $(function() {
 		event.preventDefault();
 		var form_data = $(this).serialize();
 		if ($(".error").is(":visible")) {
-			$("#alert2").show();
+			$("#alert1").show();
 		} else {
-			$("#alert2").hide();
+			$("#alert1").hide();
 			createDataCenter(form_data);
 		}
 	});
