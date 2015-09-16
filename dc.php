@@ -32,8 +32,11 @@ $user_id = $_SESSION['user_session'];
 		?>
 
 		<div class="container">
+
 			<div class="col-md-3" id="tree"></div>
+
 			<div class="col-md-6">
+
 				<div id="grid-controls" style="display: none">
 					<div id="mygraph"></div>
 					<div class="controls">
@@ -111,21 +114,27 @@ $user_id = $_SESSION['user_session'];
 					</form>
 				</div>
 
-				<div id="server-design">
-					<div class="table-responsive">
-						<div class="clickable-div second-row">
-							
+				<div id="server-design" style="display: none">
+					<div class="col-md-2">
+						<button type="button" class="btn btn-default" id="back-view" aria-label="Back" data-toggle="tooltip" data-placement="top" title="Back">
+							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+						</button>
+					</div>
+					
+					<div class="col-md-10 table-responsive">
+						<div class="clickable-div second-row" id="rowE">
+
 						</div>
-						<div class="clickable-div second-row">
-							
+						<div class="clickable-div second-row" id="rowD">
+
 						</div>
-						<div class="clickable-div second-row">
-							
+						<div class="clickable-div second-row" id="rowC">
+
 						</div>
-						<div class="clickable-div second-row">
+						<div class="clickable-div second-row" id="rowB">
 							serverdef
 						</div>
-						<div class="clickable-div second-row">
+						<div class="clickable-div second-row" id="rowA">
 							serverabc
 						</div>
 						<div class="clickable-div" id="first-row">
@@ -133,43 +142,60 @@ $user_id = $_SESSION['user_session'];
 						</div>
 					</div>
 				</div>
-				
-				<div class="col-md-3">
-					<div id="cabinet-form" style="display: none">
-						<form id="form2" role="form" method="post">
-							<div class="table-responsive">
-								<table class="table">
-									<tr>
-										<td>Height</td>
-										<td>
-										<input type="number" class="number-cells" id="height" name="height" value="7" min="1" max="100">
-										</td>
-										<td><span id="error-height" class="error">Please enter a valid height</span></td>
-									</tr>
-									<tr>
-										<td>Width</td>
-										<td>
-										<input type="number" class="number-cells" id="width" name="width" value="3" min="1" max="100">
-										</td>
-										<td><span id="error-width" class="error">Please enter a valid width</span></td>
-									</tr>
-									<tr>
-										<td>Color</td>
-										<td>
-										<input type="color" class="number-cells" id="color "name="color">
-										</td>
-									</tr>
-								</table>
-							</div>
-							<div class="col-sm-12 controls btn-group">
-								<button type="submit" class="btn btn-large btn-primary">
-									Save
-								</button>
-								<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
-							</div>
-						</form>
-					</div>
+
+			</div>
+
+			<div class="col-md-3">
+
+				<div id="cabinet-form" style="display: none">
+					<form id="form2" role="form" method="post">
+						<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<td>Height</td>
+									<td>
+									<input type="number" class="number-cells" id="height" name="height" value="7" min="1" max="100">
+									</td>
+									<td><span id="error-height" class="error">Please enter a valid height</span></td>
+								</tr>
+								<tr>
+									<td>Width</td>
+									<td>
+									<input type="number" class="number-cells" id="width" name="width" value="3" min="1" max="100">
+									</td>
+									<td><span id="error-width" class="error">Please enter a valid width</span></td>
+								</tr>
+								<tr>
+									<td>Color</td>
+									<td>
+									<input type="color" class="number-cells" id="color "name="color">
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-12 controls btn-group">
+							<button type="submit" class="btn btn-large btn-primary">
+								Save
+							</button>
+							<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
+						</div>
+					</form>
 				</div>
+
+			</div>
+
+			<div class="contextMenu" id="myMenu1">
+				<ul>
+					<li id="add_ci">
+						Add CI
+					</li>
+					<li id="show_ci">
+						Show CI
+					</li>
+					<li id="rm_ci">
+						Remove CI
+					</li>
+				</ul>
 			</div>
 
 			<?php
@@ -179,6 +205,7 @@ $user_id = $_SESSION['user_session'];
 			<script src="jquery/jquery-1.11.3.js"></script>
 			<script src="bootstrap/js/bootstrap.min.js"></script>
 			<script src="dist/jstree.min.js"></script>
+			<script src="context-menu/jquery.contextmenu.r2.js"></script>
 			<script src="dc_tree.js"></script>
 			<script src="menu.js"></script>
 	</body>

@@ -302,7 +302,7 @@ function createCabinet(data, tile_id) {
 		url : "dc_db_createCabinet.php",
 		data : data + "&tile_id=" + tile_id,
 		success : function(data) {
-			for (var i=0; i<data.length; i++) {
+			for (var i = 0; i < data.length; i++) {
 				addCabinet(getSelectedRow(), getSelectedCol(), data[i].color);
 			}
 			$("#tree").jstree("refresh");
@@ -486,6 +486,8 @@ $(function() {
 	}).on('select_node.jstree', function(e, data) {
 		setNodeId(data.node.id);
 		$("#grid-form").hide();
+		$('#server-design').hide();
+
 		if (data.node.type == "file") {
 			$('#grid-controls').show();
 			buildGrid(getNodeId());
@@ -674,7 +676,8 @@ $(function() {
 		e.preventDefault();
 		if (lastClicked) {
 			if (lastClicked.innerHTML != "") {
-				alert("3d");
+				$("#grid-controls").hide();
+				$("#server-design").show();
 			} else {
 				alert("There is no cabinet on this cell!");
 			}
@@ -712,6 +715,36 @@ $(function() {
 			}
 		} else {
 			alert("You cannot remove the last column!");
+		}
+	});
+
+	$('#back-view').click(function(e) {
+		e.preventDefault();
+		$('#server-design').hide();
+		$('#grid-controls').show();
+	});
+
+	$('.clickable-div').contextMenu('myMenu1', {
+		bindings : {
+			'add_ci' : function(t) {
+				alert('Trigger was ' + t.id + '\nAction was add_ci');
+			},
+			'show_ci' : function(t) {
+				alert('Trigger was ' + t.id + '\nAction was show_ci');
+			},
+			'rm_ci' : function(t) {
+				alert('Trigger was ' + t.id + '\nAction was rm_ci');
+			},
+		},
+
+		onShowMenu : function(e, menu) {
+			if ($(e.target)[0].innerText === '') {
+				$('#show_ci', menu).remove();
+				$('#rm_ci', menu).remove();
+			} else {
+				$('#add_ci', menu).remove();
+			}
+			return menu;
 		}
 	});
 });
