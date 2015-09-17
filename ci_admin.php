@@ -56,9 +56,10 @@ if ($permission == 0) {
 						<a href="#labor">Labor</a>
 					</li>
 				</ul>
-
+				
 				<div id="general">
 					<div id="fileData_general">
+						<div class="alert alert-success" role="alert" style="display: none"></div>
 						<form class="value-form" role="form" method="post"></form>
 					</div>
 
@@ -89,6 +90,7 @@ if ($permission == 0) {
 
 				<div id="financial">
 					<div id="fileData_financial">
+						<div class="alert alert-success" role="alert" style="display: none"></div>
 						<form class="value-form" role="form" method="post"></form>
 					</div>
 
@@ -119,6 +121,7 @@ if ($permission == 0) {
 
 				<div id="labor">
 					<div id="fileData_labor">
+						<div class="alert alert-success" role="alert" style="display: none"></div>
 						<form class="value-form" role="form" method="post"></form>
 					</div>
 

@@ -45,10 +45,10 @@ if ($permission == 0) {
 			<div class="col-md-4" id="tree"></div>
 			<div class="col-md-6" id="mynetwork" style="display:none"></div>
 			<div class="col-md-2" id="control-panel" style="display:none">
-				<input class="btn btn-large btn-primary i-graph" type="button" onclick="addFolder()" value="Add folder">
-				<input class="btn btn-large btn-primary i-graph" type="button" onclick="loadConfigItem()" value="Add configuration item">
-				<span class="span-cfg"></span>
-				<input class="btn btn-large btn-primary i-graph" type="button" onclick="renameFolder()" value="Rename folder">
+				<input class="btn btn-large btn-primary i-graph" type="button" id="addFolder" value="Add folder">
+				<input class="btn btn-large btn-primary i-graph" type="button" id="loadConfigItems" value="Add configuration item">
+				<span class="span-cfg" style="display:none"></span>
+				<input class="btn btn-large btn-primary i-graph" type="button" id="renameFolder" value="Rename folder">
 
 				<span class="cat1" style="display:none">
 					<form class="form-horizontal" role="form" method="post">
@@ -56,10 +56,10 @@ if ($permission == 0) {
 						<button class="btn btn-sm btn-info i-graph" type="submit">
 							Save
 						</button>
-						<input class="btn btn-sm btn-info i-graph" type="button" onclick="document.location.href='app_admin.php';" value="Cancel">
+						<input class="btn btn-sm btn-cancel i-graph" type="button" value="Cancel">
 					</form> </span>
 
-				<input class="btn btn-large btn-primary i-graph" type="button" onclick="removeItem()" value="Remove item">
+				<input class="btn btn-large btn-primary i-graph" type="button" id="removeItem" value="Remove item">
 			</div>
 		</div>
 

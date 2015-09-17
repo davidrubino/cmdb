@@ -101,25 +101,29 @@ $(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('rename_node.jstree', function(e, data) {
 		var name = data.text;
-
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
 				url : "db_renameApplication.php",
 				data : "name=" + name + "&id=" + data.node.id,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "db_renameFolder.php",
 				data : "name=" + name + "&parent_id=" + data.node.id,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		}
-		$("#tree").jstree("refresh");
 
 	}).on('delete_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
@@ -130,35 +134,45 @@ $(function() {
 				success : function() {
 					$("#mynetwork").hide();
 					$('#control-panel').hide();
+					$("#tree").jstree("refresh");
 				}
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "app_db_deleteFolder.php",
-				data : "id=" + data.node.id
+				data : "id=" + data.node.id,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		}
-		$("#tree").jstree("refresh");
 
 	}).on('create_node.jstree', function(e, data) {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
 				url : "db_createApplication.php",
-				data : "folder_id=" + data.node.parent
+				data : "folder_id=" + data.node.parent,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		} else {
 			$.ajax({
 				type : "POST",
 				url : "db_createFolder.php",
-				data : "id=" + data.node.parent
+				data : "id=" + data.node.parent,
+				success : function() {
+					$("#tree").jstree("refresh");
+				}
 			});
 		}
-		$("#tree").jstree("refresh");
 
 	}).on('select_node.jstree', function(e, data) {
 		application_id = data.node.id;
+		$('.cat1').hide();
+		$('.span-cfg').hide();
 
 		if (data.node.type == "file") {
 			$("#mynetwork").show();
@@ -180,6 +194,31 @@ $(function() {
 			$("#mynetwork").hide();
 			$('#control-panel').hide();
 		}
+	});
+
+	$(".btn-cancel").click(function(e) {
+		e.preventDefault();
+		$('.cat1').hide();
+	});
+
+	$('#addFolder').click(function(e) {
+		e.preventDefault();
+		addFolder();
+	});
+
+	$('#loadConfigItems').click(function(e) {
+		e.preventDefault();
+		loadConfigItem();
+	});
+
+	$('#renameFolder').click(function(e) {
+		e.preventDefault();
+		renameFolder();
+	});
+
+	$('#removeItem').click(function(e) {
+		e.preventDefault();
+		removeItem();
 	});
 });
 
@@ -265,7 +304,7 @@ function addFolder() {
 				url : "app_db_createFolder.php",
 				data : "parent_id=" + node_id + "&application_id=" + application_id,
 				success : function() {
-					location.reload();
+					$('#mynetwork').load('#mynetwork');
 				}
 			});
 		} else {
@@ -288,6 +327,7 @@ function loadConfigItem() {
 						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value)" value="' + data[i].name + '">');
 					}
 					$(".span-cfg").html(items);
+					$(".span-cfg").show();
 				}
 			});
 		} else {
@@ -304,7 +344,7 @@ function addConfigItem(value) {
 		url : "app_db_addConfigItems.php",
 		data : "value=" + value + "&parent_id=" + node_id + "&application_id=" + application_id,
 		success : function() {
-			location.reload();
+			$('#mynetwork').load('#mynetwork');
 		}
 	});
 }
@@ -312,7 +352,7 @@ function addConfigItem(value) {
 function renameFolder() {
 	if (node_id != -1) {
 		if (getGroup(node_id) == "folder") {
-			$('.cat1').toggle();
+			$('.cat1').show();
 			$(".form-horizontal").on('submit', function(event) {
 				event.preventDefault();
 				data = $(this).serialize();
@@ -323,7 +363,8 @@ function renameFolder() {
 						url : "app_db_renameFolder.php",
 						data : data + "&id=" + node_id,
 						success : function() {
-							location.reload();
+							$('#mynetwork').load('#mynetwork');
+							$('.cat1').hide();
 						}
 					});
 				} else {
@@ -347,7 +388,7 @@ function removeItem() {
 					url : "app_db_deleteItem.php",
 					data : "id=" + node_id,
 					success : function() {
-						location.reload();
+						$('#mynetwork').load('#mynetwork');
 					}
 				});
 			}
@@ -366,10 +407,13 @@ function setupNetwork() {
 	network.on("selectNode", function(params) {
 		node_id = params.nodes[0];
 		size = params.edges.length;
+		$('.cat1').hide();
+		$('.span-cfg').hide();
 	});
 
 	network.on("deselectNode", function(params) {
 		resetNodeId();
 		$('.cat1').hide();
+		$('.span-cfg').hide();
 	});
 }

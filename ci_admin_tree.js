@@ -68,12 +68,16 @@ function getCurrentTab() {
 	return tab.substring(1);
 }
 
+function getFullPath(node) {
+	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
+}
+
 function getCurrentId() {
 	return global_id;
 }
 
-function getFullPath(node) {
-	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
+function setCurrentId(id) {
+	global_id = id;
 }
 
 function createProperty(data, id, tab) {
@@ -135,7 +139,6 @@ function getValues(id, tab) {
 		data : "id=" + id + "&tab=" + tab,
 		success : function(data) {
 			var htmlContainer = new Array();
-			htmlContainer.push('<div class="alert alert-success" role="alert" style="display: none">Update successful!</div>');
 			for (var i = 0; i < data.length; i++) {
 				for (var k = 0; k < data[i].title.length; k++) {
 					for (var j = 0; j < data[i].content.length; j++) {
@@ -143,8 +146,12 @@ function getValues(id, tab) {
 					}
 				}
 			}
-			htmlContainer.push('<button type="submit" class="btn btn-large btn-primary">Save</button>');
-			htmlContainer.push('<input type="button" onclick="document.location.href=\'ci_admin.php\';" value="Cancel" class="btn btn-large btn-default">');
+			if (htmlContainer.length != 0) {
+				htmlContainer.push('<button type="submit" class="btn btn-large btn-primary">Save</button>');
+				htmlContainer.push('<input type="button" onclick="document.location.href=\'ci_admin.php\';" value="Cancel" class="btn btn-large btn-default">');
+			} else {
+				htmlContainer.push('<div class="alert alert-info" role="alert">There are no properties for this category.</div>');
+			}
 			$('.value-form').html(htmlContainer);
 		}
 	});
@@ -155,7 +162,8 @@ function editValues(id, name, value) {
 		type : "POST",
 		url : "db_updateValues.php",
 		data : "id=" + id + "&name=" + name + "&value=" + value,
-		success : function() {
+		success : function(data) {
+			$('.alert-success').html(data);
 			$('.alert-success').show();
 		}
 	});
@@ -208,6 +216,8 @@ $(document).ready(function() {
 
 	}).on('select_node.jstree', function(e, data) {
 		getFullPath(data.node);
+		$('.alert-success').hide();
+		setCurrentId(data.node.id);
 
 		if (data.node.type == "file") {
 			initializeTabs();
@@ -221,7 +231,6 @@ $(document).ready(function() {
 			$("#folderData_financial").hide();
 			$("#folderData_labor").hide();
 
-			global_id = data.node.id;
 			global_parent_id = data.node.parent;
 			global_grandparent_id = data.node.parents[1];
 
@@ -240,7 +249,6 @@ $(document).ready(function() {
 			$("#fileData_financial").hide();
 			$("#fileData_labor").hide();
 
-			global_id = data.node.id;
 			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
 		}
 
@@ -320,13 +328,14 @@ $(document).ready(function() {
 			getProperties(getCurrentTab(), getCurrentId(), ".property-table", ".property-class-title");
 			getValues(getCurrentId(), getCurrentTab());
 			$('.btn-group').hide();
+			$('.alert-success').hide();
 		}
 	});
 
 	$(".property-form").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
-		createProperty(form_data, global_id, getCurrentTab());
+		createProperty(form_data, getCurrentId(), getCurrentTab());
 	});
 
 	$(".value-form").on('submit', function(event) {
@@ -361,9 +370,9 @@ $(document).ready(function() {
 
 	$(".rm-toggler").click(function(e) {
 		e.preventDefault();
-		removeProperty(current_name, global_id);
+		removeProperty(current_name, getCurrentId());
 	});
-	
+
 	$(".btn-cancel").click(function(e) {
 		e.preventDefault();
 		document.location.href = 'ci_admin.php';
