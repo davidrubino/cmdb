@@ -77,7 +77,7 @@ $(function() {
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
-					return node.id === '#' ? 'db_appTreeLoaderRoot.php' : 'db_appTreeLoader.php';
+					return node.id === '#' ? 'app_db_treeLoaderRoot.php' : 'app_db_treeLoader.php';
 				},
 				"data" : function(node) {
 					return {
@@ -108,7 +108,7 @@ $(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_renameApplication.php",
+				url : "app_db_renameApplication.php",
 				data : "name=" + name + "&id=" + data.node.id,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -117,7 +117,7 @@ $(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_renameFolder.php",
+				url : "app_db_renameFolder.php",
 				data : "name=" + name + "&parent_id=" + data.node.id,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -152,7 +152,7 @@ $(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_createApplication.php",
+				url : "app_db_createApplication.php",
 				data : "folder_id=" + data.node.parent,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -161,7 +161,7 @@ $(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_createFolder.php",
+				url : "app_db_createFolder.php",
 				data : "id=" + data.node.parent,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -301,7 +301,7 @@ function addFolder() {
 		if (getGroup(node_id) != "config_item") {
 			$.ajax({
 				type : "POST",
-				url : "app_db_createFolder.php",
+				url : "app_db_createNode.php",
 				data : "parent_id=" + node_id + "&application_id=" + application_id,
 				success : function() {
 					$('#mynetwork').load('#mynetwork');
@@ -320,7 +320,7 @@ function loadConfigItem() {
 		if (getGroup(node_id) != "config_item") {
 			$.ajax({
 				type : "POST",
-				url : "app_db_loadConfigItems.php",
+				url : "db_loadConfigItems.php",
 				success : function(data) {
 					var items = new Array();
 					for (var i = 0; i < data.length; i++) {
@@ -360,7 +360,7 @@ function renameFolder() {
 				if (data != "txt-name=") {
 					$.ajax({
 						type : "POST",
-						url : "app_db_renameFolder.php",
+						url : "app_db_renameNode.php",
 						data : data + "&id=" + node_id,
 						success : function() {
 							$('#mynetwork').load('#mynetwork');

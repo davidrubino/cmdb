@@ -12,11 +12,11 @@ function createCabinet($conn) {
 
 	try {
 		$sql = 'insert into cabinet
-		(height, width, color, tile_id)
+		(id, height, width, color, tile_id)
 		values
-		(:height, :width, :color, :tile_id)';
+		(:id, :height, :width, :color, :tile_id)';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':height' => $height, ':width' => $width, ':color' => $color, ':tile_id' => $tile_id));
+		$stmt -> execute(array(':id' => $tile_id, ':height' => $height, ':width' => $width, ':color' => $color, ':tile_id' => $tile_id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		
 		$sql_select = 'select * from cabinet

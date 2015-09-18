@@ -3,18 +3,15 @@
 include 'db_connect.php';
 
 function createFolder($conn) {
-	$parent_id = $_POST['parent_id'];
-	$application_id = $_POST['application_id'];
+	$id = $_POST['id'];
 
 	try {
-		$sql = "
-		insert into graph
-		(name, type, parent_id, application_id)
+		$sql = 'insert into folder
+		(name, parent_id)
 		values
-		('New Folder', 'folder', :parent_id, :application_id)
-		";
+		("New node", :id);';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':parent_id' => $parent_id, 'application_id' => $application_id));
+		$stmt -> execute(array(':id' => $id));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 		echo "Folder created!";

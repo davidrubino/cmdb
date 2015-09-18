@@ -5,7 +5,8 @@ var lastClicked,
     node_id,
     selected_row = -1,
     select_col = -1,
-    tile_prop;
+    tile_prop,
+    position;
 
 function setRows(nb_rows) {
 	rows = nb_rows;
@@ -29,6 +30,14 @@ function setSelectedCol(col) {
 
 function setTileProperties(prop) {
 	tile_prop = prop;
+}
+
+function setPosition(p) {
+	position = p;
+}
+
+function getPosition() {
+	return position;
 }
 
 function getTileProperties() {
@@ -324,6 +333,37 @@ function loadCabinets(id) {
 	});
 }
 
+function resetSelect() {
+	$("#select-ci").html("");
+	$(".form-group").hide();
+}
+
+function loadConfigItems() {
+	$.ajax({
+		type : "POST",
+		url : "db_loadConfigItems.php",
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				$("#select-ci").append($('<option>', {
+					value : data[i].id,
+					text : data[i].name
+				}));
+			}
+		}
+	});
+}
+
+function map2Cabinet(data, position, cabinet_id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_map2Cabinet.php",
+		data : data + "&position=" + position + "&cabinet_id=" + cabinet_id,
+		success : function() {
+			$("#"+position).html("success");
+		}
+	});
+}
+
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
 	var items = {
@@ -487,6 +527,7 @@ $(function() {
 		setNodeId(data.node.id);
 		$("#grid-form").hide();
 		$('#server-design').hide();
+		resetSelect();
 
 		if (data.node.type == "file") {
 			$('#grid-controls').show();
@@ -516,6 +557,12 @@ $(function() {
 			createTile(tile_prop.id, tile_prop.x, tile_prop.y, tile_prop.label, tile_prop.grayed_out, tile_prop.html_row, tile_prop.html_col, tile_prop.data_center_id);
 			createCabinet(form_data, tile_prop.id);
 		}
+	});
+
+	$("#form3").on('submit', function(event) {
+		event.preventDefault();
+		var form_data = $(this).serialize();
+		map2Cabinet(form_data, getPosition(), tile_prop.id);
 	});
 
 	$('#name').on('input', function() {
@@ -607,6 +654,11 @@ $(function() {
 	$("#create-cabinet-cancel").click(function(e) {
 		e.preventDefault();
 		$("#cabinet-form").hide();
+	});
+
+	$("#cancel-select-ci").click(function(e) {
+		e.preventDefault();
+		resetSelect();
 	});
 
 	$("#gray-out").click(function(e) {
@@ -722,22 +774,28 @@ $(function() {
 		e.preventDefault();
 		$('#server-design').hide();
 		$('#grid-controls').show();
+		resetSelect();
 	});
 
 	$('.clickable-div').contextMenu('myMenu1', {
 		bindings : {
 			'add_ci' : function(t) {
-				alert('Trigger was ' + t.id + '\nAction was add_ci');
+				loadConfigItems();
+				$(".form-group").show();
+				setPosition(t.id);
 			},
 			'show_ci' : function(t) {
 				alert('Trigger was ' + t.id + '\nAction was show_ci');
+				setPosition(t.id);
 			},
 			'rm_ci' : function(t) {
 				alert('Trigger was ' + t.id + '\nAction was rm_ci');
+				setPosition(t.id);
 			},
 		},
 
 		onShowMenu : function(e, menu) {
+			resetSelect();
 			if ($(e.target)[0].innerText === '') {
 				$('#show_ci', menu).remove();
 				$('#rm_ci', menu).remove();

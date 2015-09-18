@@ -3,6 +3,10 @@ img {
 	height: 100%;
 }
 
+#select-ci {
+	margin: 5px;
+}
+
 #server-design .table-responsive {
 	table-layout: fixed;
 	border: 1px solid black;

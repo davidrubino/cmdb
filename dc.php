@@ -120,7 +120,7 @@ $user_id = $_SESSION['user_session'];
 							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
 						</button>
 					</div>
-					
+
 					<div class="col-md-10 table-responsive">
 						<div class="clickable-div second-row" id="rowE">
 
@@ -132,13 +132,13 @@ $user_id = $_SESSION['user_session'];
 
 						</div>
 						<div class="clickable-div second-row" id="rowB">
-							serverdef
+
 						</div>
 						<div class="clickable-div second-row" id="rowA">
-							serverabc
+
 						</div>
 						<div class="clickable-div" id="first-row">
-							nw-router1
+
 						</div>
 					</div>
 				</div>
@@ -179,6 +179,17 @@ $user_id = $_SESSION['user_session'];
 							</button>
 							<input type="button" value="Cancel" id="create-cabinet-cancel" class="btn btn-large btn-default">
 						</div>
+					</form>
+				</div>
+
+				<div class="form-group" style="display: none">
+					<label for="select-ci">Select the server to add:</label>
+					<select class="form-control" id="select-ci" size="5" name="selectionField" form="form3"></select>
+					<form id="form3" role="form" method="post">
+						<button type="submit" class="btn btn-large btn-primary">
+							OK
+						</button>
+						<input type="button" value="Cancel" id="cancel-select-ci" class="btn btn-large btn-default">
 					</form>
 				</div>
 

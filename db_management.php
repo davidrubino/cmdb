@@ -5,6 +5,10 @@ include 'db_connect.php';
 function dropTables($conn) {
 	try {
 		$sql = "
+		DROP TABLE Map_ci_cabinet;
+		DROP TABLE Cabinet;
+		DROP TABLE Tile;
+		DROP TABLE Data_center;
 		DROP TABLE Graph;
 		DROP TABLE Application;
 		DROP TABLE Folder;
@@ -13,9 +17,6 @@ function dropTables($conn) {
 		DROP TABLE Property;
 		DROP TABLE Config_item;
 		DROP TABLE Class;
-		DROP TABLE Cabinet;
-		DROP TABLE Tile;
-		DROP TABLE Data_center;
 		";
 		$conn -> exec($sql);
 		echo "Tables dropped successfully";
@@ -75,7 +76,7 @@ function createTables($conn) {
 		);
 		
 		CREATE TABLE Cabinet (
-		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id int NOT NULL PRIMARY KEY,
 		height int NOT NULL,
 		width int NOT NULL,
 		color varchar(255) NOT NULL,
@@ -157,6 +158,17 @@ function createTables($conn) {
 		FOREIGN KEY (parent_id) REFERENCES Graph(id)
 		ON DELETE CASCADE,
 		FOREIGN KEY (application_id) REFERENCES Application(id)
+		ON DELETE CASCADE
+		);
+		
+		CREATE TABLE Map_ci_cabinet (
+		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		position int,
+		ci_id int,
+		cabinet_id int,
+		FOREIGN KEY (ci_id) REFERENCES Config_item(id)
+		ON DELETE CASCADE,
+		FOREIGN KEY (cabinet_id) REFERENCES Cabinet(id)
 		ON DELETE CASCADE
 		);
 		";

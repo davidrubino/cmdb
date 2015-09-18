@@ -83,7 +83,7 @@ function setCurrentId(id) {
 function createProperty(data, id, tab) {
 	$.ajax({
 		type : "POST",
-		url : "db_createProperty.php",
+		url : "ci_db_createProperty.php",
 		data : data + "&class_id=" + id + "&tab=" + tab,
 		success : function() {
 			location.reload();
@@ -96,7 +96,7 @@ function removeProperty(name, id) {
 		if (confirm("Are you sure you want to permanently delete this property?")) {
 			$.ajax({
 				type : "POST",
-				url : "db_deleteProperty.php",
+				url : "ci_db_deleteProperty.php",
 				data : "name=" + name + "&id=" + id,
 				success : function(data) {
 					$('.highlight').remove();
@@ -113,7 +113,7 @@ function removeProperty(name, id) {
 function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
-		url : "db_loadClassProperties.php",
+		url : "ci_db_loadClassProperties.php",
 		data : "tab=" + tab + "&class_id=" + id,
 		success : function(data) {
 			var htmlResult = new Array();
@@ -135,7 +135,7 @@ function getProperties(tab, id, table, classTitle) {
 function getValues(id, tab) {
 	$.ajax({
 		type : "POST",
-		url : "db_loadClassValues.php",
+		url : "ci_db_loadClassValues.php",
 		data : "id=" + id + "&tab=" + tab,
 		success : function(data) {
 			var htmlContainer = new Array();
@@ -160,7 +160,7 @@ function getValues(id, tab) {
 function editValues(id, name, value) {
 	$.ajax({
 		type : "POST",
-		url : "db_updateValues.php",
+		url : "ci_db_updateValues.php",
 		data : "id=" + id + "&name=" + name + "&value=" + value,
 		success : function(data) {
 			$('.alert-success').html(data);
@@ -188,7 +188,7 @@ $(document).ready(function() {
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
-					return node.id === '#' ? 'db_treeLoaderRoot.php' : 'db_treeLoader.php';
+					return node.id === '#' ? 'ci_db_treeLoaderRoot.php' : 'ci_db_treeLoader.php';
 				},
 				"data" : function(node) {
 					return {
@@ -261,7 +261,7 @@ $(document).ready(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_renameConfigItem.php",
+				url : "ci_db_renameConfigItem.php",
 				data : "name=" + name + "&id=" + data.node.id,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -270,7 +270,7 @@ $(document).ready(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_renameClass.php",
+				url : "ci_db_renameClass.php",
 				data : "name=" + name + "&class_id=" + data.node.id,
 				success : function() {
 					$("#tree").jstree("refresh");
@@ -282,7 +282,7 @@ $(document).ready(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_deleteConfigItem.php",
+				url : "ci_db_deleteConfigItem.php",
 				data : "id=" + data.node.id,
 				success : function(data) {
 					$("#tabs").hide();
@@ -292,7 +292,7 @@ $(document).ready(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_deleteClass.php",
+				url : "ci_db_deleteClass.php",
 				data : "id=" + data.node.id,
 				success : function(data) {
 					$("#tabs").hide();
@@ -305,7 +305,7 @@ $(document).ready(function() {
 		if (data.node.type == 'file') {
 			$.ajax({
 				type : "POST",
-				url : "db_createConfigItem.php",
+				url : "ci_db_createConfigItem.php",
 				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1],
 				success : function(data) {
 					$("#tree").jstree("refresh");
@@ -314,7 +314,7 @@ $(document).ready(function() {
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "db_createClass.php",
+				url : "ci_db_createClass.php",
 				data : "id=" + data.node.parent,
 				success : function(data) {
 					$("#tree").jstree("refresh");

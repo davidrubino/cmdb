@@ -12,7 +12,7 @@ $(function() {
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
-					return node.id === '#' ? 'db_appTreeLoaderRoot.php' : 'db_appTreeLoader.php';
+					return node.id === '#' ? 'app_db_treeLoaderRoot.php' : 'app_db_treeLoader.php';
 				},
 				"data" : function(node) {
 					return {

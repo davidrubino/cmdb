@@ -24,7 +24,7 @@ function getFullPath(node) {
 function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
-		url : "db_loadClassProperties.php",
+		url : "ci_db_loadClassProperties.php",
 		data : "tab=" + tab + "&class_id=" + id,
 		success : function(data) {
 			var htmlResult = new Array();
@@ -44,7 +44,7 @@ function getProperties(tab, id, table, classTitle) {
 function getValues(id, tab) {
 	$.ajax({
 		type : "POST",
-		url : "db_loadClassValues.php",
+		url : "ci_db_loadClassValues.php",
 		data : "id=" + id + "&tab=" + tab,
 		success : function(data) {
 			var htmlContainer = new Array();
@@ -70,7 +70,7 @@ $(document).ready(function() {
 			"data" : {
 				"type" : "POST",
 				"url" : function(node) {
-					return node.id === '#' ? 'db_treeLoaderRoot.php' : 'db_treeLoader.php';
+					return node.id === '#' ? 'ci_db_treeLoaderRoot.php' : 'ci_db_treeLoader.php';
 				},
 				"data" : function(node) {
 					return {

@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 function loadConfigItems($conn) {
 	try {
 		$sql = "
-		select name from config_item;
+		select id, name from config_item;
 		";
 
 		$stmt = $conn -> prepare($sql);
