@@ -122,22 +122,22 @@ $user_id = $_SESSION['user_session'];
 					</div>
 
 					<div class="col-md-10 table-responsive">
-						<div class="clickable-div second-row" id="rowE">
+						<div class="clickable-div second-row" id="6">
 
 						</div>
-						<div class="clickable-div second-row" id="rowD">
+						<div class="clickable-div second-row" id="5">
 
 						</div>
-						<div class="clickable-div second-row" id="rowC">
+						<div class="clickable-div second-row" id="4">
 
 						</div>
-						<div class="clickable-div second-row" id="rowB">
+						<div class="clickable-div second-row" id="3">
 
 						</div>
-						<div class="clickable-div second-row" id="rowA">
+						<div class="clickable-div second-row" id="2">
 
 						</div>
-						<div class="clickable-div" id="first-row">
+						<div class="clickable-div first-row" id="1">
 
 						</div>
 					</div>

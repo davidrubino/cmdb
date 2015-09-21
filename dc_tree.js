@@ -8,70 +8,144 @@ var lastClicked,
     tile_prop,
     position;
 
+/**
+ * set the number of rows in the grid
+ * @param {Object} nb_rows: the desired number of rows
+ */
 function setRows(nb_rows) {
 	rows = nb_rows;
 }
 
+/**
+ * set the number of columns in the grid
+ * @param {Object} nb_cols: the desired number of columns
+ */
 function setColumns(nb_cols) {
 	cols = nb_cols;
 }
 
+/**
+ * set the id of the selected node in the tree
+ * @param {Object} id: the node id
+ */
 function setNodeId(id) {
 	node_id = id;
 }
 
+/**
+ * set the number of the selected row in the grid
+ * @param {Object} row: the row of the currently selected cell
+ */
 function setSelectedRow(row) {
 	selected_row = row;
 }
 
+/**
+ * set the number of the selected column in the grid
+ * @param {Object} col: the column of the currently selected cell
+ */
 function setSelectedCol(col) {
 	selected_col = col;
 }
 
+/**
+ * set the various properties of the selected tile
+ * @param {Object} prop: an object including all the properties
+ * 	id: the tile id
+ * 	x: the x coordinate of the tile
+ * 	y: the y coordinate of the tile
+ * 	label: the tile label according to its position in the grid
+ * 	grayed_out: 1 if grayed-out, 0 otherwise
+ * 	html_row: the row number accoridng to the html grid
+ * 	html_col: the column number according to the html grid
+ * 	data_center_id: the id referencing the tile to its data center
+ */
 function setTileProperties(prop) {
 	tile_prop = prop;
 }
 
+/**
+ * set the position of a server in the cabinet view
+ * @param {Object} p: the position of the server (int)
+ */
 function setPosition(p) {
 	position = p;
 }
 
+/**
+ * return the position of the server in the cabinet
+ */
 function getPosition() {
 	return position;
 }
 
+/**
+ * return all the properties of the selected tile
+ */
 function getTileProperties() {
 	return tile_prop;
 }
 
+/**
+ * return the number of rows in the grid
+ */
 function getRows() {
 	return rows;
 }
 
+/**
+ * return the number of columns in the grid
+ */
 function getColumns() {
 	return cols;
 }
 
+/**
+ * return the id of the selected node in the tree
+ */
 function getNodeId() {
 	return node_id;
 }
 
+/**
+ * return the row of the selected cell in the grid
+ */
 function getSelectedRow() {
 	return selected_row;
 }
 
+/**
+ * return the column of the selected cell in the grid
+ */
 function getSelectedCol() {
 	return selected_col;
 }
 
+/**
+ * return the x value of the selected tile in the grid
+ * @param {Object} x: the html x value of the tile
+ * @param {Object} dim: the dimension of the tile
+ */
 function getXValue(x, dim) {
 	return x * dim;
 }
 
+/**
+ * return the y value f the selected tile in the grid
+ * @param {Object} y: the html y value of the tile
+ * @param {Object} dim: the dimension of the tile
+ */
 function getYValue(y, dim) {
 	return y * dim;
 }
 
+/**
+ * returns the label of a tile
+ * @param {Object} row: the row id of the tile
+ * @param {Object} col: the column id of the tile
+ * @param {Object} labelRows: the first id of the rows in the grid
+ * @param {Object} labelCols: the first column id of the rows in the grid
+ */
 function getLabel(row, col, labelRows, labelCols) {
 	if ($.isNumeric(labelRows)) {
 		for (var i = 1; i < row; i++) {
@@ -97,10 +171,18 @@ function getLabel(row, col, labelRows, labelCols) {
 	return labelRows + '-' + labelCols;
 }
 
+/**
+ * return true if the cell is grayed out
+ * @param {Object} el: the cell
+ */
 function isGrayedOut(el) {
 	return el.className == 'grayed';
 }
 
+/**
+ * return the previous char of the current letter
+ * @param {Object} s: the current letter
+ */
 function previousChar(s) {
 	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
 		var c = a.charCodeAt(0);
@@ -115,6 +197,10 @@ function previousChar(s) {
 	});
 }
 
+/**
+ * return the next char of the current letter
+ * @param {Object} s: the current letter
+ */
 function nextChar(s) {
 	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
 		var c = a.charCodeAt(0);
@@ -129,6 +215,14 @@ function nextChar(s) {
 	});
 }
 
+/**
+ * creates the clickable grid for a data center
+ * @param {Object} rows: the number of rows in the grid
+ * @param {Object} cols: the number of columns in the grid
+ * @param {Object} labelRows: the label of the first row in the grid
+ * @param {Object} labelCols: the label of the first column in the grid
+ * @param {Object} callback: the callback function
+ */
 function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 	var i = "";
 	var grid = document.createElement('table');
@@ -178,6 +272,11 @@ function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 	return grid;
 }
 
+/**
+ * return the equivalent letter for a specified number.
+ * This function is used to create the column names with letters
+ * @param {Object} n: the number to convert into a letter
+ */
 function colName(n) {
 	var ordA = 'a'.charCodeAt(0);
 	var ordZ = 'z'.charCodeAt(0);
@@ -191,6 +290,11 @@ function colName(n) {
 	return s;
 }
 
+/**
+ * change the background color of a defined cell to gray
+ * @param {Object} x: the cell abscissa
+ * @param {Object} y: the cell ordinate
+ */
 function grayOutCell(x, y) {
 	var table = document.getElementById("table");
 	var row = table.rows[x];
@@ -198,6 +302,10 @@ function grayOutCell(x, y) {
 	$(cell).addClass("grayed");
 }
 
+/**
+ * delete a tile
+ * @param {Object} id: id of the tile to delete
+ */
 function deleteTile(id) {
 	$.ajax({
 		type : "POST",
@@ -217,6 +325,12 @@ function deleteTile(id) {
 	});
 }
 
+/**
+ * add graphically a cabinet on the grid
+ * @param {Object} x: the tile abscissa containing the cabinet
+ * @param {Object} y: the tile ordinate containing the cabinet
+ * @param {Object} color: the tile background color
+ */
 function addCabinet(x, y, color) {
 	var table = document.getElementById("table");
 	var row = table.rows[x];
@@ -225,6 +339,10 @@ function addCabinet(x, y, color) {
 	$(cell).css("background-color", color);
 }
 
+/**
+ * add another row to the grid of a data center
+ * @param {Object} id: id of the data center in which the row will be added
+ */
 function addRow(id) {
 	$.ajax({
 		type : "POST",
@@ -236,6 +354,10 @@ function addRow(id) {
 	});
 }
 
+/**
+ * add another column to the grid of  data center
+ * @param {Object} id: id of the data center in which the column will be added
+ */
 function addColumn(id) {
 	$.ajax({
 		type : "POST",
@@ -247,6 +369,10 @@ function addColumn(id) {
 	});
 }
 
+/**
+ * remove the last row from the grid of a data center
+ * @param {Object} id: id of the data center
+ */
 function removeRow(id) {
 	$.ajax({
 		type : "POST",
@@ -258,6 +384,10 @@ function removeRow(id) {
 	});
 }
 
+/**
+ * remove the last column from the grid of a data center
+ * @param {Object} id: id of the data center
+ */
 function removeColumn(id) {
 	$.ajax({
 		type : "POST",
@@ -269,6 +399,10 @@ function removeColumn(id) {
 	});
 }
 
+/**
+ * creates the data center in the database
+ * @param {Object} data: the form data sent by the user
+ */
 function createDataCenter(data) {
 	$.ajax({
 		type : "POST",
@@ -281,6 +415,18 @@ function createDataCenter(data) {
 	});
 }
 
+/**
+ * creates a tile for a data center
+ * The function is called only when another item (grayed cell, cabinet) is added on the tile
+ * @param {Object} id: tile id
+ * @param {Object} x: tile abscissa
+ * @param {Object} y: tile ordinate
+ * @param {Object} label: tile label using the row and column labels
+ * @param {Object} grayed_out: 1 is the cell is grayed out, 0 otherwise
+ * @param {Object} html_row: row on the html grid
+ * @param {Object} html_col: column on the html grid
+ * @param {Object} data_center_id: references the data center corresponding to the grid
+ */
 function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center_id) {
 	$.ajax({
 		type : "POST",
@@ -292,6 +438,10 @@ function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center
 	});
 }
 
+/**
+ * load a tile on the data center grid
+ * @param {Object} id: id of the data center
+ */
 function loadTiles(id) {
 	$.ajax({
 		type : "POST",
@@ -305,6 +455,11 @@ function loadTiles(id) {
 	});
 }
 
+/**
+ * create the cabinet in the database
+ * @param {Object} data: data from the form sent by the user
+ * @param {Object} tile_id: id of the tile including the cabinet
+ */
 function createCabinet(data, tile_id) {
 	$.ajax({
 		type : "POST",
@@ -320,6 +475,10 @@ function createCabinet(data, tile_id) {
 	});
 }
 
+/**
+ * load the cabinet from the database on the grid
+ * @param {Object} id: id of the data center including the grid
+ */
 function loadCabinets(id) {
 	$.ajax({
 		type : "POST",
@@ -333,11 +492,20 @@ function loadCabinets(id) {
 	});
 }
 
+/**
+ * reset the different selections when the tile is no longer on focus
+ * It hides the menu allowing the user to choose a server to add in a cabinet.
+ * It resets the html of the menu field where the configuration item are displayed.
+ */
 function resetSelect() {
 	$("#select-ci").html("");
 	$(".form-group").hide();
 }
 
+/**
+ * load the configuration items in the select menu
+ * It allows the user to select an item to add in the cabinet.
+ */
 function loadConfigItems() {
 	$.ajax({
 		type : "POST",
@@ -353,17 +521,72 @@ function loadConfigItems() {
 	});
 }
 
+/**
+ * add the name of the server in the cabinet at a specific position
+ * @param {Object} position: the reference of the cell in which the name will be added
+ * @param {Object} name: the name of the server to be added
+ */
+function addServer(position, name) {
+	$("#" + position).html(name);
+}
+
+/**
+ * creates the mapping table between a cabinet and a configuration item
+ * @param {Object} data: includes the configuration item id of the server to be added
+ * @param {Object} position: the current position of the server in the cabinet
+ * @param {Object} cabinet_id: the id of the cabinet containing the server
+ */
 function map2Cabinet(data, position, cabinet_id) {
 	$.ajax({
 		type : "POST",
 		url : "dc_db_map2Cabinet.php",
 		data : data + "&position=" + position + "&cabinet_id=" + cabinet_id,
-		success : function() {
-			$("#"+position).html("success");
+		success : function(data) {
+			$(".form-group").hide();
+			for (var i = 0; i < data.length; i++) {
+				addServer(position, data[i].name);
+			}
 		}
 	});
 }
 
+/**
+ * return the list of servers for a specified cabinet
+ * @param {Object} id: the cabinet id
+ */
+function getServers(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getServers.php",
+		data : "id=" + id,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				addServer(data[i].position, data[i].name);
+			}
+		}
+	});
+}
+
+/**
+ * remove the selected server from the cabinet
+ * @param {Object} position: the position ofthe server in the cabinet
+ * @param {Object} id: the cabinet id
+ */
+function removeServer(position, id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_deleteServer.php",
+		data : "position=" + position + "&id=" + id,
+		success : function() {
+			$("#" + position).html("");
+		}
+	});
+}
+
+/**
+ * create a custom menu for the tree
+ * @param {Object} $node: callback parameter representing a node on the tree
+ */
 function customMenu($node) {
 	var tree = $("#tree").jstree(true);
 	var items = {
@@ -407,6 +630,10 @@ function customMenu($node) {
 	return items;
 }
 
+/**
+ * build the grid of a data center from the database properties
+ * @param {Object} id: the data center id related to the grid
+ */
 function buildGrid(id) {
 	var label_rows;
 	var label_cols;
@@ -562,7 +789,11 @@ $(function() {
 	$("#form3").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
-		map2Cabinet(form_data, getPosition(), tile_prop.id);
+		if (form_data != "") {
+			map2Cabinet(form_data, getPosition(), tile_prop.id);
+		} else {
+			alert("Please select a server!");
+		}
 	});
 
 	$('#name').on('input', function() {
@@ -730,6 +961,7 @@ $(function() {
 			if (lastClicked.innerHTML != "") {
 				$("#grid-controls").hide();
 				$("#server-design").show();
+				getServers(getTileProperties().id);
 			} else {
 				alert("There is no cabinet on this cell!");
 			}
@@ -785,12 +1017,14 @@ $(function() {
 				setPosition(t.id);
 			},
 			'show_ci' : function(t) {
-				alert('Trigger was ' + t.id + '\nAction was show_ci');
 				setPosition(t.id);
+				alert('Trigger was ' + getPosition() + '\nAction was show_ci');
 			},
 			'rm_ci' : function(t) {
-				alert('Trigger was ' + t.id + '\nAction was rm_ci');
 				setPosition(t.id);
+				if (confirm("Are you sure you want to remove this server from the cabinet?")) {
+					removeServer(getPosition(), getTileProperties().id);
+				}
 			},
 		},
 

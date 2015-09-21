@@ -327,6 +327,7 @@ function loadConfigItem() {
 						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value)" value="' + data[i].name + '">');
 					}
 					$(".span-cfg").html(items);
+					$(".cat1").hide();
 					$(".span-cfg").show();
 				}
 			});
@@ -352,6 +353,7 @@ function addConfigItem(value) {
 function renameFolder() {
 	if (node_id != -1) {
 		if (getGroup(node_id) == "folder") {
+			$('.span-cfg').hide();
 			$('.cat1').show();
 			$(".form-horizontal").on('submit', function(event) {
 				event.preventDefault();
