@@ -517,6 +517,7 @@ function loadConfigItems() {
 					text : data[i].name
 				}));
 			}
+			$(".form-group").show();
 		}
 	});
 }
@@ -569,7 +570,7 @@ function getServers(id) {
 
 /**
  * remove the selected server from the cabinet
- * @param {Object} position: the position ofthe server in the cabinet
+ * @param {Object} position: the position of the server in the cabinet
  * @param {Object} id: the cabinet id
  */
 function removeServer(position, id) {
@@ -579,6 +580,30 @@ function removeServer(position, id) {
 		data : "position=" + position + "&id=" + id,
 		success : function() {
 			$("#" + position).html("");
+		}
+	});
+}
+
+/**
+ * reset the racks fields for a cabinet
+ */
+function resetFields() {
+	$(".clickable-div").html("");
+}
+
+/**
+ * retrieve the color for a cabinet, and then change its background color
+ * @param {Object} id: the id of the cabinet
+ */
+function getCabinetColor(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getCabinetColor.php",
+		data : "id=" + id,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				$("#server-design .table-responsive").css("background-color", data[i].color);
+			}
 		}
 	});
 }
@@ -695,6 +720,10 @@ function buildGrid(id) {
 $(function() {
 	$("#tree").jstree({
 
+		"contextmenu" : {
+			"items" : customMenu
+		},
+
 		"core" : {
 			"check_callback" : function(operation, node) {
 				if (operation === 'delete_node') {
@@ -711,7 +740,8 @@ $(function() {
 						'id' : node.id
 					};
 				}
-			}
+			},
+			"multiple" : false
 		},
 
 		"types" : {
@@ -719,10 +749,6 @@ $(function() {
 				"icon" : "img/file-icon.png",
 				"valid_children" : []
 			}
-		},
-
-		"contextmenu" : {
-			"items" : customMenu
 		},
 
 		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
@@ -959,8 +985,10 @@ $(function() {
 		e.preventDefault();
 		if (lastClicked) {
 			if (lastClicked.innerHTML != "") {
+				getCabinetColor(getTileProperties().id);
 				$("#grid-controls").hide();
 				$("#server-design").show();
+				resetFields();
 				getServers(getTileProperties().id);
 			} else {
 				alert("There is no cabinet on this cell!");
@@ -1012,13 +1040,12 @@ $(function() {
 	$('.clickable-div').contextMenu('myMenu1', {
 		bindings : {
 			'add_ci' : function(t) {
-				loadConfigItems();
-				$(".form-group").show();
 				setPosition(t.id);
+				loadConfigItems();
 			},
 			'show_ci' : function(t) {
 				setPosition(t.id);
-				alert('Trigger was ' + getPosition() + '\nAction was show_ci');
+				window.location.href = "ci_admin.php";
 			},
 			'rm_ci' : function(t) {
 				setPosition(t.id);

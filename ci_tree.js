@@ -77,7 +77,8 @@ $(document).ready(function() {
 						'id' : node.id
 					};
 				}
-			}
+			},
+			"multiple" : false
 		},
 		"types" : {
 			"file" : {
@@ -89,7 +90,7 @@ $(document).ready(function() {
 			}
 		},
 
-		"plugins" : ["json_data", "massload", "search", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
 		getFullPath(data.node);

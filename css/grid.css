@@ -28,14 +28,14 @@ img {
 }
 
 .clickable-div {
-	background-color: #F1FAF4;
+	background-color: #FFFFFF;
 	border: 1px solid black;
 }
 
 .clickable-div:hover {
 	cursor: auto;
 	cursor: pointer;
-	opacity: 0.5;
+	opacity: 0.8;
 }
 
 .grid {

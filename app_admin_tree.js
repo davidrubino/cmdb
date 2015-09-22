@@ -84,7 +84,8 @@ $(function() {
 						'id' : node.id
 					};
 				}
-			}
+			},
+			"multiple" : false
 		},
 
 		"types" : {

@@ -19,7 +19,8 @@ $(function() {
 						'id' : node.id
 					};
 				}
-			}
+			},
+			"multiple" : false
 		},
 
 		"types" : {
@@ -32,7 +33,7 @@ $(function() {
 			}
 		},
 
-		"plugins" : ["json_data", "massload", "sort", "themes", "types", "ui", "unique", "wholerow"]
+		"plugins" : ["json_data", "massload", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
 		application_id = data.node.id;

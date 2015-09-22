@@ -4,7 +4,7 @@ var global_id,
     current_name;
 
 function customMenu($node) {
-	var tree = $("#tree").jstree(true);
+	var tree = $("#tree-ci").jstree(true);
 	var items = {
 		"createfolder" : {
 			"separator_before" : false,
@@ -69,7 +69,7 @@ function getCurrentTab() {
 }
 
 function getFullPath(node) {
-	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
+	$('.name').html($("#tree-ci").jstree(true).get_path(node, ":"));
 }
 
 function getCurrentId() {
@@ -173,7 +173,7 @@ function editValues(id, name, value) {
 $(document).ready(function() {
 	initializeTabs();
 
-	$("#tree").jstree({
+	$("#tree-ci").jstree({
 		"core" : {
 			"check_callback" : function(operation, node) {
 				if (operation === 'delete_node') {
@@ -195,7 +195,8 @@ $(document).ready(function() {
 						'id' : node.id
 					};
 				}
-			}
+			},
+			"multiple" : false
 		},
 
 		"types" : {
@@ -264,7 +265,7 @@ $(document).ready(function() {
 				url : "ci_db_renameConfigItem.php",
 				data : "name=" + name + "&id=" + data.node.id,
 				success : function() {
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		} else {
@@ -273,7 +274,7 @@ $(document).ready(function() {
 				url : "ci_db_renameClass.php",
 				data : "name=" + name + "&class_id=" + data.node.id,
 				success : function() {
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		}
@@ -286,7 +287,7 @@ $(document).ready(function() {
 				data : "id=" + data.node.id,
 				success : function(data) {
 					$("#tabs").hide();
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		} else {
@@ -296,7 +297,7 @@ $(document).ready(function() {
 				data : "id=" + data.node.id,
 				success : function(data) {
 					$("#tabs").hide();
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		}
@@ -308,7 +309,7 @@ $(document).ready(function() {
 				url : "ci_db_createConfigItem.php",
 				data : "class_id=" + data.node.parent + "&parent_id=" + data.node.parents[1],
 				success : function(data) {
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		} else {
@@ -317,7 +318,7 @@ $(document).ready(function() {
 				url : "ci_db_createClass.php",
 				data : "id=" + data.node.parent,
 				success : function(data) {
-					$("#tree").jstree("refresh");
+					$("#tree-ci").jstree("refresh");
 				}
 			});
 		}
