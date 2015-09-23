@@ -8,8 +8,9 @@ function createConfigItem($conn) {
 
 	try {
 		$sql1 = 'insert into config_item
-		(id, name, class_id)
-		select max(id) + 1, "New node", :class_id from config_item';
+		(id, name, height, starting_position, class_id, cabinet_id)
+		select max(id) + 1, "New node", NULL, NULL, :class_id, NULL
+		from config_item';
 		$stmt1 = $conn -> prepare($sql1);
 		$stmt1 -> execute(array(':class_id' => $class_id));
 		$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);

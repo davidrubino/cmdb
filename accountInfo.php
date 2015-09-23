@@ -1,48 +1,48 @@
 <?php
-include 'db_connect.php';
-
-if (!$user -> is_loggedin()) {
-	$user -> redirect('login.php');
-}
-
-$user_id = $_SESSION['user_session'];
-
-try {
-	$sql = 'select user_name, user_email, user_fname, user_lname, isAdmin
-   				from user
-   				where user_id = :user_id;';
-
-	$stmt = $DB_con -> prepare($sql);
-	$stmt -> execute(array(':user_id' => $user_id));
-	$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-	$string = json_encode($row);
-	$decoded_json = json_decode($string, true);
-
-} catch(PDOException $e) {
-	echo json_encode(['success' => 'no', 'message' => 'error while loading']);
-}
-
-if (isset($_POST['btn-save'])) {
-	$uname = $decoded_json[0]['user_name'];
-	$upass = trim($_POST['txt_password']);
-	$upass_check = trim($_POST['txt_password_confirm']);
-
-	if ($upass == "") {
-		$error[] = "Please provide a password!";
-	} else if (strlen($upass) < 6) {
-		$error[] = "Password must be at least 6 characters!";
-	} else if ($upass != $upass_check) {
-		$error[] = "Passwords do not match!";
-	} else {
-		try {
-			if ($user -> changePassword($uname, $upass)) {
-				$user -> redirect('accountInfo.php?updated');
-			}
-		} catch(PDOException $e) {
-			echo $e -> getMessage();
-		}
-	}
-}
+   include 'db_connect.php';
+   
+   if (!$user -> is_loggedin()) {
+   	$user -> redirect('login.php');
+   }
+   
+   $user_id = $_SESSION['user_session'];
+   
+   try {
+   	$sql = 'select user_name, user_email, user_fname, user_lname, isAdmin
+      				from user
+      				where user_id = :user_id;';
+   
+   	$stmt = $DB_con -> prepare($sql);
+   	$stmt -> execute(array(':user_id' => $user_id));
+   	$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+   	$string = json_encode($row);
+   	$decoded_json = json_decode($string, true);
+   
+   } catch(PDOException $e) {
+   	echo json_encode(['success' => 'no', 'message' => 'error while loading']);
+   }
+   
+   if (isset($_POST['btn-save'])) {
+   	$uname = $decoded_json[0]['user_name'];
+   	$upass = trim($_POST['txt_password']);
+   	$upass_check = trim($_POST['txt_password_confirm']);
+   
+   	if ($upass == "") {
+   		$error[] = "Please provide a password!";
+   	} else if (strlen($upass) < 6) {
+   		$error[] = "Password must be at least 6 characters!";
+   	} else if ($upass != $upass_check) {
+   		$error[] = "Passwords do not match!";
+   	} else {
+   		try {
+   			if ($user -> changePassword($uname, $upass)) {
+   				$user -> redirect('accountInfo.php?updated');
+   			}
+   		} catch(PDOException $e) {
+   			echo $e -> getMessage();
+   		}
+   	}
+   }
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,8 +56,8 @@ if (isset($_POST['btn-save'])) {
    </head>
    <body>
       <?php
-	include 'menu.php';
-         ?>
+         include 'menu.php';
+                 ?>
       <div class="container">
          <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="panel panel-info" >
@@ -75,16 +75,17 @@ if (isset($_POST['btn-save'])) {
                      <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
                   </div>
                   <?php }
-					}
-					else if(isset($_GET['updated']))
-					{
-				 ?>
-                 <div class="alert alert-info">
-                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Your password has been updated!
-                 </div>
-                 <?php
-				}
+                     }
+                     else {
+                     if(isset($_GET['updated'])) {
                      ?>
+                  <div class="alert alert-info">
+                     <i class="glyphicon glyphicon-log-in"></i> &nbsp; Your password has been updated!
+                  </div>
+                  <?php
+                     }
+                     }
+                                 ?>
                   <div class="table-responsive">
                      <form class="form-horizontal" role="form" method="post">
                         <table class="table table-bordered table-hover" style="table-layout: fixed">
@@ -96,14 +97,14 @@ if (isset($_POST['btn-save'])) {
                               <tr>
                                  <td><strong>Admin</strong></td>
                                  <td>
-                                 	<?php
-									if ($decoded_json[0]['isAdmin'] == 1) {
-										echo "Yes";
-									} else {
-										echo "No";
-									}
- 									?>
- 								</td>
+                                    <?php
+                                       if ($decoded_json[0]['isAdmin'] == 1) {
+                                       	echo "Yes";
+                                       } else {
+                                       	echo "No";
+                                       }
+                                       	?>
+                                 </td>
                               </tr>
                               <tr>
                                  <td><strong>Email</strong></td>
@@ -139,20 +140,9 @@ if (isset($_POST['btn-save'])) {
             </div>
          </div>
       </div>
-      <?php
-	include 'footer.php';
-         ?>
       <script src="jquery/jquery-1.11.3.js" type="text/javascript"></script>
       <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
       <script src="menu.js" type="text/javascript"></script>
-      <script type="text/javascript">
-		$(document).ready(function() {
-			$(".toggler").click(function(e) {
-				e.preventDefault();
-				$('.cat1').toggle();
-				$('.btn-group').toggle();
-			});
-		});
-      </script>
+      <script src="passwordToggler.js" type="text/javascript"></script>
    </body>
 </html>

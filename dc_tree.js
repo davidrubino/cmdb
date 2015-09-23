@@ -717,6 +717,28 @@ function buildGrid(id) {
 	});
 }
 
+/**
+ * retrieve the height of the current cabinet, and then
+ * insert the correct amount of racks into the cabinet
+ * @param {Object} id: the id of the cabinet
+ */
+function buildRacks(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getHeight.php",
+		data : "id=" + id,
+		success : function(data) {
+			var htmlResult = new Array();
+			for (var j = 0; j < data.length; j++) {
+				for (var i = 0; i < data[j].height; i++) {
+					htmlResult.push("<div class='clickable-div second-row' id='" + i + "'></div>");
+				}
+				$("#racks").html(htmlResult);
+			}
+		}
+	});
+}
+
 $(function() {
 	$("#tree").jstree({
 
@@ -989,7 +1011,8 @@ $(function() {
 				$("#grid-controls").hide();
 				$("#server-design").show();
 				resetFields();
-				getServers(getTileProperties().id);
+				buildRacks(getTileProperties().id);
+				//getServers(getTileProperties().id);
 			} else {
 				alert("There is no cabinet on this cell!");
 			}

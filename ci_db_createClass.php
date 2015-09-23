@@ -11,7 +11,13 @@ function createClass($conn) {
 		values
 		("New node", :id);';
 		$stmt = $conn -> prepare($sql);
-		$stmt -> execute(array(':id' => $id));
+		
+		if($id == -1) {
+			$stmt -> execute(array(':id' => NULL));
+		} else {
+			$stmt -> execute(array(':id' => $id));
+		}
+		
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 		echo "Class created!";

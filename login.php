@@ -94,10 +94,6 @@ if(isset($error))
 			</div>
 		</div>
 
-		<?php
-		include 'footer.php';
-		?>
-
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="menu.js"></script>

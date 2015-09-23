@@ -35,10 +35,6 @@ $user_id = $_SESSION['user_session'];
 			</div>
 		</div>
 
-		<?php
-		include 'footer.php';
-		?>
-
 		<script src="jquery/jquery-1.11.3.js" type="text/javascript"></script>
 		<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="menu.js" type="text/javascript"></script>

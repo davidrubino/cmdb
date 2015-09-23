@@ -121,26 +121,7 @@ $user_id = $_SESSION['user_session'];
 						</button>
 					</div>
 
-					<div class="col-md-10 table-responsive">
-						<div class="clickable-div second-row" id="6">
-
-						</div>
-						<div class="clickable-div second-row" id="5">
-
-						</div>
-						<div class="clickable-div second-row" id="4">
-
-						</div>
-						<div class="clickable-div second-row" id="3">
-
-						</div>
-						<div class="clickable-div second-row" id="2">
-
-						</div>
-						<div class="clickable-div first-row" id="1">
-
-						</div>
-					</div>
+					<div class="col-md-10 table-responsive" id="racks"></div>
 				</div>
 
 			</div>
@@ -208,10 +189,6 @@ $user_id = $_SESSION['user_session'];
 					</li>
 				</ul>
 			</div>
-
-			<?php
-			include 'footer.php';
-			?>
 
 			<script src="jquery/jquery-1.11.3.js"></script>
 			<script src="bootstrap/js/bootstrap.min.js"></script>

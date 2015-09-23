@@ -116,10 +116,6 @@ if ($permission == 1) {
 			</div>
 		</div>
 
-		<?php
-		include 'footer.php';
-		?>
-
 		<script src="jquery/jquery-1.11.3.js"></script>
 		<script src="jquery/jquery-ui.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
