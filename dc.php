@@ -44,7 +44,7 @@ $user_id = $_SESSION['user_session'];
 						<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
 						<input class="btn btn-large btn-primary i-graph" id="addCabinet" type="button" value="Add cabinet">
 						<input class="btn btn-large btn-primary i-graph" id="rmCabinet" type="button" value="Remove cabinet">
-						<input class="btn btn-large btn-primary i-graph" id="3d" type="button" value="3D">
+						<input class="btn btn-large btn-primary i-graph" id="3d" type="button" value="2D">
 					</div>
 					<div class="controls">
 						<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
@@ -167,6 +167,17 @@ $user_id = $_SESSION['user_session'];
 					<label for="select-ci">Select the server to add:</label>
 					<select class="form-control" id="select-ci" size="5" name="selectionField" form="form3"></select>
 					<form id="form3" role="form" method="post">
+						<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<td>Height</td>
+									<td>
+									<input type="number" class="number-cells" id="item-height" name="item-height" value="7" min="1" max="100">
+									</td>
+									<td><span id="error-item-height" class="error">Please enter a valid height</span></td>
+								</tr>
+							</table>
+						</div>
 						<button type="submit" class="btn btn-large btn-primary">
 							OK
 						</button>

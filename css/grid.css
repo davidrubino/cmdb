@@ -20,7 +20,7 @@ img {
 }
 
 .second-row {
-	height: 30px;
+	height: 25px;
 }
 
 .clickable-div {
@@ -29,9 +29,7 @@ img {
 }
 
 .clickable-div:hover {
-	cursor: auto;
 	cursor: pointer;
-	opacity: 0.8;
 }
 
 .grid {

@@ -321,7 +321,7 @@ function loadConfigItem() {
 		if (getGroup(node_id) != "config_item") {
 			$.ajax({
 				type : "POST",
-				url : "db_loadConfigItems.php",
+				url : "app_db_loadConfigItems.php",
 				success : function(data) {
 					var items = new Array();
 					for (var i = 0; i < data.length; i++) {

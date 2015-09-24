@@ -7,13 +7,29 @@ function createConfigItem($conn) {
 	$parent_id = $_POST['parent_id'];
 
 	try {
-		$sql1 = 'insert into config_item
-		(id, name, height, starting_position, class_id, cabinet_id)
-		select max(id) + 1, "New node", NULL, NULL, :class_id, NULL
-		from config_item';
-		$stmt1 = $conn -> prepare($sql1);
-		$stmt1 -> execute(array(':class_id' => $class_id));
-		$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);
+		$preSQL = 'select * from config_item';
+		$stmt_preSQL = $conn -> prepare($preSQL);
+		$stmt_preSQL -> execute();
+		$row_preSQL = $stmt_preSQL -> fetchAll(PDO::FETCH_ASSOC);
+
+		if (empty($row_preSQL)) {
+			$sql1 = 'insert into config_item
+			(id, name, height, starting_position, class_id, cabinet_id)
+			values
+			(1000, "New node", NULL, NULL, :class_id, NULL)';
+			$stmt1 = $conn -> prepare($sql1);
+			$stmt1 -> execute(array(':class_id' => $class_id));
+			$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);
+
+		} else {
+			$sql1 = 'insert into config_item
+			(id, name, height, starting_position, class_id, cabinet_id)
+			select max(id) + 1, "New node", NULL, NULL, :class_id, NULL
+			from config_item';
+			$stmt1 = $conn -> prepare($sql1);
+			$stmt1 -> execute(array(':class_id' => $class_id));
+			$row1 = $stmt1 -> fetchAll(PDO::FETCH_ASSOC);
+		}
 
 		$sql2 = 'select property.id from property, map_class_property
 		where property.id = map_class_property.prop_id
@@ -34,8 +50,6 @@ function createConfigItem($conn) {
 			$stmt3 -> execute(array(':property_id' => $row[id]));
 			$row3 = $stmt3 -> fetchAll(PDO::FETCH_ASSOC);
 		}
-
-		echo "Config item created!";
 
 	} catch(PDOException $e) {
 		echo $e -> getMessage();

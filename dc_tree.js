@@ -509,15 +509,19 @@ function resetSelect() {
 function loadConfigItems() {
 	$.ajax({
 		type : "POST",
-		url : "db_loadConfigItems.php",
+		url : "dc_db_loadConfigItems.php",
 		success : function(data) {
-			for (var i = 0; i < data.length; i++) {
-				$("#select-ci").append($('<option>', {
-					value : data[i].id,
-					text : data[i].name
-				}));
+			if (data.length != 0) {
+				for (var i = 0; i < data.length; i++) {
+					$("#select-ci").append($('<option>', {
+						value : data[i].id,
+						text : data[i].name
+					}));
+				}
+				$(".form-group").show();
+			} else {
+				alert("All configuration items are already assigned to a cabinet.");
 			}
-			$(".form-group").show();
 		}
 	});
 }
@@ -562,7 +566,7 @@ function getServers(id) {
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				addServer(data[i].position, data[i].name);
+				addServer(data[i].starting_position, data[i].name);
 			}
 		}
 	});
@@ -686,17 +690,6 @@ function buildGrid(id) {
 					}
 					lastClicked = el;
 
-					console.log("id: ", getNodeId() + getSelectedRow() + getSelectedCol());
-					console.log("x: ", getXValue(getSelectedCol(), tile_dim));
-					console.log("y: ", getYValue(getSelectedRow(), tile_dim));
-					console.log("html_row: ", getSelectedRow());
-					console.log("html_col: ", getSelectedCol());
-					console.log("label_rows: ", label_rows);
-					console.log("label_cols: ", label_cols);
-					console.log("label: ", getLabel(getSelectedRow(), getSelectedCol(), label_rows, label_cols));
-					console.log("grayed_out: ", isGrayedOut(el));
-					console.log("data_center_id: ", getNodeId());
-
 					var tileProp = {
 						id : getNodeId() + getSelectedRow() + getSelectedCol(),
 						x : getXValue(getSelectedCol(), tile_dim),
@@ -731,10 +724,48 @@ function buildRacks(id) {
 			var htmlResult = new Array();
 			for (var j = 0; j < data.length; j++) {
 				for (var i = 0; i < data[j].height; i++) {
-					htmlResult.push("<div class='clickable-div second-row' id='" + i + "'></div>");
+					var $el = $("<div class='clickable-div second-row' id='" + i + "'></div>");
+					htmlResult.push($el);
+					addContextMenu($el);
 				}
 				$("#racks").html(htmlResult);
 			}
+		}
+	});
+}
+
+/**
+ * create the context menu for the racks
+ * @param {Object} el: the element on which the context menu will be bound
+ */
+function addContextMenu(el) {
+	$(el).contextMenu('myMenu1', {
+		bindings : {
+			'add_ci' : function(t) {
+				setPosition(t.id);
+				loadConfigItems();
+			},
+			'show_ci' : function(t) {
+				setPosition(t.id);
+				window.location.href = "ci_admin.php";
+			},
+			'rm_ci' : function(t) {
+				setPosition(t.id);
+				if (confirm("Are you sure you want to remove this server from the cabinet?")) {
+					removeServer(getPosition(), getTileProperties().id);
+				}
+			},
+		},
+
+		onShowMenu : function(e, menu) {
+			resetSelect();
+			if ($(e.target)[0].innerText === '') {
+				$('#show_ci', menu).remove();
+				$('#rm_ci', menu).remove();
+			} else {
+				$('#add_ci', menu).remove();
+			}
+			return menu;
 		}
 	});
 }
@@ -802,6 +833,7 @@ $(function() {
 		setNodeId(data.node.id);
 		$("#grid-form").hide();
 		$('#server-design').hide();
+		$('#cabinet-form').hide();
 		resetSelect();
 
 		if (data.node.type == "file") {
@@ -837,10 +869,14 @@ $(function() {
 	$("#form3").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
-		if (form_data != "") {
-			map2Cabinet(form_data, getPosition(), tile_prop.id);
+		if ($(".error").is(":visible")) {
+			alert("There are errors on this page!");
 		} else {
-			alert("Please select a server!");
+			if (form_data.indexOf("selectionField") != -1) {
+				map2Cabinet(form_data, getPosition(), tile_prop.id);
+			} else {
+				alert("Please select a server!");
+			}
 		}
 	});
 
@@ -921,6 +957,16 @@ $(function() {
 			$("#error-width").hide();
 		} else {
 			$("#error-width").show();
+		}
+	});
+
+	$('#item-height').on('input', function() {
+		var input = $(this);
+		var is_valid = input.val();
+		if (is_valid > 0) {
+			$("#error-item-height").hide();
+		} else {
+			$("#error-item-height").show();
 		}
 	});
 
@@ -1012,7 +1058,7 @@ $(function() {
 				$("#server-design").show();
 				resetFields();
 				buildRacks(getTileProperties().id);
-				//getServers(getTileProperties().id);
+				getServers(getTileProperties().id);
 			} else {
 				alert("There is no cabinet on this cell!");
 			}
@@ -1058,35 +1104,5 @@ $(function() {
 		$('#server-design').hide();
 		$('#grid-controls').show();
 		resetSelect();
-	});
-
-	$('.clickable-div').contextMenu('myMenu1', {
-		bindings : {
-			'add_ci' : function(t) {
-				setPosition(t.id);
-				loadConfigItems();
-			},
-			'show_ci' : function(t) {
-				setPosition(t.id);
-				window.location.href = "ci_admin.php";
-			},
-			'rm_ci' : function(t) {
-				setPosition(t.id);
-				if (confirm("Are you sure you want to remove this server from the cabinet?")) {
-					removeServer(getPosition(), getTileProperties().id);
-				}
-			},
-		},
-
-		onShowMenu : function(e, menu) {
-			resetSelect();
-			if ($(e.target)[0].innerText === '') {
-				$('#show_ci', menu).remove();
-				$('#rm_ci', menu).remove();
-			} else {
-				$('#add_ci', menu).remove();
-			}
-			return menu;
-		}
 	});
 });

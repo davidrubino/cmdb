@@ -7,8 +7,10 @@ function deleteServer($conn) {
 	$id = $_POST['id'];
 
 	try {
-		$sql = 'delete from map_ci_cabinet
-		where position = :position
+		$sql = 'update config_item
+		set starting_position = NULL,
+		cabinet_id = NULL
+		where starting_position = :position
 		and cabinet_id = :id';
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':position' => $position, ':id' => $id));
