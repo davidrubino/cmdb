@@ -7,16 +7,17 @@ img {
 	margin: 5px;
 }
 
-#server-design .table-responsive {
-	table-layout: fixed;
+#racks {
 	border: 1px solid black;
-	height: 500px;
-	width: 250px;
 }
 
-#server-design .table-responsive div {
-	margin: 5px;
+#racks div {
 	text-align: center;
+	margin: 2px;
+}
+
+.form-group {
+	position: fixed;
 }
 
 .second-row {
@@ -30,6 +31,7 @@ img {
 
 .clickable-div:hover {
 	cursor: pointer;
+	opacity: 0.8;
 }
 
 .grid {

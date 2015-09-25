@@ -8,7 +8,7 @@ function getHeight($conn) {
 	$id = $_POST['id'];
 	
 	try {
-		$sql = 'select height
+		$sql = 'select id, height
 		from cabinet
 		where id = :id';
 		$stmt = $conn -> prepare($sql);

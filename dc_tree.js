@@ -556,23 +556,6 @@ function map2Cabinet(data, position, cabinet_id) {
 }
 
 /**
- * return the list of servers for a specified cabinet
- * @param {Object} id: the cabinet id
- */
-function getServers(id) {
-	$.ajax({
-		type : "POST",
-		url : "dc_db_getServers.php",
-		data : "id=" + id,
-		success : function(data) {
-			for (var i = 0; i < data.length; i++) {
-				addServer(data[i].starting_position, data[i].name);
-			}
-		}
-	});
-}
-
-/**
  * remove the selected server from the cabinet
  * @param {Object} position: the position of the server in the cabinet
  * @param {Object} id: the cabinet id
@@ -606,7 +589,7 @@ function getCabinetColor(id) {
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				$("#server-design .table-responsive").css("background-color", data[i].color);
+				$("#racks").css("background-color", data[i].color);
 			}
 		}
 	});
@@ -711,6 +694,23 @@ function buildGrid(id) {
 }
 
 /**
+ * return the list of servers for a specified cabinet
+ * @param {Object} id: the cabinet id
+ */
+function getServers(id) {
+	$.ajax({
+		type : "POST",
+		url : "dc_db_getServers.php",
+		data : "id=" + id,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				addServer(data[i].starting_position, data[i].name);
+			}
+		}
+	});
+}
+
+/**
  * retrieve the height of the current cabinet, and then
  * insert the correct amount of racks into the cabinet
  * @param {Object} id: the id of the cabinet
@@ -724,10 +724,11 @@ function buildRacks(id) {
 			var htmlResult = new Array();
 			for (var j = 0; j < data.length; j++) {
 				for (var i = 0; i < data[j].height; i++) {
-					var $el = $("<div class='clickable-div second-row' id='" + i + "'></div>");
-					htmlResult.push($el);
-					addContextMenu($el);
+					var el = $("<div class='clickable-div second-row' id='" + i + "'></div>");
+					htmlResult.push(el);
+					addContextMenu(el);
 				}
+				getServers(data[j].id);
 				$("#racks").html(htmlResult);
 			}
 		}
@@ -1049,16 +1050,15 @@ $(function() {
 		}
 	});
 
-	$('#3d').click(function(e) {
+	$('#2d').click(function(e) {
 		e.preventDefault();
 		if (lastClicked) {
 			if (lastClicked.innerHTML != "") {
-				getCabinetColor(getTileProperties().id);
 				$("#grid-controls").hide();
 				$("#server-design").show();
+				getCabinetColor(getTileProperties().id);
 				resetFields();
 				buildRacks(getTileProperties().id);
-				getServers(getTileProperties().id);
 			} else {
 				alert("There is no cabinet on this cell!");
 			}
@@ -1105,4 +1105,5 @@ $(function() {
 		$('#grid-controls').show();
 		resetSelect();
 	});
+	
 });

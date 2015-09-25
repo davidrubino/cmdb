@@ -44,7 +44,7 @@ $user_id = $_SESSION['user_session'];
 						<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
 						<input class="btn btn-large btn-primary i-graph" id="addCabinet" type="button" value="Add cabinet">
 						<input class="btn btn-large btn-primary i-graph" id="rmCabinet" type="button" value="Remove cabinet">
-						<input class="btn btn-large btn-primary i-graph" id="3d" type="button" value="2D">
+						<input class="btn btn-large btn-primary i-graph" id="2d" type="button" value="2D">
 					</div>
 					<div class="controls">
 						<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
@@ -120,8 +120,7 @@ $user_id = $_SESSION['user_session'];
 							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
 						</button>
 					</div>
-
-					<div class="col-md-10 table-responsive" id="racks"></div>
+					<div class="col-md-10" id="racks"></div>
 				</div>
 
 			</div>
