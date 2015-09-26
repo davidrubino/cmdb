@@ -5,6 +5,6 @@
 5.	(Why our solution works)
 6.	Technologies used
 7.	Implementation of the solution
-8.	Economic strategy and technological progress regarding our product
+8.	Economic strategy and technological progress regarding the product
 9.	Future of the CMDB app
 10.	Work method and project management
