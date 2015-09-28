@@ -531,28 +531,16 @@ function loadConfigItems() {
  * @param {Object} position: the reference of the cell in which the name will be added
  * @param {Object} name: the name of the server to be added
  */
-function addServer(position, name) {
-	$("#" + position).html(name);
-}
-
-/**
- * creates the mapping table between a cabinet and a configuration item
- * @param {Object} data: includes the configuration item id of the server to be added
- * @param {Object} position: the current position of the server in the cabinet
- * @param {Object} cabinet_id: the id of the cabinet containing the server
- */
-function map2Cabinet(data, position, cabinet_id) {
-	$.ajax({
-		type : "POST",
-		url : "dc_db_map2Cabinet.php",
-		data : data + "&position=" + position + "&cabinet_id=" + cabinet_id,
-		success : function(data) {
-			$(".form-group").hide();
-			for (var i = 0; i < data.length; i++) {
-				addServer(position, data[i].name);
-			}
+function addServer(position, name, height) {
+	var limit = position + height;
+	var pxHeight = height * 25;
+	$("#rack" + position).html(name);
+	if (height > 1) {
+		for (var i = 0; i < height; i++) {
+			$("#rack" + position).next('.second-row').remove();
+			$("#rack" + position).css("height", pxHeight + "px");
 		}
-	});
+	}
 }
 
 /**
@@ -704,7 +692,7 @@ function getServers(id) {
 		data : "id=" + id,
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				addServer(data[i].starting_position, data[i].name);
+				addServer(data[i].starting_position, data[i].name, data[i].height);
 			}
 		}
 	});
@@ -724,7 +712,7 @@ function buildRacks(id) {
 			var htmlResult = new Array();
 			for (var j = 0; j < data.length; j++) {
 				for (var i = 0; i < data[j].height; i++) {
-					var el = $("<div class='clickable-div second-row' id='" + i + "'></div>");
+					var el = $('<div class="clickable-div second-row" id="rack' + i + '"></div>');
 					htmlResult.push(el);
 					addContextMenu(el);
 				}
@@ -772,6 +760,7 @@ function addContextMenu(el) {
 }
 
 $(function() {
+
 	$("#tree").jstree({
 
 		"contextmenu" : {
@@ -874,7 +863,18 @@ $(function() {
 			alert("There are errors on this page!");
 		} else {
 			if (form_data.indexOf("selectionField") != -1) {
-				map2Cabinet(form_data, getPosition(), tile_prop.id);
+				var pos = getPosition().substring(4);
+				$.ajax({
+					type : "POST",
+					url : "dc_db_map2Cabinet.php",
+					data : form_data + "&position=" + pos + "&cabinet_id=" + tile_prop.id,
+					success : function(data) {
+						$(".form-group").hide();
+						for (var i = 0; i < data.length; i++) {
+							addServer(pos, data[i].name);
+						}
+					}
+				});
 			} else {
 				alert("Please select a server!");
 			}
@@ -1105,5 +1105,5 @@ $(function() {
 		$('#grid-controls').show();
 		resetSelect();
 	});
-	
+
 });

@@ -8,7 +8,7 @@ function getServers($conn) {
 	$id = $_POST['id'];
 
 	try {
-		$sql = 'select starting_position, name
+		$sql = 'select starting_position, name, height
 		from config_item
 		where cabinet_id = :id';
 		$stmt = $conn -> prepare($sql);

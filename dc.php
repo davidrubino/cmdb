@@ -125,7 +125,7 @@ $user_id = $_SESSION['user_session'];
 
 			</div>
 
-			<div class="col-md-3">
+			<div class="col-md-3 container-fluid">
 
 				<div id="cabinet-form" style="display: none">
 					<form id="form2" role="form" method="post">
