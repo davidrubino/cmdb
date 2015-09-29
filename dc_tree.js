@@ -6,7 +6,8 @@ var lastClicked,
     selected_row = -1,
     select_col = -1,
     tile_prop,
-    position;
+    position,
+    height;
 
 /**
  * set the number of rows in the grid
@@ -70,6 +71,21 @@ function setTileProperties(prop) {
  */
 function setPosition(p) {
 	position = p;
+}
+
+/**
+ * set the height of a cabinet
+ * @param {Object} h: the height of the cabinet (int)
+ */
+function setHeight(h) {
+	height = h;
+}
+
+/**
+ * return the height of the cabinet
+ */
+function getHeight() {
+	return height;
 }
 
 /**
@@ -535,28 +551,10 @@ function addServer(position, name, height) {
 	var limit = position + height;
 	var pxHeight = height * 25;
 	$("#rack" + position).html(name);
-	if (height > 1) {
-		for (var i = 0; i < height; i++) {
-			$("#rack" + position).next('.second-row').remove();
-			$("#rack" + position).css("height", pxHeight + "px");
-		}
+	for (var i = 1; i < height; i++) {
+		$("#rack" + position).next('.second-row').remove();
+		$("#rack" + position).css("height", pxHeight + "px");
 	}
-}
-
-/**
- * remove the selected server from the cabinet
- * @param {Object} position: the position of the server in the cabinet
- * @param {Object} id: the cabinet id
- */
-function removeServer(position, id) {
-	$.ajax({
-		type : "POST",
-		url : "dc_db_deleteServer.php",
-		data : "position=" + position + "&id=" + id,
-		success : function() {
-			$("#" + position).html("");
-		}
-	});
 }
 
 /**
@@ -711,6 +709,7 @@ function buildRacks(id) {
 		success : function(data) {
 			var htmlResult = new Array();
 			for (var j = 0; j < data.length; j++) {
+				setHeight(data[j].height);
 				for (var i = 0; i < data[j].height; i++) {
 					var el = $('<div class="clickable-div second-row" id="rack' + i + '"></div>');
 					htmlResult.push(el);
@@ -724,7 +723,7 @@ function buildRacks(id) {
 }
 
 /**
- * create the context menu for the racks
+ * create the context menu for the racks and bind them with to a function
  * @param {Object} el: the element on which the context menu will be bound
  */
 function addContextMenu(el) {
@@ -734,14 +733,24 @@ function addContextMenu(el) {
 				setPosition(t.id);
 				loadConfigItems();
 			},
+			
 			'show_ci' : function(t) {
 				setPosition(t.id);
 				window.location.href = "ci_admin.php";
 			},
+			
 			'rm_ci' : function(t) {
 				setPosition(t.id);
 				if (confirm("Are you sure you want to remove this server from the cabinet?")) {
-					removeServer(getPosition(), getTileProperties().id);
+					var pos = parseInt(getPosition().substring(4));
+					$.ajax({
+						type : "POST",
+						url : "dc_db_deleteServer.php",
+						data : "position=" + pos + "&id=" + getTileProperties().id,
+						success : function() {
+							$("#" + getPosition()).html("");
+						}
+					});
 				}
 			},
 		},
@@ -859,22 +868,46 @@ $(function() {
 	$("#form3").on('submit', function(event) {
 		event.preventDefault();
 		var form_data = $(this).serialize();
+
 		if ($(".error").is(":visible")) {
 			alert("There are errors on this page!");
 		} else {
+
 			if (form_data.indexOf("selectionField") != -1) {
-				var pos = getPosition().substring(4);
-				$.ajax({
-					type : "POST",
-					url : "dc_db_map2Cabinet.php",
-					data : form_data + "&position=" + pos + "&cabinet_id=" + tile_prop.id,
-					success : function(data) {
-						$(".form-group").hide();
-						for (var i = 0; i < data.length; i++) {
-							addServer(pos, data[i].name);
+
+				var pos = parseInt(getPosition().substring(4));
+				var height = parseInt($("#item-height").val());
+				var bool = true;
+				var cabinet_height = getHeight();
+
+				if (pos + height <= cabinet_height) {
+					for (var i = pos; i < height; i++) {
+						if ($("#rack" + i).html() != "") {
+							bool = false;
 						}
 					}
-				});
+
+					if (bool) {
+						$.ajax({
+							type : "POST",
+							url : "dc_db_map2Cabinet.php",
+							data : form_data + "&position=" + pos + "&cabinet_id=" + tile_prop.id,
+							success : function(data) {
+								$(".form-group").hide();
+								for (var i = 0; i < data.length; i++) {
+									addServer(pos, data[i].name, height);
+								}
+							}
+						});
+
+					} else {
+						alert("Adjacent element! Please reduce the height.");
+					}
+
+				} else {
+					alert("The server does not fit! Please reduce the height.");
+				}
+
 			} else {
 				alert("Please select a server!");
 			}

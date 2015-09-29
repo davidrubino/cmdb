@@ -20,7 +20,7 @@ function map2Cabinet($conn) {
 		$stmt -> execute(array(':position' => $position, ':ci_id' => $ci_id, ':cabinet_id' => $cabinet_id, ':height' => $height));
 		$row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
-		$sql_return = 'select name from config_item
+		$sql_return = 'select name, height from config_item
 		where id = :id';
 		$stmt_return = $conn -> prepare($sql_return);
 		$stmt_return -> execute(array(':id' => $ci_id));
