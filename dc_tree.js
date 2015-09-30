@@ -519,30 +519,6 @@ function resetSelect() {
 }
 
 /**
- * load the configuration items in the select menu
- * It allows the user to select an item to add in the cabinet.
- */
-function loadConfigItems() {
-	$.ajax({
-		type : "POST",
-		url : "dc_db_loadConfigItems.php",
-		success : function(data) {
-			if (data.length != 0) {
-				for (var i = 0; i < data.length; i++) {
-					$("#select-ci").append($('<option>', {
-						value : data[i].id,
-						text : data[i].name
-					}));
-				}
-				$(".form-group").show();
-			} else {
-				alert("All configuration items are already assigned to a cabinet.");
-			}
-		}
-	});
-}
-
-/**
  * add the name of the server in the cabinet at a specific position
  * @param {Object} position: the reference of the cell in which the name will be added
  * @param {Object} name: the name of the server to be added
@@ -731,24 +707,49 @@ function addContextMenu(el) {
 		bindings : {
 			'add_ci' : function(t) {
 				setPosition(t.id);
-				loadConfigItems();
+				$.ajax({
+					type : "POST",
+					url : "dc_db_loadConfigItems.php",
+					success : function(data) {
+						if (data.length != 0) {
+							for (var i = 0; i < data.length; i++) {
+								$("#select-ci").append($('<option>', {
+									value : data[i].id,
+									text : data[i].name
+								}));
+							}
+							$(".form-group").show();
+						} else {
+							alert("All configuration items are already assigned to a cabinet.");
+						}
+					}
+				});
 			},
-			
+
 			'show_ci' : function(t) {
 				setPosition(t.id);
 				window.location.href = "ci_admin.php";
 			},
-			
+
 			'rm_ci' : function(t) {
 				setPosition(t.id);
 				if (confirm("Are you sure you want to remove this server from the cabinet?")) {
 					var pos = parseInt(getPosition().substring(4));
+					var incr = pos + 1;
 					$.ajax({
 						type : "POST",
 						url : "dc_db_deleteServer.php",
 						data : "position=" + pos + "&id=" + getTileProperties().id,
-						success : function() {
+						success : function(data) {
 							$("#" + getPosition()).html("");
+							$("#" + getPosition()).css("height", "25px");
+							for (var i = 0; i < data.length; i++) {
+								for (var j = 0; j < data[i].height - 1; j++) {
+									$("#rack" + pos).after('<div class="clickable-div second-row" id="rack' + incr + '"></div>');
+									pos++;
+									incr++;
+								}
+							}
 						}
 					});
 				}
@@ -879,9 +880,10 @@ $(function() {
 				var height = parseInt($("#item-height").val());
 				var bool = true;
 				var cabinet_height = getHeight();
+				var adjusted_pos = pos + height;
 
-				if (pos + height <= cabinet_height) {
-					for (var i = pos; i < height; i++) {
+				if (adjusted_pos <= cabinet_height) {
+					for (var i = pos; i < adjusted_pos; i++) {
 						if ($("#rack" + i).html() != "") {
 							bool = false;
 						}

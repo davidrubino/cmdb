@@ -171,7 +171,7 @@ $user_id = $_SESSION['user_session'];
 								<tr>
 									<td>Height</td>
 									<td>
-									<input type="number" class="number-cells" id="item-height" name="item-height" value="7" min="1" max="100">
+									<input type="number" class="number-cells" id="item-height" name="item-height" value="1" min="1" max="100">
 									</td>
 									<td><span id="error-item-height" class="error">Please enter a valid height</span></td>
 								</tr>
