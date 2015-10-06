@@ -47,14 +47,16 @@ if ($permission == 0) {
 
 				<div id="grid-controls" style="display: none">
 					<div id="mygraph"></div>
-					<div class="controls">
+					<div class="div_controls controls">
 						<input class="btn btn-large btn-primary i-graph" id="activate" type="button" value="Activate cell">
 						<input class="btn btn-large btn-primary i-graph" id="gray-out" type="button" value="Gray out">
 						<input class="btn btn-large btn-primary i-graph" id="addCabinet" type="button" value="Add cabinet">
 						<input class="btn btn-large btn-primary i-graph" id="rmCabinet" type="button" value="Remove cabinet">
-						<input class="btn btn-large btn-primary i-graph" id="2d" type="button" value="2D">
 					</div>
-					<div class="controls">
+					<div class="div_controls">
+						<input class="btn btn-large btn-primary i-graph" id="view_cabinet" type="button" value="View cabinet">
+					</div>
+					<div class="div_controls controls">
 						<input class="btn btn-large btn-primary i-graph" id="addRow" type="button" value="Add row">
 						<input class="btn btn-large btn-primary i-graph" id="addCol" type="button" value="Add column">
 						<input class="btn btn-large btn-primary i-graph" id="rmRow" type="button" value="Remove row">

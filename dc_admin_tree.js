@@ -1085,7 +1085,7 @@ $(function() {
 		}
 	});
 
-	$('#2d').click(function(e) {
+	$('#view_cabinet').click(function(e) {
 		e.preventDefault();
 		if (lastClicked) {
 			if (lastClicked.innerHTML != "") {

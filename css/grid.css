@@ -16,14 +16,14 @@ img {
 	margin: 2px;
 }
 
-#div_view {
-	text-align:center;
-}
-
 #view_cabinet {
 	margin-left: auto;
 	margin-right: auto;
 	width: 10em
+}
+
+.div_controls {
+	text-align:center;
 }
 
 .second-row {
