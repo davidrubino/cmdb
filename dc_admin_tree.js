@@ -728,7 +728,10 @@ function addContextMenu(el) {
 
 			'show_ci' : function(t) {
 				setPosition(t.id);
-				window.location.href = "ci_admin.php";
+				console.log(t.id);
+				$("#tree").jstree("deselect_all");
+				$('#tree').jstree('select_node', 2);
+				window.location.href = "ci_admin.php?id=1000";
 			},
 
 			'rm_ci' : function(t) {
