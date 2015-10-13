@@ -103,7 +103,6 @@ function createTables($conn) {
 		FOREIGN KEY (class_id) REFERENCES Class(id)
 		ON DELETE CASCADE,
 		FOREIGN KEY (cabinet_id) REFERENCES Cabinet(id)
-		ON DELETE CASCADE
 		);
 		
 		CREATE TABLE Property (

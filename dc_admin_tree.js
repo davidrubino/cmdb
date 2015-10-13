@@ -319,29 +319,6 @@ function grayOutCell(x, y) {
 }
 
 /**
- * delete a tile
- * @param {Object} id: id of the tile to delete
- */
-function deleteTile(id) {
-	$.ajax({
-		type : "POST",
-		url : "dc_db_deleteTile.php",
-		data : "id=" + id,
-		success : function(data) {
-			var table = document.getElementById("table");
-			var row,
-			    cell;
-			for (var i = 0; i < data.length; i++) {
-				row = table.rows[data[i].html_row];
-				cell = row.cells[data[i].html_col];
-				$(cell).html("");
-				$(cell).css("background-color", "#FFFFFF");
-			}
-		}
-	});
-}
-
-/**
  * add graphically a cabinet on the grid
  * @param {Object} x: the tile abscissa containing the cabinet
  * @param {Object} y: the tile ordinate containing the cabinet
@@ -730,8 +707,8 @@ function addContextMenu(el) {
 				setPosition(t.id);
 				console.log(t.id);
 				$("#tree").jstree("deselect_all");
-				$('#tree').jstree('select_node', 2);
-				window.location.href = "ci_admin.php?id=1000";
+				$('#tree-ci').jstree('select_node', 1000);
+				window.location.href = "ci_admin.php";
 			},
 
 			'rm_ci' : function(t) {
@@ -880,9 +857,11 @@ $(function() {
 			if (form_data.indexOf("selectionField") != -1) {
 
 				var pos = parseInt(getPosition().substring(4));
-				var height = parseInt($("#item-height").val()); //height of the server
+				var height = parseInt($("#item-height").val());
+				//height of the server
 				var bool = true;
-				var cabinet_height = getHeight(); // height of the cabinet
+				var cabinet_height = getHeight();
+				// height of the cabinet
 				var adjusted_pos = pos + height;
 
 				if (adjusted_pos <= cabinet_height) {
@@ -1047,7 +1026,22 @@ $(function() {
 		e.preventDefault();
 		if (lastClicked) {
 			if (isGrayedOut(lastClicked)) {
-				deleteTile(tile_prop.id);
+				$.ajax({
+					type : "POST",
+					url : "dc_db_deleteTile.php",
+					data : "id=" + tile_prop.id,
+					success : function(data) {
+						var table = document.getElementById("table");
+						var row,
+						    cell;
+						for (var i = 0; i < data.length; i++) {
+							row = table.rows[data[i].html_row];
+							cell = row.cells[data[i].html_col];
+							$(cell).html("");
+							$(cell).css("background-color", "#FFFFFF");
+						}
+					}
+				});
 			} else {
 				alert("The cell is already activated!");
 			}
@@ -1078,7 +1072,22 @@ $(function() {
 		if (lastClicked) {
 			if (lastClicked.innerHTML != "") {
 				if (confirm("Are you sure you want to delete this cabinet?")) {
-					deleteTile(tile_prop.id);
+					$.ajax({
+						type : "POST",
+						url : "dc_db_deleteCabinet.php",
+						data : "id=" + tile_prop.id,
+						success : function(data) {
+							var table = document.getElementById("table");
+							var row,
+							    cell;
+							for (var i = 0; i < data.length; i++) {
+								row = table.rows[data[i].html_row];
+								cell = row.cells[data[i].html_col];
+								$(cell).html("");
+								$(cell).css("background-color", "#FFFFFF");
+							}
+						}
+					});
 				}
 			} else {
 				alert("There is no cabinet on this cell!");
