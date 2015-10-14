@@ -130,7 +130,11 @@ if ($permission == 0) {
 							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
 						</button>
 					</div>
-					<div class="col-md-10" id="racks"></div>
+					
+					<div class="col-md-10">
+						<div id="racks"></div>
+					</div>
+
 				</div>
 
 			</div>

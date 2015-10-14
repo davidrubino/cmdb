@@ -184,35 +184,6 @@ $(document).ready(function() {
 						return false;
 					}
 				}
-				if (operation === 'rename_node') {
-					var bool = false;
-					var iter = new Array();
-					$.ajax({
-						type : "POST",
-						url : "ci_db_loadConfigItems.php",
-						success : function(data) {
-							for (var i = 0; i < data.length; i++) {
-								iter.push(data[i].name === node_position);
-							}
-							if ($.inArray(true, iter) == -1) {
-								console.log("unused name");
-								bool = true;
-							} else {
-								console.log("used name");
-								bool = false;
-							}
-							console.log(iter);
-						}
-					});
-
-					console.log(iter);
-					if (bool == false) {
-						alert("The name is already used!");
-						return false;
-					} else {
-						return true;
-					}
-				}
 			},
 			"data" : {
 				"type" : "POST",
@@ -242,7 +213,7 @@ $(document).ready(function() {
 			"items" : customMenu
 		},
 
-		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "wholerow"]
+		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]
 
 	}).on('select_node.jstree', function(e, data) {
 		getFullPath(data.node);

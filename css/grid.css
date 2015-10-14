@@ -3,12 +3,11 @@ img {
 	height: 100%;
 }
 
-#select-ci {
-	margin: 5px;
-}
-
 #racks {
 	border: 1px solid black;
+	position: relative;
+	left: 15px;
+	top: 190px;
 }
 
 #racks div {
@@ -16,18 +15,14 @@ img {
 	margin: 2px;
 }
 
+#select-ci {
+	margin: 5px;
+}
+
 #view_cabinet {
 	margin-left: auto;
 	margin-right: auto;
 	width: 10em
-}
-
-.div_controls {
-	text-align:center;
-}
-
-.second-row {
-	height: 25px;
 }
 
 .clickable-div {
@@ -38,6 +33,29 @@ img {
 .clickable-div:hover {
 	cursor: pointer;
 	opacity: 0.8;
+}
+
+.col-md-2 {
+	
+}
+
+.col-md-10 {
+	background-image: url("../img/server.jpg");
+	height: 500px;
+	position: absolute;
+}
+
+.controls {
+	margin: 1em auto;
+}
+
+.div_controls {
+	text-align: center;
+}
+
+.error {
+	color: red;
+	display: none;
 }
 
 .grid {
@@ -63,15 +81,10 @@ img {
 	background-color: #A5A5A5;
 }
 
-.controls {
-	margin: 1em auto;
-}
-
-.error {
-	color: red;
-	display: none;
-}
-
 .number-cells {
 	width: 65px;
+}
+
+.second-row {
+	height: 25px;
 }
