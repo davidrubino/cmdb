@@ -6,13 +6,14 @@ img {
 #racks {
 	border: 1px solid black;
 	position: relative;
-	left: 15px;
-	top: 190px;
+	left: 5px;
+	top: 110px;
+	width: 270px;
 }
 
 #racks div {
-	text-align: center;
 	margin: 2px;
+	text-align: center;
 }
 
 #select-ci {
@@ -35,14 +36,11 @@ img {
 	opacity: 0.8;
 }
 
-.col-md-2 {
-	
-}
-
 .col-md-10 {
 	background-image: url("../img/server.jpg");
+	background-repeat: no-repeat;
+	background-size: contain;
 	height: 500px;
-	position: absolute;
 }
 
 .controls {

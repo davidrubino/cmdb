@@ -703,9 +703,13 @@ function addContextMenu(el) {
 				});
 			},
 
+			'show_app' : function(t) {
+				setPosition(t.id);
+				window.open("app_admin.php", "littleWindow", "location=no,width=320,height=200", false);
+			},
+
 			'show_ci' : function(t) {
 				setPosition(t.id);
-				console.log(t.id);
 				$("#tree").jstree("deselect_all");
 				$('#tree-ci').jstree('select_node', 1000);
 				window.location.href = "ci_admin.php";
@@ -725,7 +729,9 @@ function addContextMenu(el) {
 							$("#" + getPosition()).css("height", "25px");
 							for (var i = 0; i < data.length; i++) {
 								for (var j = 0; j < data[i].height - 1; j++) {
-									$("#rack" + pos).after('<div class="clickable-div second-row" id="rack' + incr + '"></div>');
+									var el = $('<div class="clickable-div second-row" id="rack' + incr + '"></div>');
+									$("#rack" + pos).after(el);
+									addContextMenu(el);
 									pos++;
 									incr++;
 								}
@@ -739,6 +745,7 @@ function addContextMenu(el) {
 		onShowMenu : function(e, menu) {
 			resetSelect();
 			if ($(e.target)[0].innerText === '') {
+				$('#show_app', menu).remove();
 				$('#show_ci', menu).remove();
 				$('#rm_ci', menu).remove();
 			} else {

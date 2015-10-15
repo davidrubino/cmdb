@@ -205,6 +205,9 @@ if ($permission == 0) {
 					<li id="add_ci">
 						Add CI
 					</li>
+					<li id="show_app">
+						Show applications
+					</li>
 					<li id="show_ci">
 						Show CI
 					</li>
