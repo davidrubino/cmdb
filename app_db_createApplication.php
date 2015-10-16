@@ -30,11 +30,11 @@ function createApplication($conn) {
 		}
 
 		$sql_graph = 'insert into graph
-		(name, type, parent_id, application_id)
+		(name, type, parent_id, application_id, config_item_id)
 		values
 		("New node", "app", NULL, (select id from application
 			order by id desc 
-			limit 1))';
+			limit 1), NULL)';
 		$stmt_graph = $conn -> prepare($sql_graph);
 		$stmt_graph -> execute();
 		$row_graph = $stmt_graph -> fetchAll(PDO::FETCH_ASSOC);

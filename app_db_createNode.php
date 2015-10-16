@@ -9,9 +9,9 @@ function createFolder($conn) {
 	try {
 		$sql = "
 		insert into graph
-		(name, type, parent_id, application_id)
+		(name, type, parent_id, application_id, config_item_id)
 		values
-		('New Folder', 'folder', :parent_id, :application_id)
+		('New Folder', 'folder', :parent_id, :application_id, NULL)
 		";
 		$stmt = $conn -> prepare($sql);
 		$stmt -> execute(array(':parent_id' => $parent_id, 'application_id' => $application_id));

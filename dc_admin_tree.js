@@ -11,7 +11,7 @@ var lastClicked,
 
 /**
  * set the number of rows in the grid
- * @param {Object} nb_rows: the desired number of rows
+ * @param {Int} nb_rows: the desired number of rows
  */
 function setRows(nb_rows) {
 	rows = nb_rows;
@@ -19,7 +19,7 @@ function setRows(nb_rows) {
 
 /**
  * set the number of columns in the grid
- * @param {Object} nb_cols: the desired number of columns
+ * @param {Int} nb_cols: the desired number of columns
  */
 function setColumns(nb_cols) {
 	cols = nb_cols;
@@ -27,7 +27,7 @@ function setColumns(nb_cols) {
 
 /**
  * set the id of the selected node in the tree
- * @param {Object} id: the node id
+ * @param {Int} id: the node id
  */
 function setNodeId(id) {
 	node_id = id;
@@ -35,7 +35,7 @@ function setNodeId(id) {
 
 /**
  * set the number of the selected row in the grid
- * @param {Object} row: the row of the currently selected cell
+ * @param {Int} row: the row of the currently selected cell
  */
 function setSelectedRow(row) {
 	selected_row = row;
@@ -43,7 +43,7 @@ function setSelectedRow(row) {
 
 /**
  * set the number of the selected column in the grid
- * @param {Object} col: the column of the currently selected cell
+ * @param {Int} col: the column of the currently selected cell
  */
 function setSelectedCol(col) {
 	selected_col = col;
@@ -51,7 +51,7 @@ function setSelectedCol(col) {
 
 /**
  * set the various properties of the selected tile
- * @param {Object} prop: an object including all the properties
+ * @param {Object} prop: an object representing all the properties of the tile
  * 	id: the tile id
  * 	x: the x coordinate of the tile
  * 	y: the y coordinate of the tile
@@ -67,7 +67,7 @@ function setTileProperties(prop) {
 
 /**
  * set the position of a server in the cabinet view
- * @param {Object} p: the position of the server (int)
+ * @param {Int} p: the position of the server (int)
  */
 function setPosition(p) {
 	position = p;
@@ -75,7 +75,7 @@ function setPosition(p) {
 
 /**
  * set the height of a cabinet
- * @param {Object} h: the height of the cabinet (int)
+ * @param {Int} h: the height of the cabinet (int)
  */
 function setHeight(h) {
 	height = h;
@@ -138,18 +138,18 @@ function getSelectedCol() {
 }
 
 /**
- * return the x value of the selected tile in the grid
- * @param {Object} x: the html x value of the tile
- * @param {Object} dim: the dimension of the tile
+ * return the x value for the selected tile in the grid
+ * @param {Int} x: the html x value of the tile
+ * @param {Int} dim: the dimension of the tile
  */
 function getXValue(x, dim) {
 	return x * dim;
 }
 
 /**
- * return the y value f the selected tile in the grid
- * @param {Object} y: the html y value of the tile
- * @param {Object} dim: the dimension of the tile
+ * return the y value for the selected tile in the grid
+ * @param {Int} y: the html y value of the tile
+ * @param {Int} dim: the dimension of the tile
  */
 function getYValue(y, dim) {
 	return y * dim;
@@ -157,10 +157,10 @@ function getYValue(y, dim) {
 
 /**
  * returns the label of a tile
- * @param {Object} row: the row id of the tile
- * @param {Object} col: the column id of the tile
- * @param {Object} labelRows: the first id of the rows in the grid
- * @param {Object} labelCols: the first column id of the rows in the grid
+ * @param {Int} row: the row id of the tile
+ * @param {Int} col: the column id of the tile
+ * @param {String} labelRows: the first id of the rows in the grid
+ * @param {String} labelCols: the first column id of the rows in the grid
  */
 function getLabel(row, col, labelRows, labelCols) {
 	if ($.isNumeric(labelRows)) {
@@ -197,7 +197,7 @@ function isGrayedOut(el) {
 
 /**
  * return the previous char of the current letter
- * @param {Object} s: the current letter
+ * @param {String} s: the current letter
  */
 function previousChar(s) {
 	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
@@ -215,7 +215,7 @@ function previousChar(s) {
 
 /**
  * return the next char of the current letter
- * @param {Object} s: the current letter
+ * @param {String} s: the current letter
  */
 function nextChar(s) {
 	return s.replace(/([a-zA-Z])[^a-zA-Z]*$/, function(a) {
@@ -233,10 +233,10 @@ function nextChar(s) {
 
 /**
  * creates the clickable grid for a data center
- * @param {Object} rows: the number of rows in the grid
- * @param {Object} cols: the number of columns in the grid
- * @param {Object} labelRows: the label of the first row in the grid
- * @param {Object} labelCols: the label of the first column in the grid
+ * @param {Int} rows: the number of rows in the grid
+ * @param {Int} cols: the number of columns in the grid
+ * @param {String} labelRows: the label of the first row in the grid
+ * @param {String} labelCols: the label of the first column in the grid
  * @param {Object} callback: the callback function
  */
 function clickableGrid(rows, cols, labelRows, labelCols, callback) {
@@ -291,7 +291,7 @@ function clickableGrid(rows, cols, labelRows, labelCols, callback) {
 /**
  * return the equivalent letter for a specified number.
  * This function is used to create the column names with letters
- * @param {Object} n: the number to convert into a letter
+ * @param {Int} n: the number to convert into a letter
  */
 function colName(n) {
 	var ordA = 'a'.charCodeAt(0);
@@ -308,8 +308,8 @@ function colName(n) {
 
 /**
  * change the background color of a defined cell to gray
- * @param {Object} x: the cell abscissa
- * @param {Object} y: the cell ordinate
+ * @param {Int} x: the cell abscissa
+ * @param {Int} y: the cell ordinate
  */
 function grayOutCell(x, y) {
 	var table = document.getElementById("table");
@@ -320,9 +320,9 @@ function grayOutCell(x, y) {
 
 /**
  * add graphically a cabinet on the grid
- * @param {Object} x: the tile abscissa containing the cabinet
- * @param {Object} y: the tile ordinate containing the cabinet
- * @param {Object} color: the tile background color
+ * @param {Int} x: the tile abscissa containing the cabinet
+ * @param {Int} y: the tile ordinate containing the cabinet
+ * @param {String} color: the tile background color
  */
 function addCabinet(x, y, color) {
 	var table = document.getElementById("table");
@@ -334,7 +334,7 @@ function addCabinet(x, y, color) {
 
 /**
  * add another row to the grid of a data center
- * @param {Object} id: id of the data center in which the row will be added
+ * @param {Int} id: id of the data center in which the row will be added
  */
 function addRow(id) {
 	$.ajax({
@@ -349,7 +349,7 @@ function addRow(id) {
 
 /**
  * add another column to the grid of  data center
- * @param {Object} id: id of the data center in which the column will be added
+ * @param {Int} id: id of the data center in which the column will be added
  */
 function addColumn(id) {
 	$.ajax({
@@ -364,7 +364,7 @@ function addColumn(id) {
 
 /**
  * remove the last row from the grid of a data center
- * @param {Object} id: id of the data center
+ * @param {Int} id: id of the data center
  */
 function removeRow(id) {
 	$.ajax({
@@ -379,7 +379,7 @@ function removeRow(id) {
 
 /**
  * remove the last column from the grid of a data center
- * @param {Object} id: id of the data center
+ * @param {Int} id: id of the data center
  */
 function removeColumn(id) {
 	$.ajax({
@@ -411,14 +411,14 @@ function createDataCenter(data) {
 /**
  * creates a tile for a data center
  * The function is called only when another item (grayed cell, cabinet) is added on the tile
- * @param {Object} id: tile id
- * @param {Object} x: tile abscissa
- * @param {Object} y: tile ordinate
- * @param {Object} label: tile label using the row and column labels
- * @param {Object} grayed_out: 1 is the cell is grayed out, 0 otherwise
- * @param {Object} html_row: row on the html grid
- * @param {Object} html_col: column on the html grid
- * @param {Object} data_center_id: references the data center corresponding to the grid
+ * @param {Int} id: tile id
+ * @param {Int} x: tile abscissa
+ * @param {Int} y: tile ordinate
+ * @param {String} label: tile label using the row and column labels
+ * @param {Int} grayed_out: 1 is the cell is grayed out, 0 otherwise
+ * @param {Int} html_row: row on the html grid
+ * @param {Int} html_col: column on the html grid
+ * @param {Int} data_center_id: references the data center corresponding to the grid
  */
 function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center_id) {
 	$.ajax({
@@ -433,7 +433,7 @@ function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center
 
 /**
  * load a tile on the data center grid
- * @param {Object} id: id of the data center
+ * @param {Int} id: id of the data center
  */
 function loadTiles(id) {
 	$.ajax({
@@ -451,7 +451,7 @@ function loadTiles(id) {
 /**
  * create the cabinet in the database
  * @param {Object} data: data from the form sent by the user
- * @param {Object} tile_id: id of the tile including the cabinet
+ * @param {Int} tile_id: id of the tile including the cabinet
  */
 function createCabinet(data, tile_id) {
 	$.ajax({
@@ -470,7 +470,7 @@ function createCabinet(data, tile_id) {
 
 /**
  * load the cabinet from the database on the grid
- * @param {Object} id: id of the data center including the grid
+ * @param {Int} id: id of the data center including the grid
  */
 function loadCabinets(id) {
 	$.ajax({
@@ -497,8 +497,9 @@ function resetSelect() {
 
 /**
  * add the name of the server in the cabinet at a specific position
- * @param {Object} position: the reference of the cell in which the name will be added
- * @param {Object} name: the name of the server to be added
+ * @param {Int} position: the starting position for which the server will be added
+ * @param {String} name: the server name
+ * @param {Int} height: the server height
  */
 function addServer(position, name, height) {
 	var limit = position + height;
@@ -519,7 +520,7 @@ function resetFields() {
 
 /**
  * retrieve the color for a cabinet, and then change its background color
- * @param {Object} id: the id of the cabinet
+ * @param {Int} id: the id of the cabinet
  */
 function getCabinetColor(id) {
 	$.ajax({
@@ -583,7 +584,7 @@ function customMenu($node) {
 
 /**
  * build the grid of a data center from the database properties
- * @param {Object} id: the data center id related to the grid
+ * @param {Int} id: the data center id related to the grid
  */
 function buildGrid(id) {
 	var label_rows;
@@ -634,7 +635,7 @@ function buildGrid(id) {
 
 /**
  * return the list of servers for a specified cabinet
- * @param {Object} id: the cabinet id
+ * @param {Int} id: the cabinet id
  */
 function getServers(id) {
 	$.ajax({
@@ -652,7 +653,7 @@ function getServers(id) {
 /**
  * retrieve the height of the current cabinet, and then
  * insert the correct amount of racks into the cabinet
- * @param {Object} id: the id of the cabinet
+ * @param {Int} id: the id of the cabinet
  */
 function buildRacks(id) {
 	$.ajax({
@@ -705,7 +706,7 @@ function addContextMenu(el) {
 
 			'show_app' : function(t) {
 				setPosition(t.id);
-				window.open("popup.php", "littleWindow", "location=no,width=400,height=200", false);
+				popupWindow("popup.php", "littleWindow", 400, 200);
 			},
 
 			'show_ci' : function(t) {
@@ -754,6 +755,19 @@ function addContextMenu(el) {
 			return menu;
 		}
 	});
+}
+
+/**
+ * creates a popup window 
+ * @param {String} url: the url of the popup
+ * @param {String} title: the title of the popup
+ * @param {Int} w: the width of the popup
+ * @param {Int} h: the height of the popup
+ */
+function popupWindow(url, title, w, h) {
+	var left = (screen.width / 2) - (w / 2);
+	var top = (screen.height / 2) - (h / 2);
+	return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 }
 
 $(function() {

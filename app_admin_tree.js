@@ -171,7 +171,7 @@ $(function() {
 		}
 
 	}).on('select_node.jstree', function(e, data) {
-		application_id = data.node.id;
+		setApplicationId(data.node.id);
 		$('.cat1').hide();
 		$('.span-cfg').hide();
 
@@ -181,12 +181,12 @@ $(function() {
 			$.ajax({
 				type : "POST",
 				url : "app_db_createGraph.php",
-				data : "application_id=" + application_id,
+				data : "application_id=" + getApplicationId(),
 				success : function(data) {
 					setContainer();
 					setOptions();
 					setGraph(data);
-					resetNodeId();
+					setNodeId(-1);
 					setupNetwork();
 				}
 			});
@@ -235,10 +235,194 @@ var container,
     size,
     network;
 
+/**
+ * adds the selected configuration item to the graph at the selected position
+ * @param {String} value: the name of the configuration item (name of the node)
+ * @param {Int} parent_id: the id of the parent node
+ * @param {Int} app_id: the id of the application
+ * @param {config_item_id}: the id of the configuration item inserted in the graph
+ */
+function addConfigItem(value, parent_id, app_id, config_item_id) {
+	$.ajax({
+		type : "POST",
+		url : "app_db_addConfigItems.php",
+		data : "value=" + value + "&parent_id=" + parent_id + "&application_id=" + app_id + "&config_item_id=" + config_item_id,
+		success : function() {
+			$('#mynetwork').load('#mynetwork');
+		}
+	});
+}
+
+/**
+ * adds a folder in the graph after the selected node
+ */
+function addFolder() {
+	if (getNodeId() != -1) {
+		if (getGroup(getNodeId()) != "config_item") {
+			$.ajax({
+				type : "POST",
+				url : "app_db_createNode.php",
+				data : "parent_id=" + getNodeId() + "&application_id=" + getApplicationId(),
+				success : function() {
+					$('#mynetwork').load('#mynetwork');
+				}
+			});
+		} else {
+			alert("A configuration item cannot be a parent node!");
+		}
+	} else {
+		alert("Please select a parent node!");
+	}
+}
+
+/**
+ * returns the id of the selected application in the tree
+ */
+function getApplicationId() {
+	return application_id;
+}
+
+/**
+ * returns the group of the selected node. There are 3 possible groups: app, folder, config_item
+ * @param {Int} id: the id of the node
+ */
+function getGroup(id) {
+	for ( i = 0; i < g.nodes.length; i++) {
+		if (g.nodes[i].id == id) {
+			return g.nodes[i].group;
+		}
+	}
+}
+
+/**
+ * returns the id of the selected node in the graph
+ */
+function getNodeId() {
+	return node_id;
+}
+
+/**
+ * loads the configuration items available on the page for potential insertion in the graph
+ */
+function loadConfigItem() {
+	if (getNodeId() != -1) {
+		if (getGroup(getNodeId()) != "config_item") {
+			$.ajax({
+				type : "POST",
+				url : "app_db_loadConfigItems.php",
+				success : function(data) {
+					var items = new Array();
+					for (var i = 0; i < data.length; i++) {
+						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value, getNodeId(), getApplicationId(),' + data[i].id + ')" value="' + data[i].name + '">');
+					}
+					$(".span-cfg").html(items);
+					$(".cat1").hide();
+					$(".span-cfg").show();
+				}
+			});
+		} else {
+			alert("A configuration item cannot be a parent node!");
+		}
+	} else {
+		alert("Please select a parent node!");
+	}
+}
+
+/**
+ * removes the selected node from the graph
+ */
+function removeItem() {
+	if (getNodeId() != -1) {
+		if (size < 2) {
+			if (confirm("Are you sure you want to delete this node?")) {
+				$.ajax({
+					type : "POST",
+					url : "app_db_deleteItem.php",
+					data : "id=" + getNodeId(),
+					success : function() {
+						$('#mynetwork').load('#mynetwork');
+					}
+				});
+			}
+		} else {
+			alert("Folder not empty! Please delete all children first!");
+		}
+	} else {
+		alert("Please select an item to remove!");
+	}
+}
+
+/**
+ * renames the selected folder in the graph
+ */
+function renameFolder() {
+	if (getNodeId() != -1) {
+		if (getGroup(getNodeId()) == "folder") {
+			$('.span-cfg').hide();
+			$('.cat1').show();
+			$(".form-horizontal").on('submit', function(event) {
+				event.preventDefault();
+				data = $(this).serialize();
+
+				if (data != "txt-name=") {
+					$.ajax({
+						type : "POST",
+						url : "app_db_renameNode.php",
+						data : data + "&id=" + getNodeId(),
+						success : function() {
+							$('#mynetwork').load('#mynetwork');
+							$('.cat1').hide();
+						}
+					});
+				} else {
+					alert("Please enter a valid name!");
+				}
+			});
+		} else {
+			alert("Only folders can be renamed!");
+		}
+	} else {
+		alert("Please select an item to rename!");
+	}
+}
+
+/**
+ * sets the id of the application currently selected in the tree
+ * @param {Id} id: the id of the application
+ */
+function setApplicationId(id) {
+	application_id = id;
+}
+
+/**
+ * sets the HTML element containing the graph
+ */
 function setContainer() {
 	container = document.getElementById('mynetwork');
 }
 
+/**
+ * creates the graph according to the JSON data returned from the server
+ * @param {Object} data: the data from the server
+ */
+function setGraph(data) {
+	g = {
+		nodes : data.nodes,
+		edges : data.edges
+	};
+}
+
+/**
+ * sets the id of the selected node in the graph
+ * @aparam {Int} id: the id of the node
+ */
+function setNodeId(id) {
+	node_id = id;
+}
+
+/**
+ * set the different options for the graph including groups, icons, and layout
+ */
 function setOptions() {
 	options = {
 		groups : {
@@ -278,144 +462,22 @@ function setOptions() {
 	};
 }
 
-function setGraph(data) {
-	g = {
-		nodes : data.nodes,
-		edges : data.edges
-	};
-}
-
-function getGroup(id) {
-	for ( i = 0; i < g.nodes.length; i++) {
-		if (g.nodes[i].id == id) {
-			return g.nodes[i].group;
-		}
-	}
-}
-
-function resetNodeId() {
-	node_id = -1;
-}
-
-function addFolder() {
-	if (node_id != -1) {
-		if (getGroup(node_id) != "config_item") {
-			$.ajax({
-				type : "POST",
-				url : "app_db_createNode.php",
-				data : "parent_id=" + node_id + "&application_id=" + application_id,
-				success : function() {
-					$('#mynetwork').load('#mynetwork');
-				}
-			});
-		} else {
-			alert("A configuration item cannot be a parent node!");
-		}
-	} else {
-		alert("Please select a parent node!");
-	}
-}
-
-function loadConfigItem() {
-	if (node_id != -1) {
-		if (getGroup(node_id) != "config_item") {
-			$.ajax({
-				type : "POST",
-				url : "app_db_loadConfigItems.php",
-				success : function(data) {
-					var items = new Array();
-					for (var i = 0; i < data.length; i++) {
-						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value)" value="' + data[i].name + '">');
-					}
-					$(".span-cfg").html(items);
-					$(".cat1").hide();
-					$(".span-cfg").show();
-				}
-			});
-		} else {
-			alert("A configuration item cannot be a parent node!");
-		}
-	} else {
-		alert("Please select a parent node!");
-	}
-}
-
-function addConfigItem(value) {
-	$.ajax({
-		type : "POST",
-		url : "app_db_addConfigItems.php",
-		data : "value=" + value + "&parent_id=" + node_id + "&application_id=" + application_id,
-		success : function() {
-			$('#mynetwork').load('#mynetwork');
-		}
-	});
-}
-
-function renameFolder() {
-	if (node_id != -1) {
-		if (getGroup(node_id) == "folder") {
-			$('.span-cfg').hide();
-			$('.cat1').show();
-			$(".form-horizontal").on('submit', function(event) {
-				event.preventDefault();
-				data = $(this).serialize();
-
-				if (data != "txt-name=") {
-					$.ajax({
-						type : "POST",
-						url : "app_db_renameNode.php",
-						data : data + "&id=" + node_id,
-						success : function() {
-							$('#mynetwork').load('#mynetwork');
-							$('.cat1').hide();
-						}
-					});
-				} else {
-					alert("Please enter a valid name!");
-				}
-			});
-		} else {
-			alert("Only folders can be renamed!");
-		}
-	} else {
-		alert("Please select an item to rename!");
-	}
-}
-
-function removeItem() {
-	if (node_id != -1) {
-		if (size < 2) {
-			if (confirm("Are you sure you want to delete this node?")) {
-				$.ajax({
-					type : "POST",
-					url : "app_db_deleteItem.php",
-					data : "id=" + node_id,
-					success : function() {
-						$('#mynetwork').load('#mynetwork');
-					}
-				});
-			}
-		} else {
-			alert("Folder not empty! Please delete all children first!");
-		}
-	} else {
-		alert("Please select an item to remove!");
-	}
-}
-
+/**
+ * creates the graph network using the JQuery plugin
+ */
 function setupNetwork() {
 	network = new vis.Network(container, g, options);
 	network.fit();
 
 	network.on("selectNode", function(params) {
-		node_id = params.nodes[0];
+		setNodeId(params.nodes[0]);
 		size = params.edges.length;
 		$('.cat1').hide();
 		$('.span-cfg').hide();
 	});
 
 	network.on("deselectNode", function(params) {
-		resetNodeId();
+		setNodeId(-1);
 		$('.cat1').hide();
 		$('.span-cfg').hide();
 	});
