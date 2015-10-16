@@ -705,7 +705,7 @@ function addContextMenu(el) {
 
 			'show_app' : function(t) {
 				setPosition(t.id);
-				window.open("app_admin.php", "littleWindow", "location=no,width=320,height=200", false);
+				window.open("popup.php", "littleWindow", "location=no,width=400,height=200", false);
 			},
 
 			'show_ci' : function(t) {
