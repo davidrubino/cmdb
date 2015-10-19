@@ -706,7 +706,19 @@ function addContextMenu(el) {
 
 			'show_app' : function(t) {
 				setPosition(t.id);
+				console.log(getPosition());
+				var ci_name = document.getElementById(getPosition()).innerHTML;
+				console.log(ci_name);
 				popupWindow("popup.php", "littleWindow", 400, 200);
+				
+				$.ajax({
+					type : "POST",
+					url : "dc_db_getPopupContent.php",
+					data : "name=" + ci_name,
+					success : function(data) {
+						console.log(data);
+					}
+				});
 			},
 
 			'show_ci' : function(t) {
@@ -758,7 +770,7 @@ function addContextMenu(el) {
 }
 
 /**
- * creates a popup window 
+ * creates a popup window
  * @param {String} url: the url of the popup
  * @param {String} title: the title of the popup
  * @param {Int} w: the width of the popup

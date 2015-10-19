@@ -3,24 +3,37 @@ var global_id,
     global_grandparent_id,
     current_name;
 
-function initializeTabs() {
-	$('#tabs').tabs();
+/**
+ * reurns the id of the selected node in the tree
+ */
+function getCurrentId() {
+	return global_id;
 }
 
+/**
+ * returns the current selected tab
+ */
 function getCurrentTab() {
 	var active = $('#tabs').tabs('option', 'active');
 	var tab = $("#tabs ul>li a").eq(active).attr("href");
 	return tab.substring(1);
 }
 
-function getCurrentId() {
-	return global_id;
-}
-
+/**
+ * prints the path of the selected node from the root node
+ * @param {Int} id: the id of the selected node
+ */
 function getFullPath(node) {
 	$('.name').html($("#tree").jstree(true).get_path(node, ":"));
 }
 
+/**
+ * loads the properties of the selected class for the selected tab
+ * @param {String} tab: the tab name
+ * @param {Int} id: the id of the selected node in the tree
+ * @param {String} table: the class name of the HTML table in which the results will be displayed
+ * @param {String} classTitle: the class name of the HTML field reserved for the title of the table
+ */
 function getProperties(tab, id, table, classTitle) {
 	$.ajax({
 		type : "POST",
@@ -32,8 +45,13 @@ function getProperties(tab, id, table, classTitle) {
 			for (var i = 0; i < data.length; i++) {
 				for (var j = 0; j < data[i].content.length; j++) {
 					htmlResult.push('<tr><td>' + data[i].content[j].name + '</td><td>' + data[i].content[j].value_type + '</td></tr>');
+				}
+				for (var j = 0; j < data[i].title.length; j++) {
 					title.push(data[i].title[j].name);
 				}
+			}
+			if (htmlResult.length == 0) {
+				htmlResult.push('<div class="alert alert-info" role="alert">There are no properties for this category.</div>');
 			}
 			$(table).html(htmlResult);
 			$(classTitle).html(title);
@@ -41,6 +59,11 @@ function getProperties(tab, id, table, classTitle) {
 	});
 }
 
+/**
+ * get the property values for the selected configuration item in the selected tab
+ * @param {Int} id: the node id
+ * @param {String} tab: the tab name
+ */
 function getValues(id, tab) {
 	$.ajax({
 		type : "POST",
@@ -55,9 +78,19 @@ function getValues(id, tab) {
 					}
 				}
 			}
-			$('.value-form').html(htmlContainer);
+			if (htmlContainer.length == 0) {
+				htmlContainer.push('<div class="alert alert-info" role="alert">There are no properties for this category.</div>');
+			}
+			$('.values').html(htmlContainer);
 		}
 	});
+}
+
+/**
+ * sets the different category tabs: general, financial, labor
+ */
+function initializeTabs() {
+	$('#tabs').tabs();
 }
 
 

@@ -58,59 +58,47 @@ if ($permission == 1) {
 				</ul>
 
 				<div id="general">
-					<div id="fileData_general">
-						<form class="value-form" role="form" method="post"></form>
-					</div>
+					<div class="values" id="fileData_general"></div>
 
-					<div id="folderData_general">
-						<form class="property-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title property-class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table selectable property-table"></table>
-								</div>
+					<div class="class-panel" id="folderData_general">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title property-class-title"></h3>
 							</div>
-						</form>
+							<div class="table-responsive">
+								<table class="table selectable property-table"></table>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<div id="financial">
-					<div id="fileData_financial">
-						<form class="value-form" role="form" method="post"></form>
-					</div>
+					<div class="values" id="fileData_financial"></div>
 
-					<div id="folderData_financial">
-						<form class="property-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title property-class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table selectable property-table"></table>
-								</div>
+					<div class="class-panel" id="folderData_financial">
+						<div class="panel panel-primary class-panel">
+							<div class="panel-heading">
+								<h3 class="panel-title property-class-title"></h3>
 							</div>
-						</form>
+							<div class="table-responsive">
+								<table class="table selectable property-table"></table>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<div id="labor">
-					<div id="fileData_labor">
-						<form class="value-form" role="form" method="post"></form>
-					</div>
+					<div class="values" id="fileData_labor"></div>
 
-					<div id="folderData_labor">
-						<form class="property-form" role="form" method="post">
-							<div class="panel panel-primary class-panel">
-								<div class="panel-heading">
-									<h3 class="panel-title property-class-title"></h3>
-								</div>
-								<div class="table-responsive">
-									<table class="table selectable property-table"></table>
-								</div>
+					<div class="class-panel" id="folderData_labor">
+						<div class="panel panel-primary class-panel">
+							<div class="panel-heading">
+								<h3 class="panel-title property-class-title"></h3>
 							</div>
-						</form>
+							<div class="table-responsive">
+								<table class="table selectable property-table"></table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

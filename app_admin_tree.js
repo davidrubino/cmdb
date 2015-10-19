@@ -388,7 +388,7 @@ function renameFolder() {
 
 /**
  * sets the id of the application currently selected in the tree
- * @param {Id} id: the id of the application
+ * @param {Int} id: the id of the application
  */
 function setApplicationId(id) {
 	application_id = id;
