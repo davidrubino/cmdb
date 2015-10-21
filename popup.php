@@ -23,7 +23,7 @@ if (!$user -> is_loggedin()) {
 
 	<body>
 		<div class="container">
-			<div class="col-md-12">
+			<div class="col-md-12" id="links">
 				<p>
 					<img src="img/folder-icon.png"> Root <img src="img/folder-icon.png"> HR <img src="img/folder-icon.png"> PayRoll <img src="img/file-icon.png"><a href="javascript:loadPage('app_admin.php')">RollPayer</a>
 				</p>

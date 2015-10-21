@@ -6,6 +6,16 @@ header('Content-Type: application/json');
 
 $array_parents = array();
 
+function getArrayParents() {
+	global $array_parents;
+	return $array_parents;
+}
+
+function setArrayParents($a) {
+	global $array_parents;
+	$array_parents = $a;
+}
+
 function getParents($conn, $id) {
 	global $array_parents;
 
@@ -34,8 +44,7 @@ function getParents($conn, $id) {
 }
 
 function getPopUpContent($conn) {
-	//$name = $_POST['name'];
-	$name = 'lazy';
+	$name = $_POST['name'];
 
 	try {
 		$iterate = array();
@@ -54,6 +63,7 @@ function getPopUpContent($conn) {
 		foreach ($row as $i) {
 			$iterate = getParents($conn, $i['folder_id']);
 			array_push($app, ['parents' => $iterate, 'application' => $i['name']]);
+			setArrayParents(array());
 		}
 		
 		echo json_encode($app);

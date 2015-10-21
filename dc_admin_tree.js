@@ -676,6 +676,10 @@ function buildRacks(id) {
 	});
 }
 
+function loadPage(dapage) {
+	opener.location.href = dapage;
+}
+
 /**
  * create the context menu for the racks and bind them with to a function
  * @param {Object} el: the element on which the context menu will be bound
@@ -706,19 +710,27 @@ function addContextMenu(el) {
 
 			'show_app' : function(t) {
 				setPosition(t.id);
-				console.log(getPosition());
 				var ci_name = document.getElementById(getPosition()).innerHTML;
-				console.log(ci_name);
-				popupWindow("popup.php", "littleWindow", 400, 200);
-				
 				$.ajax({
 					type : "POST",
 					url : "dc_db_getPopupContent.php",
 					data : "name=" + ci_name,
 					success : function(data) {
-						console.log(data);
+						var popupWin = popupWindow("popup.php", "littleWindow", 400, 200);
+						var chain = "";
+						for (var i = 0; i < data.length; i++) {
+							chain += '<p>';
+							for (var j = data[i].parents.length - 1; j >= 0; j--) {
+								chain += '<img src="img/folder-icon.png">' + data[i].parents[j].name;
+							}
+							chain += '<img src="img/file-icon.png"><a href="loadPage(&quot;app_admin.php&quot;)">' + data[i].application + '</a>';
+							chain += '</p>';
+							popupWin.document.writeln(chain);
+							chain = "";
+						}
 					}
 				});
+
 			},
 
 			'show_ci' : function(t) {
