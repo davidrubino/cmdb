@@ -16,27 +16,26 @@ if (!$user -> is_loggedin()) {
 
 		<title>Show applications</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/popup.css" rel="stylesheet">
+		<link href="jquery/jquery-ui.min.css" rel="stylesheet">
 
 	</head>
 
 	<body>
-		<div class="container">
-			<div class="col-md-12" id="links">
-				<p>
-					<img src="img/folder-icon.png"> Root <img src="img/folder-icon.png"> HR <img src="img/folder-icon.png"> PayRoll <img src="img/file-icon.png"><a href="javascript:loadPage('app_admin.php')">RollPayer</a>
-				</p>
-				<p>
-					<img src="img/folder-icon.png"> Root <img src="img/folder-icon.png"> HR <img src="img/folder-icon.png"> PayRoll <img src="img/file-icon.png"><a href="javascript:loadPage('app_admin.php')">MyPayRoll</a>
-				</p>
-			</div>
+		<div id="dialog" title="Applications">
+			I'm in a dialog
 		</div>
 
+		<script src="jquery/jquery-1.11.3.js"></script>
+		<script src="jquery/jquery-ui.js"></script>
+		
 		<script type="text/javascript">
 			function loadPage(dapage) {
 				opener.location.href = dapage;
 			}
+
+			$(document).ready(function() {
+				$("#dialog").dialog();
+			});
 		</script>
 
 	</body>

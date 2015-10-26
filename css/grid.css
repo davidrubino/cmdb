@@ -83,6 +83,12 @@ img {
 	width: 65px;
 }
 
+.pop-img {
+	padding: 5px;
+	height: 25px;
+	width: 25px;
+}
+
 .second-row {
 	height: 25px;
 }

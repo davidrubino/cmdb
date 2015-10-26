@@ -676,10 +676,6 @@ function buildRacks(id) {
 	});
 }
 
-function loadPage(dapage) {
-	opener.location.href = dapage;
-}
-
 /**
  * create the context menu for the racks and bind them with to a function
  * @param {Object} el: the element on which the context menu will be bound
@@ -716,27 +712,24 @@ function addContextMenu(el) {
 					url : "dc_db_getPopupContent.php",
 					data : "name=" + ci_name,
 					success : function(data) {
-						var popupWin = popupWindow("popup.php", "littleWindow", 400, 200);
 						var chain = "";
 						for (var i = 0; i < data.length; i++) {
-							chain += '<p>';
 							for (var j = data[i].parents.length - 1; j >= 0; j--) {
-								chain += '<img src="img/folder-icon.png">' + data[i].parents[j].name;
+								chain += '<img class="pop-img" src="img/folder-icon.png">' + data[i].parents[j].name;
 							}
-							chain += '<img src="img/file-icon.png"><a href="loadPage(&quot;app_admin.php&quot;)">' + data[i].application + '</a>';
-							chain += '</p>';
-							popupWin.document.writeln(chain);
-							chain = "";
+							chain += '<img class="pop-img" src="img/file-icon.png"><a href="app_admin.php">' + data[i].application + '</a>';
+							chain += '<br>';
 						}
+						$("#dialog").html(chain);
+						$("#dialog").dialog("open");
 					}
 				});
-
 			},
 
 			'show_ci' : function(t) {
 				setPosition(t.id);
 				$("#tree").jstree("deselect_all");
-				$('#tree-ci').jstree('select_node', 1000);
+				$('#tree').jstree('select_node', 3);
 				window.location.href = "ci_admin.php";
 			},
 
@@ -796,6 +789,11 @@ function popupWindow(url, title, w, h) {
 
 $(function() {
 
+	$("#dialog").dialog({
+		autoOpen : false,
+		width : 500
+	});
+
 	$("#tree").jstree({
 
 		"contextmenu" : {
@@ -827,6 +825,11 @@ $(function() {
 				"icon" : "img/file-icon.png",
 				"valid_children" : []
 			}
+		},
+
+		"ui" : {
+			"select_limit" : 1,
+			"selected_parent_close" : false
 		},
 
 		"plugins" : ["contextmenu", "json_data", "massload", "search", "sort", "state", "themes", "types", "ui", "unique", "wholerow"]

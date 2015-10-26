@@ -30,6 +30,7 @@ if ($permission == 0) {
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/grid.css" rel="stylesheet">
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
+		<link href="jquery/jquery-ui.min.css" rel="stylesheet">
 
 	</head>
 
@@ -130,7 +131,7 @@ if ($permission == 0) {
 							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
 						</button>
 					</div>
-					
+
 					<div class="col-md-10">
 						<div id="racks"></div>
 					</div>
@@ -217,7 +218,10 @@ if ($permission == 0) {
 				</ul>
 			</div>
 
+			<div id="dialog" title="Applications"></div>
+
 			<script src="jquery/jquery-1.11.3.js"></script>
+			<script src="jquery/jquery-ui.js"></script>
 			<script src="bootstrap/js/bootstrap.min.js"></script>
 			<script src="dist/jstree.min.js"></script>
 			<script src="context-menu/jquery.contextmenu.r2.js"></script>
