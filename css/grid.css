@@ -3,17 +3,24 @@ img {
 	height: 100%;
 }
 
+#img-container {
+	padding-left: 10px;
+	width: 170px;
+}
+
 #racks {
 	border: 1px solid black;
-	position: relative;
-	left: 5px;
-	top: 110px;
-	width: 270px;
+	width: 310px;
 }
 
 #racks div {
 	margin: 2px;
 	text-align: center;
+}
+
+#racks-container {
+	padding-right: 0px;
+	width: 315px;
 }
 
 #select-ci {
@@ -34,13 +41,6 @@ img {
 .clickable-div:hover {
 	cursor: pointer;
 	opacity: 0.8;
-}
-
-.col-md-10 {
-	background-image: url("../img/server.jpg");
-	background-repeat: no-repeat;
-	background-size: contain;
-	height: 500px;
 }
 
 .controls {

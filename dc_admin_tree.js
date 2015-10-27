@@ -672,6 +672,8 @@ function buildRacks(id) {
 				getServers(data[j].id);
 				$("#racks").html(htmlResult);
 			}
+			var h = $("#racks-container").css("height");
+			$("#img-container").height(h);
 		}
 	});
 }
