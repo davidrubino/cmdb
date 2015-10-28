@@ -776,19 +776,6 @@ function addContextMenu(el) {
 	});
 }
 
-/**
- * creates a popup window
- * @param {String} url: the url of the popup
- * @param {String} title: the title of the popup
- * @param {Int} w: the width of the popup
- * @param {Int} h: the height of the popup
- */
-function popupWindow(url, title, w, h) {
-	var left = (screen.width / 2) - (w / 2);
-	var top = (screen.height / 2) - (h / 2);
-	return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-}
-
 $(function() {
 
 	$("#dialog").dialog({
