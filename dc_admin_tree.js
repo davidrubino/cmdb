@@ -715,12 +715,16 @@ function addContextMenu(el) {
 					data : "name=" + ci_name,
 					success : function(data) {
 						var chain = "";
-						for (var i = 0; i < data.length; i++) {
-							for (var j = data[i].parents.length - 1; j >= 0; j--) {
-								chain += '<img class="pop-img" src="img/folder-icon.png">' + data[i].parents[j].name;
+						if (data.length != 0) {
+							for (var i = 0; i < data.length; i++) {
+								for (var j = data[i].parents.length - 1; j >= 0; j--) {
+									chain += '<img class="pop-img" src="img/folder-icon.png">' + data[i].parents[j].name;
+								}
+								chain += '<img class="pop-img" src="img/file-icon.png"><a href="app_admin.php">' + data[i].application + '</a>';
+								chain += '<br>';
 							}
-							chain += '<img class="pop-img" src="img/file-icon.png"><a href="app_admin.php">' + data[i].application + '</a>';
-							chain += '<br>';
+						} else {
+							chain = "There is no application using this configuration item.";
 						}
 						$("#dialog").html(chain);
 						$("#dialog").dialog("open");
