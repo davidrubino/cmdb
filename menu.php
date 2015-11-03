@@ -24,22 +24,9 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 				<li>
 					<a href="dc.php">Data Center</a>
 				</li>
-				<li>
-					<a href="hr.php">Human Resources</a>
-				</li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<form class="navbar-form" role="search">
-		                <div class="input-group">
-		                    <input type="text" class="form-control" placeholder="Search" name="q">
-		                    <div class="input-group-btn">
-		                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-		                    </div>
-		                </div>
-	            	</form>
-				</li>
 				<li class="dropdown">
 					<a data-toggle="dropdown" href="#">Settings
           				<span class="caret"></span>
@@ -48,11 +35,6 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 						<li>
 							<a href="accountInfo.php">Account information</a>
 						</li>
-						<li>
-							<a href="#">Open configuration</a>
-						</li>
-						<li>
-							<a href="#">Snapshot database</a>
 						<li>
 							<a href="logout.php?logout=true">Log Out</a>
 						</li>
