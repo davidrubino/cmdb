@@ -7,7 +7,6 @@ $user_id = $_SESSION['user_session'];
 $stmt = $DB_con -> prepare("SELECT * FROM user WHERE user_id=:user_id");
 $stmt -> execute(array(":user_id" => $user_id));
 $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +18,8 @@ $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 
 		<title>Home</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		
 		<link href="css/menu.css" rel="stylesheet">
 
 	</head>
@@ -32,12 +32,15 @@ $userRow = $stmt -> fetch(PDO::FETCH_ASSOC);
 
 		<div class="container">
 			<div class="jumbotron">
-				<h1>Welcome, <?php print($userRow['user_fname']); ?>!</h1>
+				<h1>Welcome, <?php print($userRow['user_fname']); ?>!
+				</h1>
 			</div>
 		</div>
 
-		<script src="jquery/jquery-1.11.3.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+		
 		<script src="menu.js"></script>
 
 	</body>

@@ -248,7 +248,7 @@ function addConfigItem(value, parent_id, app_id, config_item_id) {
 		url : "app_db_addConfigItems.php",
 		data : "value=" + value + "&parent_id=" + parent_id + "&application_id=" + app_id + "&config_item_id=" + config_item_id,
 		success : function() {
-			$('#mynetwork').load('#mynetwork');
+			location.reload();
 		}
 	});
 }
@@ -264,7 +264,7 @@ function addFolder() {
 				url : "app_db_createNode.php",
 				data : "parent_id=" + getNodeId() + "&application_id=" + getApplicationId(),
 				success : function() {
-					$('#mynetwork').load('#mynetwork');
+					location.reload();
 				}
 			});
 		} else {
@@ -340,7 +340,7 @@ function removeItem() {
 					url : "app_db_deleteItem.php",
 					data : "id=" + getNodeId(),
 					success : function() {
-						$('#mynetwork').load('#mynetwork');
+						location.reload();
 					}
 				});
 			}
@@ -370,7 +370,7 @@ function renameFolder() {
 						url : "app_db_renameNode.php",
 						data : data + "&id=" + getNodeId(),
 						success : function() {
-							$('#mynetwork').load('#mynetwork');
+							location.reload();
 							$('.cat1').hide();
 						}
 					});

@@ -26,12 +26,13 @@ if ($permission == 0) {
 
 		<title>Applications</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.9.0/vis.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
-		<link href="dist-vis/vis.css" rel="stylesheet">
 		<link href="css/graph.css" rel="stylesheet">
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" >
 
 	</head>
 
@@ -63,12 +64,14 @@ if ($permission == 0) {
 			</div>
 		</div>
 
-		<script src="jquery/jquery-1.11.3.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.9.0/vis.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 		<script src="dist/jstree.min.js"></script>
 		<script src="app_admin_tree.js"></script>
 		<script src="menu.js"></script>
-		<script src="dist-vis/vis.js"></script>
 
 	</body>
 </html>

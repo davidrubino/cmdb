@@ -26,11 +26,12 @@ if ($permission == 1) {
 
 		<title>Data Center</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/grid.css" rel="stylesheet">
 		<link href="dist/themes/default/style.min.css" rel="stylesheet">
-		<link href="jquery/jquery-ui.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css">
 
 	</head>
 
@@ -95,11 +96,13 @@ if ($permission == 1) {
 
 			<div id="dialog" title="Applications"></div>
 
-			<script src="jquery/jquery-1.11.3.js"></script>
-			<script src="jquery/jquery-ui.js"></script>
-			<script src="bootstrap/js/bootstrap.min.js"></script>
+			<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+			<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+			<script src="http://www.trendskitchens.co.nz/jquery/contextmenu/jquery.contextmenu.r2.packed.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+			
 			<script src="dist/jstree.min.js"></script>
-			<script src="context-menu/jquery.contextmenu.r2.js"></script>
 			<script src="dc_tree.js"></script>
 			<script src="menu.js"></script>
 	</body>

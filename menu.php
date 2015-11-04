@@ -13,7 +13,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div id="navbar" class="navbar-collapse collapse" role="navigation">
 			<ul class="nav navbar-nav" id="#menu">
 				<li>
-					<a href="home.php">Home</a>
+					<a href="index.php">Home</a>
 				</li>
 				<li>
 					<a href="ci.php">Configuration Items</a>

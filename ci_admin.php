@@ -27,12 +27,14 @@ if ($permission == 0) {
 
 		<title>Configuration Items</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/menu.css" rel="stylesheet">
-		<link href="css/ci.css" rel="stylesheet">
-		<link href="dist/themes/default/style.min.css" rel="stylesheet">
-		<link href="jquery/jquery-ui.min.css" rel="stylesheet">
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css">
+		
+		<link rel="stylesheet" href="css/menu.css">
+		<link rel="stylesheet" href="css/ci.css">
+		<link rel="stylesheet" href="dist/themes/default/style.min.css">
+		
 	</head>
 
 	<body>
@@ -152,9 +154,11 @@ if ($permission == 0) {
 			</div>
 		</div>
 
-		<script src="jquery/jquery-1.11.3.js"></script>
-		<script src="jquery/jquery-ui.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+		
 		<script src="dist/jstree.min.js"></script>
 		<script src="ci_admin_tree.js"></script>
 		<script src="menu.js"></script>

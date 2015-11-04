@@ -2,7 +2,7 @@
 require_once 'db_connect.php';
 
 if ($user -> is_loggedin() != "") {
-	$user -> redirect('home.php');
+	$user -> redirect('index.php');
 }
 
 if (isset($_POST['btn-login'])) {
@@ -11,7 +11,7 @@ if (isset($_POST['btn-login'])) {
 	$upass = $_POST['txt_password'];
 
 	if ($user -> login($uname, $umail, $upass)) {
-		$user -> redirect('home.php');
+		$user -> redirect('index.php');
 	} else {
 		$error = "Login and password do not match!";
 	}
@@ -27,7 +27,8 @@ if (isset($_POST['btn-login'])) {
 
 		<title>Login</title>
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
 		<link href="css/menu.css" rel="stylesheet">
 
 	</head>
@@ -94,8 +95,10 @@ if(isset($error))
 			</div>
 		</div>
 
-		<script src="jquery/jquery-1.11.3.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 		<script src="menu.js"></script>
 
 	</body>
