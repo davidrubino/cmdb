@@ -40,7 +40,7 @@ function createConfigItem($conn) {
 		$row2 = $stmt2 -> fetchAll(PDO::FETCH_ASSOC);
 
 		foreach ($row2 as $row) {
-			$sql3 = 'INSERT INTO Property_value
+			$sql3 = 'insert into property_value
 			(property_id, config_id, str_value, date_value, float_value)
 			VALUES
 			(:property_id, (select id from config_item
