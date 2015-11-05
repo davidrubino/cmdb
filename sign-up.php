@@ -3,7 +3,7 @@
 require_once 'db_connect.php';
 
 if ($user -> is_loggedin() != "") {
-	$user -> redirect('home.php');
+	$user -> redirect('index.php');
 }
 
 if (isset($_POST['btn-signup'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['btn-signup'])) {
 				$error[] = "Email already taken!";
 			} else {
 				if ($user -> register($fname, $lname, $uname, $umail, $upass, $isAdmin)) {
-					$user -> redirect('home.php');
+					$user -> redirect('index.php');
 				}
 			}
 		} catch(PDOException $e) {

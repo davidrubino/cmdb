@@ -5,17 +5,17 @@ include 'db_connect.php';
 function dropTables($conn) {
 	try {
 		$sql = "
-		DROP TABLE Graph;
-		DROP TABLE Application;
-		DROP TABLE Folder;
-		DROP TABLE Property_value;
-		DROP TABLE Map_class_property;
-		DROP TABLE Property;
-		DROP TABLE Config_item;
-		DROP TABLE Class;
-		DROP TABLE Cabinet;
-		DROP TABLE Tile;
-		DROP TABLE Data_center;
+		DROP TABLE graph;
+		DROP TABLE application;
+		DROP TABLE folder;
+		DROP TABLE property_value;
+		DROP TABLE map_class_property;
+		DROP TABLE property;
+		DROP TABLE config_item;
+		DROP TABLE class;
+		DROP TABLE cabinet;
+		DROP TABLE tile;
+		DROP TABLE data_center;
 		";
 		$conn -> exec($sql);
 		echo "Tables dropped successfully";
@@ -28,7 +28,7 @@ function dropTables($conn) {
 function createUser($conn) {
 	try {
 		$sql = "
-		CREATE TABLE User (
+		CREATE TABLE user (
 		user_id INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		user_name VARCHAR(25) NOT NULL , 
 		user_email VARCHAR(50) NOT NULL , 
@@ -51,7 +51,7 @@ function createUser($conn) {
 function createTables($conn) {
 	try {
 		$sql = "
-		CREATE TABLE Data_center (
+		CREATE TABLE data_center (
 		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255) NOT NULL,
 		count_rows int NOT NULL,
@@ -61,7 +61,7 @@ function createTables($conn) {
 		tile_dim int NOT NULL
 		);
 		
-		CREATE TABLE Tile (
+		CREATE TABLE tile (
 		id int NOT NULL PRIMARY KEY,
 		x int NOT NULL,
 		y int NOT NULL,
@@ -74,7 +74,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Cabinet (
+		CREATE TABLE cabinet (
 		id int NOT NULL PRIMARY KEY,
 		height int NOT NULL,
 		width int NOT NULL,
@@ -84,7 +84,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Class (
+		CREATE TABLE class (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255),
 		parent_id int,
@@ -92,7 +92,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Config_item (
+		CREATE TABLE config_item (
 		id int NOT NULL,
 		name varchar(255),
 		height int,
@@ -105,14 +105,14 @@ function createTables($conn) {
 		FOREIGN KEY (cabinet_id) REFERENCES Cabinet(id)
 		);
 		
-		CREATE TABLE Property (
+		CREATE TABLE property (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255),
 		value_type varchar(255),
 		tab varchar(255)
 		);
 		
-		CREATE TABLE Map_class_property (
+		CREATE TABLE map_class_property (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		class_id int,
 		prop_id int,
@@ -122,7 +122,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Property_value (
+		CREATE TABLE property_value (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		property_id int NOT NULL,
 		config_id int NOT NULL,
@@ -135,7 +135,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Folder (
+		CREATE TABLE folder (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255),
 		parent_id int,
@@ -143,7 +143,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Application (
+		CREATE TABLE application (
 		id int NOT NULL,
 		name varchar(255),
 		folder_id int,
@@ -152,7 +152,7 @@ function createTables($conn) {
 		ON DELETE CASCADE
 		);
 		
-		CREATE TABLE Graph (
+		CREATE TABLE graph (
 		id INT ( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		name varchar(255),
 		type varchar(255),
