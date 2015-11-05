@@ -45,12 +45,23 @@ if ($permission == 0) {
 		<div class="container">
 			<div class="col-md-4" id="tree"></div>
 			<div class="col-md-6" id="mynetwork" style="display:none"></div>
+
 			<div class="col-md-2" id="control-panel" style="display:none">
 				<input class="btn btn-large btn-primary i-graph" type="button" id="addFolder" value="Add folder">
-				<input class="btn btn-large btn-primary i-graph" type="button" id="loadConfigItems" value="Add configuration item">
-				<span class="span-cfg" style="display:none"></span>
-				<input class="btn btn-large btn-primary i-graph" type="button" id="renameFolder" value="Rename folder">
 
+				<input class="btn btn-large btn-primary i-graph" type="button" id="loadConfigItems" value="Add configuration item">
+
+				<div class="form-group" style="display:none">
+					<select class="form-control" id="select-ci" size="5" name="selectionField" form="form1"></select>
+					<form id="form1" role="form" method="post">
+						<button class="btn btn-large btn-primary i-graph" type="submit">
+							OK
+						</button>
+						<input class="btn btn-large btn-default i-graph" type="button" value="Cancel" id="cancel-select-ci">
+					</form>
+				</div>
+
+				<input class="btn btn-large btn-primary i-graph" type="button" id="renameFolder" value="Rename folder">
 				<span class="cat1" style="display:none">
 					<form class="form-horizontal" role="form" method="post">
 						<input class="form-control i-graph" name="txt-name">
@@ -62,6 +73,7 @@ if ($permission == 0) {
 
 				<input class="btn btn-large btn-primary i-graph" type="button" id="removeItem" value="Remove item">
 			</div>
+
 		</div>
 
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>

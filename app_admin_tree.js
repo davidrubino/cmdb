@@ -173,7 +173,7 @@ $(function() {
 	}).on('select_node.jstree', function(e, data) {
 		setApplicationId(data.node.id);
 		$('.cat1').hide();
-		$('.span-cfg').hide();
+		resetSelect();
 
 		if (data.node.type == "file") {
 			$("#mynetwork").show();
@@ -209,7 +209,56 @@ $(function() {
 
 	$('#loadConfigItems').click(function(e) {
 		e.preventDefault();
-		loadConfigItem();
+		if (getNodeId() != -1) {
+			if (getGroup(getNodeId()) != "config_item") {
+				$.ajax({
+					type : "POST",
+					url : "app_db_loadConfigItems.php",
+					success : function(data) {
+						if (data.length != 0) {
+							for (var i = 0; i < data.length; i++) {
+								$("#select-ci").append($('<option>', {
+									value : data[i].id,
+									text : data[i].name
+								}));
+							}
+							$(".form-group").show();
+						} else {
+							alert("There is no configuration item to add!");
+						}
+						$(".cat1").hide();
+					}
+				});
+			} else {
+				alert("A configuration item cannot be a parent node!");
+			}
+		} else {
+			alert("Please select a parent node!");
+		}
+	});
+
+	$("#form1").on('submit', function(event) {
+		event.preventDefault();
+		var form_data = $(this).serialize();
+		var x = document.getElementById("select-ci");
+		var strUser = x.options[x.selectedIndex].text;
+		if (form_data.indexOf("selectionField") != -1) {
+			$.ajax({
+				type : "POST",
+				url : "app_db_addConfigItems.php",
+				data : form_data + "&value=" + strUser + "&parent_id=" + getNodeId() + "&application_id=" + getApplicationId(),
+				success : function() {
+					location.reload();
+				}
+			});
+		} else {
+			alert("Please select a server!");
+		}
+	});
+
+	$("#cancel-select-ci").click(function(e) {
+		e.preventDefault();
+		resetSelect();
 	});
 
 	$('#renameFolder').click(function(e) {
@@ -234,24 +283,6 @@ var container,
     node_id,
     size,
     network;
-
-/**
- * adds the selected configuration item to the graph at the selected position
- * @param {String} value: the name of the configuration item (name of the node)
- * @param {Int} parent_id: the id of the parent node
- * @param {Int} app_id: the id of the application
- * @param {config_item_id}: the id of the configuration item inserted in the graph
- */
-function addConfigItem(value, parent_id, app_id, config_item_id) {
-	$.ajax({
-		type : "POST",
-		url : "app_db_addConfigItems.php",
-		data : "value=" + value + "&parent_id=" + parent_id + "&application_id=" + app_id + "&config_item_id=" + config_item_id,
-		success : function() {
-			location.reload();
-		}
-	});
-}
 
 /**
  * adds a folder in the graph after the selected node
@@ -302,33 +333,6 @@ function getNodeId() {
 }
 
 /**
- * loads the configuration items available on the page for potential insertion in the graph
- */
-function loadConfigItem() {
-	if (getNodeId() != -1) {
-		if (getGroup(getNodeId()) != "config_item") {
-			$.ajax({
-				type : "POST",
-				url : "app_db_loadConfigItems.php",
-				success : function(data) {
-					var items = new Array();
-					for (var i = 0; i < data.length; i++) {
-						items.push('<input class="btn btn-large btn-info i-graph" type="button" onclick="addConfigItem(value, getNodeId(), getApplicationId(),' + data[i].id + ')" value="' + data[i].name + '">');
-					}
-					$(".span-cfg").html(items);
-					$(".cat1").hide();
-					$(".span-cfg").show();
-				}
-			});
-		} else {
-			alert("A configuration item cannot be a parent node!");
-		}
-	} else {
-		alert("Please select a parent node!");
-	}
-}
-
-/**
  * removes the selected node from the graph
  */
 function removeItem() {
@@ -358,7 +362,7 @@ function removeItem() {
 function renameFolder() {
 	if (getNodeId() != -1) {
 		if (getGroup(getNodeId()) == "folder") {
-			$('.span-cfg').hide();
+			resetSelect();
 			$('.cat1').show();
 			$(".form-horizontal").on('submit', function(event) {
 				event.preventDefault();
@@ -384,6 +388,16 @@ function renameFolder() {
 	} else {
 		alert("Please select an item to rename!");
 	}
+}
+
+/**
+ * reset the different selections when the node is no longer on focus
+ * It hides the menu allowing the user to choose a config item to add in the graph.
+ * It resets the html of the menu field where the configuration items are displayed.
+ */
+function resetSelect() {
+	$("#select-ci").html("");
+	$(".form-group").hide();
 }
 
 /**
@@ -473,12 +487,12 @@ function setupNetwork() {
 		setNodeId(params.nodes[0]);
 		size = params.edges.length;
 		$('.cat1').hide();
-		$('.span-cfg').hide();
+		resetSelect();
 	});
 
 	network.on("deselectNode", function(params) {
 		setNodeId(-1);
 		$('.cat1').hide();
-		$('.span-cfg').hide();
+		resetSelect();
 	});
 }

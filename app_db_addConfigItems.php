@@ -6,7 +6,7 @@ function addConfigItem($conn) {
 	$value = $_POST['value'];
 	$parent_id = $_POST['parent_id'];
 	$application_id = $_POST['application_id'];
-	$config_item_id = $_POST['config_item_id'];
+	$config_item_id = $_POST['selectionField'];
 
 	try {
 		$sql = "
