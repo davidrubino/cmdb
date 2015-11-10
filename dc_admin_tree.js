@@ -402,7 +402,6 @@ function createDataCenter(data) {
 		url : "dc_db_createDataCenter.php",
 		data : data,
 		success : function(data) {
-			console.log(data);
 			$("#tree").jstree("refresh");
 		}
 	});
@@ -424,10 +423,7 @@ function createTile(id, x, y, label, grayed_out, html_row, html_col, data_center
 	$.ajax({
 		type : "POST",
 		url : "dc_db_createTile.php",
-		data : "id=" + id + "&x=" + x + "&y=" + y + "&label=" + label + "&grayed_out=" + grayed_out + "&html_row=" + html_row + "&html_col=" + html_col + "&data_center_id=" + data_center_id,
-		success : function() {
-			console.log("tile created: " + x + " " + y);
-		}
+		data : "id=" + id + "&x=" + x + "&y=" + y + "&label=" + label + "&grayed_out=" + grayed_out + "&html_row=" + html_row + "&html_col=" + html_col + "&data_center_id=" + data_center_id
 	});
 }
 
